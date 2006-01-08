@@ -1,0 +1,3 @@
+#! /bin/bash
+
+./mavscript --beanshell --init $(pwd)/lib/init.bsh "$@"

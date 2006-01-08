@@ -1,0 +1,46 @@
+// BEANSHELL BEFEHL
+static import Math.*;
+
+
+// STANDARD-FUNKTIONEN
+
+/** maximaler Wert eines Arrays */
+public static double max(double[] liste) {
+        double maximal = liste[0];
+        for (int i=0 ; i < liste.length; i++) {
+            if (liste[i] > maximal) maximal = liste[i];
+        }
+        return maximal;
+}
+
+/** minimaler Wert eines Arrays */
+public static double min(double[] liste) {
+        double minimal = liste[0];
+        for (int i=0 ; i < liste.length; i++) {
+            if (liste[i] < minimal) minimal = liste[i];
+        }
+        return minimal;
+}
+
+
+/** Gibt einen Zahlenwert als formatierten String zurück.     */
+public static String nf(double zahl, int AnzNachkommaStellen) {
+        StringBuffer ausg = new StringBuffer();
+        if (AnzNachkommaStellen < 0) {
+            System.err.print("Formatierungsfehler: Anzahl Nachkommastellen: ");
+            System.err.println(AnzNachkommaStellen + " < 0");
+            ausg.append(zahl);
+            return ausg.toString();
+        }
+	double erweitern = Math.pow(10d, AnzNachkommaStellen); // Hilfsvariable
+        double gerundet = Math.round(erweitern * zahl) / erweitern;
+        if (AnzNachkommaStellen == 0) ausg.append((int) gerundet);
+        else {
+            ausg.append(gerundet); 
+            int vorhNkst = ausg.length() - 1 - ausg.indexOf(".");
+            for (int i = vorhNkst; i < AnzNachkommaStellen; i++) {
+                ausg.append("0");
+            }
+        }
+        return ausg.toString();
+}

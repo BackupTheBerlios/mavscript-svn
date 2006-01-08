@@ -1,0 +1,19 @@
+Damit dieses Beispiel funktioniert, muss Mavscript mit der Opition --init lib/init.yac aufgerufen werden.
+
+Mavscript - Testdatei
+----------------------
+
+
+Eingabe:
+Länge $m l := 10.3 $i (des Würfels)
+Breite $m b := 3.2 $i
+Höhe $m h:= 5.6
+
+Ausgabe:
+Das Volumen beträgt            $m V := l*b*h $io m³
+Das gerundete Volumen beträgt  V = $m nf(V, 1) $o m³
+Das doppelte Volumen beträgt $m dopV := 2*V $n 2V = $m dopV $o m³
+
+Der Würfel ist $m If (l>b, antwort := "Länger als breit", antwort := "Breiter als Lang") $o
+
+Ende.

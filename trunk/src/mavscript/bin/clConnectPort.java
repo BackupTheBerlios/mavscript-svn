@@ -11,13 +11,13 @@ import java.io.*;
 import java.util.*;
 
 
-/* Copyright (c) 2004 - 2005 A.Vontobel  <qwert2003@users.berlios.de>
- *                                       <qwert2003@users.sourceforge.net>,
+/* Copyright (c) 2004 - 2006 A.Vontobel  <qwert2003@users.berlios.de>,
+ *                                       <qwert2003@users.sourceforge.net>
  *
  *
  * -------------------------------------------------------------
  *
- * Deses Programm ist freie Software. Sie können es unter den Bedingungen
+ * Dieses Programm ist freie Software. Sie können es unter den Bedingungen
  * der GNU General Public License, Version 2, wie von der Free Software
  * Foundation herausgegeben, weitergeben und/oder modifizieren.
  *
@@ -97,7 +97,7 @@ public class clConnectPort extends clConnect {
             System.out.println(tr.tr("NotConnected"));
             return false;
         } else {
-            System.out.println(tr.tr("Verbunden."));
+            System.out.println(tr.tr("Connected"));
             return true;
         }
     }

@@ -11,13 +11,13 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
 
-/* Copyright (c) 2005 A.Vontobel  <qwert2003@users.berlios.de>
- *                                <qwert2003@users.sourceforge.net>,
+/* Copyright (c) 2005, 2006 A.Vontobel  <qwert2003@users.berlios.de>,
+ *                                      <qwert2003@users.sourceforge.net>
  *
  *
  * -------------------------------------------------------------
  *
- * Deses Programm ist freie Software. Sie können es unter den Bedingungen
+ * Dieses Programm ist freie Software. Sie können es unter den Bedingungen
  * der GNU General Public License, Version 2, wie von der Free Software
  * Foundation herausgegeben, weitergeben und/oder modifizieren.
  *

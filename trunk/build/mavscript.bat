@@ -1,1 +1,1 @@
-java -jar mavscript020.jar %*
+java -jar mavscript012.jar %*

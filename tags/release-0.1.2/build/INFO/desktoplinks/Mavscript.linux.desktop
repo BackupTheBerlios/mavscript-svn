@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment=Drag the template on the icon
+Comment[de]=Vorlage auf das Symbol ziehen
+Encoding=UTF-8
+Exec=konsole --noclose  --workdir /usr/local/share/mavscript/ -e /usr/local/share/mavscript/mavscript-yacas
+GenericName=mavscript
+GenericName[de]=mavscript
+Icon=math_sqrt
+MimeType=
+Name=mavscript
+Name[de]=mavscript
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DCOP-ServiceType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

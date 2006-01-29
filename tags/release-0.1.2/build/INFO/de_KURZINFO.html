@@ -1,0 +1,988 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta name="Generator" content="Kate, the KDE Advanced Text Editor" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Einleitung zu Mavscript</title>
+</head>
+
+
+<body>
+
+
+
+
+
+
+
+
+
+
+<h1><span style="color: rgb(0, 0, 0);">mavscript</span></h1>
+
+
+
+
+
+
+
+
+
+
+<h1><span style="color: rgb(0, 0, 0);"></span></h1>
+
+
+
+
+
+
+
+
+
+
+<pre><span style="color: rgb(0, 0, 0);">Copyright (c) A.Vontobel, 2004, 2005<br /><br /><br /></span></pre>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);">Mavscript erm&ouml;glicht es in einem Textdokument Berechnungen durchzuf&uuml;hren.</span></h4>
+
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">Unterst&uuml;tzt werden folgende <em>Dateiformate</em>:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Textdatei</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">   html</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">OpenDocument Text&nbsp;odt</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">OpenOffice Writer sxw</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">weitere Formate, die in Textform speichern (z.B. svg). Die Textdatei darf in einem <em>zip-Archiv</em> vorliegen.</span></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">   </span>
+<h4><span style="color: rgb(0, 0, 0);">So funktionierts</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">
+Mavscript liest die Berechnungsanweisungen ein. Es erkennt deren Beginn am Steuerzeichen <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$m</span>, das Anweisungsende an einem der folgenden Steuerzeichen:<span style="font-family: monospace;"> <span style="background-color: rgb(255, 255, 153);">$i</span></span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$o</span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$io</span> und <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$n</span>.
+Auf ihre Bedeutung wird weiter unten eingegangen. Die Anweisung wird an
+das&nbsp;Computer-Algebra-System (<em>Yacas</em>) weitergeleitet.&nbsp;Das Algebraprogramm gibt eine Antwort an Mavscript zur&uuml;ck, z.B. das
+Resultat einer Berechnung. Mavscript kann nun diese Antwort an der
+Stelle in den Text einsetzen, wo die Anweisung stand. Das fertig berechnete
+Textdokument speichert Mavscript in eine neue Datei <span style="font-family: monospace;">out.vorlage</span> ab. Die Vorlagedatei bleibt unver&auml;ndert.<br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+Nicht immer will man die Anweisung durch den R&uuml;ckgabewert des
+Algebraprogrammes ersetzen. Wenn man Variablen einen Wert
+zuweist, ist das meistens unerw&uuml;nscht. Es gibt daher die folgenden
+M&ouml;glichkeiten.<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<pre><span style="color: rgb(0, 0, 0);"><br />  Eingabe in der Vorlagedatei    Ausgabe            Anmerkung<br />  ---------------------------    -------            ---------<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> l:=5 <span style="background-color: rgb(255, 255, 153);">$i</span>                     l:=5               Die Darstellung bleibt unver&auml;ndert. $i steht f&uuml;r input.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> b:=4 <span style="background-color: rgb(255, 255, 153);">$i</span>                     b:=4               Die Steuerzeichen werden entfernt.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> h:=2 <span style="background-color: rgb(255, 255, 153);">$i</span> m                   h:=2 m                         <br />  	<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> V:=l*b*h <span style="background-color: rgb(255, 255, 153);">$io</span>                V:=l*b*h --&gt; 40    Sowohl die Ein- wie auch die Ausgabe werden angezeigt.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> 2 + 3*4 <span style="background-color: rgb(255, 255, 153);">$io</span>                 2 + 3*4 --&gt; 14     $io steht f&uuml;r input/output.<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> doppeltesVol := 2*V <span style="background-color: rgb(255, 255, 153);">$n</span>                         Nicht immer will man die Anweisung darstellen.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> gl:=x^2-l^2 <span style="background-color: rgb(255, 255, 153);">$n</span>                                 $n steht f&uuml;r nichts.<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> doppeltesVol <span style="background-color: rgb(255, 255, 153);">$o</span>             80                 Es wird nur der R&uuml;ckgabewert angezeigt. $o steht f&uuml;r output.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> Solve(gl,x) <span style="background-color: rgb(255, 255, 153);">$o</span>              {x==5,x==(-5)}     Dies kann gebraucht werden, um Berechnung und Resultat-<br />                                                    ausgabe &ouml;rtlich zu trennen.<br /></span></pre>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"><br />
+
+
+
+
+
+
+
+
+
+
+</span>
+
+<h4><span style="color: rgb(0, 0, 0);">Einige Regeln:</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Eine Anweisung muss auf einer Zeile liegen.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Es d&uuml;rfen mehrere Anweisungen auf einer Zeile liegen. Bsp: <span style="font-family: monospace;">$m a:=3 $i</span>, <span style="font-family: monospace;">$m b:=4 $i</span>.<br />
+
+
+
+    </span></li>
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Mavscript h&auml;ngt an jede Anweisung einen Strichpunkt <span style="font-family: monospace;">(;)</span> an. Dieser kann daher in der Anweisung weggelassen werden.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Sonderzeichen innerhalb einer
+Anweisung funktionieren h&auml;ufig nicht. Also nicht <span style="font-family: monospace;">$m l&auml;nge:=5 $i</span>.<br />
+
+
+
+
+
+Diese Einschr&auml;nkung kommt vom Algebraprogramm Yacas. Mit BeanShell funktionieren&nbsp;Umlaute.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">In <em>OpenOffice Writer</em> muss die ganze Anweisung die gleiche Formatierung aufweisen. In Anweisungen doppelte Leerzeichen meiden.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Die Syntax der Anweisungen h&auml;ngt
+vom verwendeten Algebraprogramm ab.&nbsp;<br />
+
+
+
+    </span>
+    
+    
+    
+    <ol>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);">Zum mitgelieferten Programm <em>Yacas</em>
+liegen eine Einf&uuml;hrung und eine ausf&uuml;hrliche Funktionsreferenz im
+Ordner <em style="font-family: monospace;">Installationspfad</em><span style="font-family: monospace;">/INFO/yacas</span> bei.</span></li>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);"></span><span style="color: rgb(0, 0, 0);">Nebst Yacas wird auch der Java-Interpreter <em>BeanShell</em> unterst&uuml;tzt und mitgeliefert. Die Anleitung liegt im Ordner&nbsp;</span><em style="font-family: monospace;">Installationspfad</em><span style="font-family: monospace;">/INFO/beanshell</span> .</li>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);">Als dritte M&ouml;glichkeit kann Mavscript zu einem <em>Port</em> (auf dem lokalen Computer oder einem entfernten Server) Verbindung aufnehmen.</span></li>
+
+
+
+    
+    
+    
+    </ol>
+
+
+
+  </li>
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+<h4>Mavscript vs. Tabellenkalkulationsprogramme</h4>
+
+
+
+
+
+
+
+
+
+
+
+Der Zweck von Mavscript ist, Berechnungen in einem Textdokument
+durchf&uuml;hren zu k&ouml;nnen. Mavscript kommt vor allem dort zum Einsatz, wo
+Tabellenkalkulationsprogramme zu wenig geeignet erscheinen: Sei es,
+weil die mathematischen F&auml;higkeiten ungen&uuml;gend sind (Algebra!) oder
+weil Berechnungen schnell un&uuml;bersichtlich&nbsp;werden (schwierige
+Fehlersuche, kaum nachvollziehbar f&uuml;r andere). Die Verwendung von
+Mavscript, mit dem Computer-Algebra-System Yacas, erweist
+sich in solchen F&auml;llen als vorteilhaft.<br />
+
+
+
+
+
+
+
+
+
+
+
+Der Nachteil gegen&uuml;ber Tabellenkalkulationsprogrammen ist die geringere
+Interaktivit&auml;t, namentlich das umst&auml;ndlichere Einbinden von
+(resultatabh&auml;ngigen) Graphiken.<span style="color: rgb(0, 0, 0);">
+
+
+<br />
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Installation</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">siehe <a href="de_Installieren.html">Installieren</a><br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Gebrauch</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">STANDARD</span></h4>
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;"><br />
+
+
+
+
+</span><span style="color: rgb(0, 0, 0);">Falls wie oben installiert und das mitgelieferte Algebraprogramm <em>yacas</em> gebraucht werden soll:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ol>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Vorlagedatei erstellen: <span style="font-family: monospace;">vorlage.txt</span>, <span style="font-family: monospace;">vorlage.html</span> oder&nbsp;<span style="font-family: monospace;">vorlage.sxw</span></span></li>
+  <li><span style="color: rgb(0, 0, 0);"><strong>Die Vorlagedatei mit der Maus auf das Mavscript-Symbol auf dem Desktop ziehen.</strong><span style="font-family: monospace;"></span></span></li>
+  <li><span style="color: rgb(0, 0, 0);">Es &ouml;ffnet sich ein Fenster und die Rechnung rattert durch. Das Fenster kann anschliessend geschlossen werden.<br />
+
+
+
+
+
+
+
+
+
+
+    </span>Darauf achten, ob eine Fehlermeldung ausgegeben wurde.</li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Die Zieldatei (<span style="font-family: monospace;">out.vorlage.txt</span>, <span style="font-family: monospace;">out.vorlage.html</span> oder <span style="font-family: monospace;">out.vorlage.sxw</span>) &ouml;ffnen.</span><br />
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+</ol>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">ALTERNATIV (um erweiterte Funktionen zu nutzen oder wenn obige Variante nicht funktioniert )</span></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"><br />
+
+
+
+
+Mavscript kann alternativ auch von
+der Shell (Eingabeaufforderung, Konsole, Terminal, Command Prompt,
+DOS-Fenster) ausgef&uuml;hrt werden.<br />
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: monospace;">cd Installationspfad</span> und dann:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript ./vorlagedatei</span>                     (Windows)</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./mavscript </span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./vorlagedatei</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;"></span>                   (Linux)</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">java -jar mavscript*.jar ./vorlagedatei</span>      (alle Plattformen)</span><br />
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">ERWEITERTE FUNKTIONEN</span></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript --help</span>                         Zeigt die verschiedenen Startparameter an.</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li>siehe <a href="de_Startparameter.html">Startparameter</a></li>
+
+
+
+
+
+
+  <li><a href="de_Beanshell.html">Mavscript mit <em>BeanShell</em></a></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span><span style="color: rgb(0, 0, 0);"><br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Rechtliches</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Gebrauch auf eigene Gefahr. Jede Haftung wird abgelehnt.</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Das Programm Mavscript unterliegt der freien <a href="de_Lizenz-GPL-deutsche_Uebersetzung.html">Lizenz GPL</a>. Sie ist in der Datei <span style="font-style: italic; font-family: monospace;">Installationspfad</span><span style="font-family: monospace;">/INFO/LICENCE-GPL.txt </span>nachzulesen.
+Die Lizenz erlaubt die Nutzung, kn&uuml;pft jedoch die Weitergabe an klare
+Bedingungen. Das Urheberrecht (Copyright) liegt bei A.Vontobel.</span></li>
+
+
+
+
+
+
+
+
+
+
+  
+
+  <li><span style="color: rgb(0, 0, 0);">Das mitgelieferte Computer-Algebra-System&nbsp;<em>Yacas</em> unterliegt der freien Lizenz GPL. Sie ist in der Datei <span style="font-style: italic; font-family: monospace;">Installationspfad</span><span style="font-family: monospace;">/INFO/yacas/COPYING </span>nachzulesen. Die Lizenz erlaubt die Nutzung, kn&uuml;pft jedoch die Weitergabe an klare Bedingungen.<em></em></span></li>
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Der mitgelieferte Java-Interpreter <em>BeanShell</em> unterliegt der freien Lizenz LGPL. </span><span style="color: rgb(0, 0, 0);">Sie ist in der Datei <span style="font-style: italic; font-family: monospace;">Installationspfad</span><span style="font-family: monospace;">/INFO/beanshell/LGPL.txt </span>nachzulesen. Die Lizenz erlaubt die Nutzung, kn&uuml;pft jedoch die Weitergabe an klare Bedingungen.</span></li>
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">  <br />
+
+
+
+
+
+
+
+
+
+
+</span>
+</body>
+</html>

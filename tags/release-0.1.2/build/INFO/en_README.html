@@ -1,0 +1,995 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta name="Generator" content="Kate, the KDE Advanced Text Editor" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Introduction to Mavscript</title>
+</head>
+
+
+<body>
+
+
+
+
+
+
+
+
+
+
+<h1><span style="color: rgb(0, 0, 0);">mavscript</span></h1>
+
+
+
+
+
+
+
+
+
+
+<h1><span style="color: rgb(0, 0, 0);"></span></h1>
+
+
+
+
+
+
+
+
+
+
+<pre><span style="color: rgb(0, 0, 0);">Copyright (c) A.Vontobel, 2004, 2005<br /><br /><br /></span></pre>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);">With Mavscript you can do calculations in a text document.</span></h4>
+
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">The following <em>file formats</em> are supported:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Text files</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">   html</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">OpenDocument Text odt</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">OpenOffice Writer sxw</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">other text based formats (i.e. svg). The text file may be packed in a <em>zip-archive</em>.</span></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">   </span>
+<h4><span style="color: rgb(0, 0, 0);">How it works</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">
+Mavscript reads the calculation commands in the template. These commands start with the control characters <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$m</span> and end with one of the following control characters:<span style="font-family: monospace;"> <span style="background-color: rgb(255, 255, 153);">$i</span></span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$o</span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$io</span> und <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$n</span>.
+Their meaning will be explained later. The commands are forwarded to the&nbsp;Computer-Algebra-System </span><span style="color: rgb(0, 0, 0);">(<em>Yacas</em></span><span style="color: rgb(0, 0, 0);">). 
+The algebra program returns an answer to Mavscript, i.e. the result of the calculation command.
+Mavscript now can insert this answer in the text, where the command was. When all calculations are done Mavscript saves
+the text document in a new file <span style="font-family: monospace;">out.template</span>. The template file remains unchanged.<br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+You do not always want to replace the calculation command by the answer from the algebra program.
+When you assign a value to a variable you usually want that the command remains in the text. 
+Therefore there are the following possibilites.<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<pre><span style="color: rgb(0, 0, 0);">
+  Input in the template file    Output             Notes<br />  --------------------------    ------             -----<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> l:=5 <span style="background-color: rgb(255, 255, 153);">$i</span>                    l:=5               The command remains unchanged. $i stands for input.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> b:=4 <span style="background-color: rgb(255, 255, 153);">$i</span>                    b:=4               The control characters are removed.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> h:=2 <span style="background-color: rgb(255, 255, 153);">$i</span> m                  h:=2 m                         <br />  	<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> V:=l*b*h <span style="background-color: rgb(255, 255, 153);">$io</span>               V:=l*b*h --&gt; 40    Both the input and the output are shown.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> 2 + 3*4 $io                2 + 3*4 --&gt; 14     $io stands for input/output.<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> doubleVol := 2*V <span style="background-color: rgb(255, 255, 153);">$n</span>                           Sometimes you do not want to show the command or its result.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> gl:=x^2-l^2 <span style="background-color: rgb(255, 255, 153);">$n</span>                                $n stands for nothing.<br /><br />  <span style="background-color: rgb(255, 255, 153);">$m</span> doubleVol <span style="background-color: rgb(255, 255, 153);">$o</span>               80                 Only the return value (answer) is shown. $o stands for output.<br />  <span style="background-color: rgb(255, 255, 153);">$m</span> Solve(gl,x) <span style="background-color: rgb(255, 255, 153);">$o</span>             {x==5,x==(-5)}     This is useful if you want to separate the calculation and <br />                                                   the results.<br /></span></pre>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"><br />
+
+
+
+
+
+
+
+
+
+
+</span>
+
+<h4><span style="color: rgb(0, 0, 0);">Some rules:</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">A command must be placed in a single line.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Several commands may be in the same line. Example: <span style="font-family: monospace;">$m a:=3 $i</span>, <span style="font-family: monospace;">$m b:=4 $i</span>.<br />
+
+
+
+    </span></li>
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Mavscript attaches a semicolon <span style="font-family: monospace;">(;)</span> to each command. Therefore the semicolon can be omitted in the commands.<br />
+
+
+
+    </span></li>
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Special (non-ASCII) characters in commands often don't work. Not working example: <span style="font-family: monospace;">$m l&auml;nge:=5 $i</span>.<br />
+
+
+
+This restriction is imposed by the algebra engine Yacas. If BeanShell is used instead, umlauts work.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">In <em>OpenOffice Writer</em> the entire command must be formatted the same way. Avoid double space characters in commands.<br />
+
+
+
+    </span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">The syntax of the commands depends on the algebra program used. <br />
+
+
+
+    </span>
+    
+    
+    
+    <ol>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);">For the built-in program <em>Yacas</em>
+(default mode) an Introduction and the Function Reference are enclosed in the directory <em style="font-family: monospace;">path-to-mavscript</em><span style="font-family: monospace;">/INFO/yacas</span>.</span></li>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);">In addition to Yacas the&nbsp;Java-Interpreter <em>BeanShell</em> is built-in. The manual is enclosed in the directory&nbsp;</span><span style="color: rgb(0, 0, 0);"><em style="font-family: monospace;">path-to-mavscript</em></span><span style="color: rgb(0, 0, 0);"><em style="font-family: monospace;"></em><span style="font-family: monospace;">INFO/beanshell</span> .</span></li>
+
+
+
+      <li><span style="color: rgb(0, 0, 0);"></span><span style="color: rgb(0, 0, 0);">The third possibility is to let Mavscript connect to a </span><span style="color: rgb(0, 0, 0);"><em>Port</em> </span><span style="color: rgb(0, 0, 0);"> (on localhost or on a remote server)</span>.</li>
+
+
+
+    
+    
+    
+    </ol>
+
+
+
+  </li>
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+<h4>Mavscript vs. spread sheet applications</h4>
+
+
+
+
+
+
+
+
+The goal of Mavscript is to allow calculations in a text document.
+Mainly Mavscript is used where spread sheet applications are not that
+much suitable: The mathematical functionality may be insufficient
+&nbsp;(algebra!) or the calculations are to much hidden (hard to debug,
+hard to understand for others). In such cases the use of Mavscript with
+a computer-algebra-system, such a yacas, shows to be favourable.<br />
+
+
+
+
+
+
+
+
+The disadvantage compared to a spread sheet application is less
+interactivity, especially when using graphs that depend&nbsp;on the
+results.<br />
+
+
+
+
+
+
+
+
+
+
+
+<h4></h4>
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Installation</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">see <a href="en_HowToInstall.html">How to install</a> <br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Usage</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">STANDARD</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h3><span style="color: rgb(0, 0, 0);"></span></h3>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">If Mavscript has been installed as described and the included algebra program <em>yacas</em> is used:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ol>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Create a template (input) file: <span style="font-family: monospace;">template.txt</span>,&nbsp;</span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.odt</span> or&nbsp;</span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.sxw</span></span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><strong><span style="color: rgb(0, 0, 0);">Drag the template file with the mouse on the Mavscript-icon on the desktop.</span></strong></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">A window opens and the calculation is executed. When finished, check if there is an error message and close the window.</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Open the output file (<span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.txt</span>, <span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.odt</span> or <span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.sxw</span>) .</span><br />
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+</ol>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">ALTERNATE (in order to use advanced functions or if the standard procedure does not work)</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">Mavscript alternately can be called out of the shell (command prompt, konsole, terminal).<br />
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: monospace;">cd path-to-mavscript</span> and then:<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript inputfile</span>                     (Windows)</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./mavscript inputfile</span>                   (Linux)</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">java -jar mavscript*.jar inputfile</span>      (all platforms)</span><br />
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<h4><span style="color: rgb(0, 0, 0);">ENHANCED FUNCTIONS</span></h4>
+
+
+
+
+
+
+
+
+
+
+<h4><span style="color: rgb(0, 0, 0);"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript --help</span>                         Shows the available start parameters.</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li>see <a href="en_Startparameter.html">start parameters</a></li>
+
+
+
+
+  <li><a href="en_Beanshell.html">Mavscript with <em>BeanShell</em></a></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span><span style="color: rgb(0, 0, 0);"><br />
+
+
+
+
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+</span>
+<h2><span style="color: rgb(0, 0, 0);">Disclaimer</span></h2>
+
+
+
+
+
+
+
+
+
+
+<h2><span style="color: rgb(0, 0, 0);"></span></h2>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);"></span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">Use it at your own risk. Mavscript comes with ABSOLUTELY NO WARRANTY.</span></li>
+
+
+
+
+
+
+
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">The program Mavscript is subject to the free <a href="LICENCE-GPL.txt">Licence GPL</a>. It is included in the file <span style="font-style: italic; font-family: monospace;">path-to-mavscript</span><span style="font-family: monospace;">/INFO/LICENCE-GPL.txt </span>.
+The licence allows the usage of the program, but does impose clear
+rules if you intend to distribute it. Mavscript is copyrighted by
+A.Vontobel.</span></li>
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">The computer-algebra-system <em>Yacas</em> that is included is subject to the free licence GPL. It is included in the file <span style="font-style: italic; font-family: monospace;">path-to-mavscript</span><span style="font-family: monospace;">/INFO/yacas/COPYING </span>.</span><span style="color: rgb(0, 0, 0);"> The licence allows the usage of the program, but does impose clear
+rules if you intend to distribute it.</span></li>
+
+
+
+  <li><span style="color: rgb(0, 0, 0);">The Java-Interpreter <em>BeanShell</em> that is included is subject to the free licence LGPL. It is included in the file</span><span style="color: rgb(0, 0, 0);"> <span style="font-style: italic; font-family: monospace;">Installationspfad</span><span style="font-family: monospace;">/INFO/beanshell/LGPL.txt .&nbsp;</span></span><span style="color: rgb(0, 0, 0);">The licence allows the usage of the program, but does impose clear
+rules if you intend to distribute it.</span></li>
+
+
+
+</ul>
+
+
+
+<br />
+
+
+
+<ul>
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+<span style="color: rgb(0, 0, 0);">  <br />
+
+
+
+
+
+
+
+
+
+
+</span>
+</body>
+</html>

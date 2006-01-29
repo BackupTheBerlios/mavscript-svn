@@ -25,6 +25,11 @@ public static double min(double[] liste) {
 
 /** Gibt einen Zahlenwert als formatierten String zurück.     */
 public static String nf(double zahl, int AnzNachkommaStellen) {
+	if (Double.isNaN(zahl)) return "NaN";
+	if (Double.isInfinite(zahl)) {
+	    if (Math.signum(zahl) > 0) return "+oo";
+	    else return "-oo";
+	}
         StringBuffer ausg = new StringBuffer();
         if (AnzNachkommaStellen < 0) {
             System.err.print("Formatierungsfehler: Anzahl Nachkommastellen: ");

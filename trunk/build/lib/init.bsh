@@ -43,8 +43,10 @@ public static String nf(double zahl, int AnzNachkommaStellen) {
         else {
             ausg.append(gerundet); 
             int vorhNkst = ausg.length() - 1 - ausg.indexOf(".");
-            for (int i = vorhNkst; i < AnzNachkommaStellen; i++) {
-                ausg.append("0");
+            if (ausg.indexOf("E") < 0) { // nur wenn Zahl nicht in der Form -6.5E-4
+                for (int i = vorhNkst; i < AnzNachkommaStellen; i++) {
+                    ausg.append("0");
+                }
             }
         }
         return ausg.toString();

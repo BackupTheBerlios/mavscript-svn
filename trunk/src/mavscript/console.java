@@ -14,6 +14,7 @@ import mavscript.bin.clMavscript;
 import mavscript.bin.clMavscriptZIP;
 import mavscript.bin.inConst;
 import mavscript.bin.clTranslation;
+import mavscript.bin.clMavscriptExtractor;
 
 
 /* Copyright (c) 2004 - 2006 A.Vontobel  <qwert2003@users.berlios.de>,
@@ -76,6 +77,7 @@ public class console implements inConst {
     boolean ausZIP = false;
     boolean mitvorlauf = false;
     boolean htmlkonvertieren = false;
+    boolean nurextrahieren = false;
     private boolean zieldateigesetzt = false;
     private boolean stdLocale = true;
     
@@ -85,10 +87,10 @@ public class console implements inConst {
     private String[] iArgs;
     
     private final static String PGM     = "Mavscript";
-    private final static String VERSION = "0.12";
+    private final static String VERSION = "0.13";
     
     private final static String USAGE_de = "Gebrauch:\n" +
-            "java -jar mavscript*.jar [-vHhV] [-l Sprache] \n" +
+            "java -jar mavscript*.jar [-vHxhV] [-l Sprache] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i Vorlaufdatei] \n" +
             "                         [-o Zieldatei] Vorlagedatei \n\n" +
@@ -105,6 +107,8 @@ public class console implements inConst {
             "-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &gt;)\n" +
             "-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)\n" +
             "                            Beispiele: ISO-8859-1, system \n" +
+            "-x, --extract               Schreibt die Anweisungen in die Zieldatei. \n" +
+            "                            Es wird keine Berechnung durchgefuehrt. \n" +
             "-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)\n" +
             "\n" +
             "OpenOffice-Writer Dateien mit der Endung .sxw und .odt werden automatisch\n" +
@@ -120,7 +124,7 @@ public class console implements inConst {
             "java -jar mavscript*.jar -o ergebnis.sxw ./vorlage.sxw";
     
     private final static String USAGE_en = "Usage:\n" +
-            "java -jar mavscript*.jar [-vHhV] [-l Language] \n" +
+            "java -jar mavscript*.jar [-vHxhV] [-l Language] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i InitFile] \n" +
             "                         [-o OutputFile] TemplateFile \n\n" +
@@ -137,6 +141,8 @@ public class console implements inConst {
             "-H, --HTML                  Accepts HTML special characters (like &gt;)\n" +
             "-C, --charset Encoding      Charset name (default: UTF-8)\n" +
             "                            examples: ISO-8859-1, system \n" +
+            "-x, --extract               Writes the commands to the OutputFile. \n" +
+            "                            No calculation is done. \n" +
             "-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)\n" +
             "\n" +
             "OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.\n" +
@@ -167,7 +173,7 @@ public class console implements inConst {
     /////////////////////////////////////////////////////////////////////////
     
     void parseArguments() {
-        LongOpt[] longopts = new LongOpt[13];
+        LongOpt[] longopts = new LongOpt[14];
         longopts[0] = new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
         longopts[1] = new LongOpt("verbose",LongOpt.NO_ARGUMENT,null,'v');
         longopts[2] = new LongOpt("version",LongOpt.NO_ARGUMENT,null,'V');
@@ -181,9 +187,10 @@ public class console implements inConst {
         longopts[10] = new LongOpt("yacas",LongOpt.NO_ARGUMENT,null,'y');
         longopts[11] = new LongOpt("HTML",LongOpt.NO_ARGUMENT,null,'H');
         longopts[12] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
+        longopts[13] = new LongOpt("extract",LongOpt.REQUIRED_ARGUMENT,null,'x');
         
         
-        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:byvHhV",longopts);
+        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:byvxHhV",longopts);
         g.setOpterr(false);
         int c;
         
@@ -235,6 +242,9 @@ public class console implements inConst {
                 case 'C':
                     charset = g.getOptarg();
                     break;
+                case 'x':
+                    nurextrahieren = true;
+                    break;
                 case 'o':
                     zieldatei = g.getOptarg();
                     zieldateigesetzt = true;
@@ -263,8 +273,20 @@ public class console implements inConst {
             File d = new File(quelldatei);
             if (d.getParent() == null) {
                 zieldatei = "out." +d.getName();
-            } else
-                zieldatei = d.getParent() + System.getProperty("file.separator") + "out." +d.getName();
+            } else zieldatei = d.getParent() + System.getProperty("file.separator") + "out." +d.getName();
+            if (nurextrahieren) {
+                switch (verbindungstyp) {
+                    case yacas:
+                        zieldatei += ".ys";
+                        break;
+                    case beanshell:
+                        zieldatei += ".bsh";
+                        break;
+                    case port:
+                    default:
+                        zieldatei += ".txt";
+                }
+            }
         }
     }
     
@@ -273,7 +295,7 @@ public class console implements inConst {
         
         System.out.println("");
         System.out.println("            " + c.tr.tr("WelcomeTo") + " " + PGM);
-        System.out.println("            Copyright (c) A. Vontobel, 2004-2005");
+        System.out.println("            Copyright (c) A. Vontobel, 2004-2006");
         System.out.println("            " + c.tr.tr("Version") + " " + VERSION);
         System.out.println("");
         
@@ -315,7 +337,8 @@ public class console implements inConst {
                 if (c.mitvorlauf) System.out.println(c.tr.tr("InitFile") + ": " + c.vorlaufdatei);
                 System.out.print(c.tr.tr("Template") + " (zip): " + c.quelldatei);
                 System.out.println(" ("+ c.tr.tr("ZippedFile")+" " + c.dateiImArchiv + ")");
-                System.out.println(c.tr.tr("OutputArchive") + ":  " + c.zieldatei);
+                if (c.nurextrahieren) System.out.println(c.tr.tr("OutputFile") + ": " + c.zieldatei);
+                else System.out.println(c.tr.tr("OutputArchive") + ":  " + c.zieldatei);
             } else {
                 if (c.mitvorlauf) System.out.println(c.tr.tr("InitFile") + ": " + c.vorlaufdatei);
                 System.out.println(c.tr.tr("TemplateFile") + ": " + c.quelldatei);
@@ -324,45 +347,60 @@ public class console implements inConst {
             System.out.println("");
         }
         
-        // Start
-        if (c.ausZIP) { // Open Office Writer Datei oder sonstige Zipdatei
-            clMavscriptZIP ber;
-            switch(c.verbindungstyp) {
-                case port:
-                    ber = new clMavscriptZIP(port, c.quelldatei, c.dateiImArchiv, c.zieldatei, c.serverAddress, c.serverPort);
-                    break;
-                case beanshell:
-                    ber = new clMavscriptZIP(beanshell, c.quelldatei, c.dateiImArchiv, c.zieldatei);
-                    break;
-                case yacas:
-                default:
-                    ber = new clMavscriptZIP(yacas, c.quelldatei, c.dateiImArchiv, c.zieldatei);
-            }
+        if (c.nurextrahieren) {
+            clMavscriptExtractor ber;
+            if (c.ausZIP) ber = new clMavscriptExtractor(c.verbindungstyp, c.quelldatei, c.dateiImArchiv, c.zieldatei);
+            else ber = new clMavscriptExtractor(c.verbindungstyp, c.quelldatei, c.zieldatei);
+            
             ber.setVerbose(c.verbose);
             if (!c.stdLocale) ber.setLocale(c.locale);
             ber.setHTMLkonvertieren(c.htmlkonvertieren);
             ber.setCharset(c.charset);
             if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
-            allesOK = ber.run();
-        } else { // alle anderen Dateien
-            clMavscript ber;
-            switch(c.verbindungstyp) {
-                case port:
-                    ber = new clMavscript(port, c.quelldatei, c.zieldatei, c.serverAddress, c.serverPort);
-                    break;
-                case beanshell:
-                    ber = new clMavscript(beanshell, c.quelldatei, c.zieldatei);
-                    break;
-                case yacas:
-                default:
-                    ber = new clMavscript(yacas, c.quelldatei, c.zieldatei);
+            allesOK = ber.run();            
+        } 
+        else { // Start
+            
+            if (c.ausZIP) { // Open Office Writer Datei oder sonstige Zipdatei
+                clMavscriptZIP ber;
+                switch(c.verbindungstyp) {
+                    case port:
+                        ber = new clMavscriptZIP(port, c.quelldatei, c.dateiImArchiv, c.zieldatei, c.serverAddress, c.serverPort);
+                        break;
+                    case beanshell:
+                        ber = new clMavscriptZIP(beanshell, c.quelldatei, c.dateiImArchiv, c.zieldatei);
+                        break;
+                    case yacas:
+                    default:
+                        ber = new clMavscriptZIP(yacas, c.quelldatei, c.dateiImArchiv, c.zieldatei);
+                }
+                ber.setVerbose(c.verbose);
+                if (!c.stdLocale) ber.setLocale(c.locale);
+                ber.setHTMLkonvertieren(c.htmlkonvertieren);
+                ber.setCharset(c.charset);
+                if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
+                allesOK = ber.run();
             }
-            ber.setVerbose(c.verbose);
-            if (!c.stdLocale) ber.setLocale(c.locale);
-            ber.setHTMLkonvertieren(c.htmlkonvertieren);
-            ber.setCharset(c.charset);
-            if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
-            allesOK = ber.run();
+            else { // alle anderen Dateien
+                clMavscript ber;
+                switch(c.verbindungstyp) {
+                    case port:
+                        ber = new clMavscript(port, c.quelldatei, c.zieldatei, c.serverAddress, c.serverPort);
+                        break;
+                    case beanshell:
+                        ber = new clMavscript(beanshell, c.quelldatei, c.zieldatei);
+                        break;
+                    case yacas:
+                    default:
+                        ber = new clMavscript(yacas, c.quelldatei, c.zieldatei);
+                }
+                ber.setVerbose(c.verbose);
+                if (!c.stdLocale) ber.setLocale(c.locale);
+                ber.setHTMLkonvertieren(c.htmlkonvertieren);
+                ber.setCharset(c.charset);
+                if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
+                allesOK = ber.run();
+            }
         }
         
         // Ende

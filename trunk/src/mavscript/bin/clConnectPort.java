@@ -167,7 +167,7 @@ public class clConnectPort extends clConnect {
             DataOutputStream outbound = new DataOutputStream(buffered);
             //DataInputStream inbound = new DataInputStream(client.getInputStream()); // uses a deprecated API
             BufferedReader inbound = new BufferedReader(new InputStreamReader(client.getInputStream()));            
-            outbound.writeBytes(inputLine+";");
+            outbound.writeBytes(inputLine+";"); // hängt Strichpunkt an. POTENTIELLES PROBLEM für Zusammenarbeit mit externen Programmen
             outbound.flush();
             String responseLine;
             while ((responseLine = inbound.readLine()) != null) { // TODO Abbruchkriterium erforderlich wenn readLine() lange nichts liefert.

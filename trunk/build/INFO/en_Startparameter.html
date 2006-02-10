@@ -94,7 +94,7 @@ The call <span style="font-family: monospace;">java -jar mavscript*.jar --help</
 
 
 
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2005<br>            Version 0.12<br><br>Usage:<br>java -jar mavscript*.jar [-vHhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system <br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Usage:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
 
 
 
@@ -391,7 +391,7 @@ Therefor the option <span style="font-family: monospace;">-z content.xml</span> 
 
 
 
-Example: <span style="font-family: monospace;">--init lib/init.yac</span><br>
+Example: <span style="font-family: monospace;">--init lib/init.ys</span><br>
 
 
 
@@ -494,14 +494,16 @@ charset may work, i.e. ISO-8889-1 (western european) instead of CP1253
 
 
 
-This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br>
+This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br><br>
 
 
 
 
 
 
-<h2>--outfile, -o</h2>
+<h2>--extract, -x</h2>If this option is set, the commands of the
+template are extracted and written to the OutputFile. No calculation is
+done. This is useful for debuging.<br>If the option --outfile is not specified, the OutputFile will be <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.ys </span>(mode --yacas), <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.bsh</span><span style="font-style: italic; font-family: monospace;"> </span>(mode --beanshell) or<span style="font-style: italic; font-family: monospace;"> </span><span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.txt</span><br><h2>--outfile, -o</h2>
 
 
 

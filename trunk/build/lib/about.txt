@@ -12,7 +12,7 @@ bsh.jar			BeanShell, the Java interpreter
 Init scripts (you may change them)
 ------------
 
-init.yac		Init script called when using the command mavscript-yacas.
+init.ys			Init script called when using the command mavscript-yacas.
 			Defines the function nf():
 			nf(1/3, 2) --> 0.33
 			nf(1/3, 4) --> 0.3333

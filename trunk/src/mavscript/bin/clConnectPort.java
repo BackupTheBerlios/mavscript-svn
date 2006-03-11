@@ -111,6 +111,7 @@ public class clConnectPort extends clConnect {
             serverPort = Integer.parseInt(args[1]);
         }
         clConnectPort verbindung = new clConnectPort(serverAddress, serverPort);
+        verbindung.setVerbose(true);
         
         String[] befehle = new String[4];
         befehle[0] = "a := 5;";
@@ -170,7 +171,9 @@ public class clConnectPort extends clConnect {
             outbound.writeBytes(inputLine+";"); // hängt Strichpunkt an. POTENTIELLES PROBLEM für Zusammenarbeit mit externen Programmen
             outbound.flush();
             String responseLine;
-            while ((responseLine = inbound.readLine()) != null) { // TODO Abbruchkriterium erforderlich wenn readLine() lange nichts liefert.
+            
+            // FIXME Blockierung des Programms durch inbound.readline() verhindern
+            while ((responseLine = inbound.readLine()) != null) {
                 if (responseLine.length()>0)
                     if (responseLine.charAt(0) == ']') break;
                 antwortliste.add(responseLine);
@@ -191,15 +194,15 @@ public class clConnectPort extends clConnect {
             
             succeed = true;
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.err.println(ex);
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.err.println(ex);
         } finally {
             if (!succeed) {
                 try {
                     client.close();
                 } catch (Exception e) {
-                    System.out.println(e);
+                    System.err.println(e);
                 }
                 client=null;
                 System.err.println(tr.tr("RequestFailed"));

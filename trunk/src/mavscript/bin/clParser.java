@@ -65,19 +65,30 @@ public class clParser {
     // Steuerzeichen
     // Vorsicht: diese Steuerzeichen können nicht einfach so geändert werden, falls sie die gleichen Zeichenabfolge
     // enthalten (wie zB $i und $io).
-    private final String stzM = "$m";     // Start der Mathe-Anweisung
-    private final String stzI = "$i";     // Ende der Anweisung: Zeige Eingabe
-    private final String stzO = "$o";     // Ende der Anweisung: Zeige Ausgabe
-    private final String stzIO = "$io";   // Ende der Anweisung: Zeige Ein- und Ausgabe
-    private final String stzN = "$n";     // Ende der Anweisung: Zeige nichts
+    private String stzM = "$m";     // Start der Mathe-Anweisung
+    private String stzI = "$i";     // Ende der Anweisung: Zeige Eingabe
+    private String stzO = "$o";     // Ende der Anweisung: Zeige Ausgabe
+    private String stzIO = "$io";   // Ende der Anweisung: Zeige Ein- und Ausgabe
+    private String stzN = "$n";     // Ende der Anweisung: Zeige nichts
     
     private final String NZ = System.getProperty("line.separator"); //"\n"; // neue Zeile
     
     /** Creates a new instance of clParser */
     public clParser(String[] quelle) {
         this.quelle = quelle;
-        parse();
-        
+        parse();        
+    }
+    
+    /** Creates a new instance of clParser.
+     @args dollarersatz: ersetzt $ mit anderem Zeichen, z.B. %. --> %m statt $m*/
+    public clParser(String[] quelle, String dollarErsatz) {
+        this.quelle = quelle;
+        stzM = dollarErsatz + "m";     // Start der Mathe-Anweisung
+        stzI = dollarErsatz + "i";     // Ende der Anweisung: Zeige Eingabe
+        stzO = dollarErsatz + "o";     // Ende der Anweisung: Zeige Ausgabe
+        stzIO = dollarErsatz + "io";   // Ende der Anweisung: Zeige Ein- und Ausgabe
+        stzN = dollarErsatz + "n";
+        parse();        
     }
     
     private void parse() {

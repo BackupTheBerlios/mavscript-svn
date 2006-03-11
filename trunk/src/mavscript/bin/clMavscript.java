@@ -65,6 +65,8 @@ public class clMavscript implements inConst {
     private String vorlaufdatei;
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
+    private boolean dollarersetzen = false;
+    private String dollarersatz = "$"; // wird nur ausgewertet wenn dollarersetzen == true
     
     String[] quelle;
     String[] vorlauf;
@@ -150,6 +152,17 @@ public class clMavscript implements inConst {
             String Fehlermeldung = tr.tr("InvalidCharset") +" "+ neuerCharsetName + '\n' + charsetName + " " + tr.tr("UsedInstead");
             System.err.println(Fehlermeldung);
         }
+    }
+    
+    /** Ein Zeichen (oder eine Zeichenfolge) angeben, welche '$' in $m/$i/etc ersetzt.*/
+    public void setDollarErsatz(String dollarersatz) {
+        if (dollarersatz.length() < 1) {
+            System.err.println("Warnung: '$' can not be replaced by " + dollarersatz);
+            return;
+        }
+        // else
+        dollarersetzen = true;
+        this.dollarersatz = dollarersatz;
     }
     
     /* Durch console.java ersetzt
@@ -351,10 +364,12 @@ public class clMavscript implements inConst {
     }
     
     private void quelldateiParsen() {
-        clParser parser = new clParser(quelle);
+        clParser parser;
+        if (dollarersetzen) parser = new clParser(quelle, dollarersatz);
+        else parser = new clParser(quelle);
         zielListe = parser.getZiel();
     }
-    
+
     private void rechnenlassen() {
         clConnect verbindung;
         switch (verbindungstyp) {

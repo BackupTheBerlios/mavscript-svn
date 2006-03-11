@@ -80,6 +80,8 @@ public class console implements inConst {
     boolean nurextrahieren = false;
     private boolean zieldateigesetzt = false;
     private boolean stdLocale = true;
+    private boolean dollarersetzen = false;
+    private String dollarersatz = "$"; // wird nur ausgewertet wenn dollarersetzen == true
     
     private Locale locale = Locale.getDefault();
     private final clTranslation tr = new clTranslation("mavscript/locales/console");
@@ -107,6 +109,7 @@ public class console implements inConst {
             "-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &gt;)\n" +
             "-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)\n" +
             "                            Beispiele: ISO-8859-1, system \n" +
+            "-D, --controlchar $-Ersatz  Setzt das Anweisungszeichen (vorgegeben: $). \n" +
             "-x, --extract               Schreibt die Anweisungen in die Zieldatei. \n" +
             "                            Es wird keine Berechnung durchgefuehrt. \n" +
             "-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)\n" +
@@ -141,6 +144,7 @@ public class console implements inConst {
             "-H, --HTML                  Accepts HTML special characters (like &gt;)\n" +
             "-C, --charset Encoding      Charset name (default: UTF-8)\n" +
             "                            examples: ISO-8859-1, system \n" +
+            "-D, --controlchar $-repl.   Sets the control character(s) (default: $). \n" +
             "-x, --extract               Writes the commands to the OutputFile. \n" +
             "                            No calculation is done. \n" +
             "-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)\n" +
@@ -173,7 +177,7 @@ public class console implements inConst {
     /////////////////////////////////////////////////////////////////////////
     
     void parseArguments() {
-        LongOpt[] longopts = new LongOpt[14];
+        LongOpt[] longopts = new LongOpt[15];
         longopts[0] = new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
         longopts[1] = new LongOpt("verbose",LongOpt.NO_ARGUMENT,null,'v');
         longopts[2] = new LongOpt("version",LongOpt.NO_ARGUMENT,null,'V');
@@ -187,10 +191,11 @@ public class console implements inConst {
         longopts[10] = new LongOpt("yacas",LongOpt.NO_ARGUMENT,null,'y');
         longopts[11] = new LongOpt("HTML",LongOpt.NO_ARGUMENT,null,'H');
         longopts[12] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
-        longopts[13] = new LongOpt("extract",LongOpt.REQUIRED_ARGUMENT,null,'x');
+        longopts[13] = new LongOpt("extract",LongOpt.NO_ARGUMENT,null,'x');
+        longopts[14] = new LongOpt("controlchar",LongOpt.REQUIRED_ARGUMENT,null,'D');
         
         
-        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:byvxHhV",longopts);
+        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:D:byvxHhV",longopts);
         g.setOpterr(false);
         int c;
         
@@ -241,6 +246,10 @@ public class console implements inConst {
                     break;
                 case 'C':
                     charset = g.getOptarg();
+                    break;
+                case 'D':
+                    dollarersatz = g.getOptarg();
+                    dollarersetzen = true;
                     break;
                 case 'x':
                     nurextrahieren = true;
@@ -356,6 +365,7 @@ public class console implements inConst {
             if (!c.stdLocale) ber.setLocale(c.locale);
             ber.setHTMLkonvertieren(c.htmlkonvertieren);
             ber.setCharset(c.charset);
+            if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
             if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
             allesOK = ber.run();            
         } 
@@ -378,6 +388,7 @@ public class console implements inConst {
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
                 ber.setCharset(c.charset);
+                if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
                 if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
                 allesOK = ber.run();
             }
@@ -398,6 +409,7 @@ public class console implements inConst {
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
                 ber.setCharset(c.charset);
+                if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
                 if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
                 allesOK = ber.run();
             }

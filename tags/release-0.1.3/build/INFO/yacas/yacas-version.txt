@@ -1,0 +1,5 @@
+yacas 1.0.61-av1
+
+Slightly modified JavaYacas 1.0.61:
+- added class YacasInterpreter.java
+- CYacas.java:96 e.printStackTrace(); removed

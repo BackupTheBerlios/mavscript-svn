@@ -1,0 +1,605 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html style="direction: ltr;" lang="en">
+<head>
+
+
+
+  
+  
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+
+  
+  
+  <title>How to install Mavscript</title>
+</head>
+
+
+<body>
+
+
+
+<h1>How to install Mavscript<br>
+
+</h1>
+
+<h2>Quick instructions</h2>
+
+
+
+<ol>
+
+
+
+  <li>
+    
+    
+    <p> 
+        Unzip the archive file into any directory, i.e. into 
+          <span style="font-family: monospace;">C:\Programme</span> (Windows) or <span style="font-family: monospace;">/usr/local/share</span> (Linux). The expression <em>path-to-mavscript</em> then stands for <span style="font-family: monospace;">C:\Programme\mavscript</span>.
+    </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p> 
+        Copy the file <span style="font-style: italic; font-family: monospace;">path-to-mavscript</span><span style="font-family: monospace;">\INFO\desktoplinks\Mavscript.windows.lnk</span> or <span style="font-style: italic; font-family: monospace;">path-to-mavscript</span><span style="font-family: monospace;">/INFO/desktoplinks/Mavscript.linux.desktop</span> on the desktop. </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p> 
+        Right click on the icon, choose the item <span style="font-style: italic;">Properties</span>. In the dialog that opens you may need to <strong>adjust the <em>path-to-mavscript</em> !</strong><strong></strong> </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p> 
+        If you haven't already, install Java (Java Runtime Environment 1.4 or above). </p>
+
+
+
+  </li>
+
+
+
+</ol>
+
+
+
+<h2><br>
+
+
+
+</h2>
+
+
+
+<h2>Windows (2000, XP) </h2>
+
+
+
+<ol>
+
+
+
+  <li>
+    
+    
+    <p>Extract the zip file <span style="font-family: monospace;">mavscript*.zip</span> into any directory, i.e. into <span style="font-family: monospace;">C:\Programme</span> (note: depending on the system language this directory might be called differently, i.e. <span style="font-family: monospace;">C:\Program Files</span>). A subdirectory <span style="font-family: monospace;">mavscript</span> will be created. T<span style="font-family: monospace;"></span>he path-to-mavscript then is <span style="font-family: monospace;">C:\Programme\mavscript</span>.
+    </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p> Java (JRE) version 1.4 or higher must be installed. To check this, open the command prompt (DOS-window) and type  <span style="font-family: monospace;">java -version</span>&nbsp; . If a messeage appears saying java could not be found, java is not installed. </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>In the directory <span style="font-family: monospace;">C:\Programme\mavscript\INFO\desktoplinks</span>
+there is a file <span style="font-family: monospace;">Mavscript.windows.lnk</span>. Drag this file - while pressing the Ctrl-key - on the desktop.<br>
+
+Select the icon on the desktop (that has just been created), press the right mouse button and open the <span style="font-style: italic;">properties</span> dialog. In one of the tabs there is a command field. There should be written <span style="font-family: monospace;">C:\Programme\mavscript\</span><span style="font-family: monospace;">mavscript-yacas</span><span style="font-family: monospace;">.bat</span> . In the field working directory:  <span style="font-family: monospace;">C:\Programme\mavscript </span>.<br>
+
+Note, you might have to adjust the path-to-mavscript (i.e . <span style="font-family: monospace;">C:\Program Files</span>\<span style="font-family: monospace;">mavscript</span>) in both fields.<span style="font-family: monospace;"></span>
+    </p>
+
+
+
+  </li>
+
+
+
+  <li>Mavscript is now installed. There are example files in the directory <span style="font-family: monospace;">C:\Programme\mavscript\</span><span style="font-family: monospace;">example</span><span style="font-family: monospace;"></span> . Drag one of it (i.e. <span style="font-family: monospace;">1-yacas</span><span style="font-family: monospace;">.txt</span>)
+on the mavscript-icon on the desktop (that has been created in point
+3). A window opens and when everything works fine on the last line
+should be written "Fertig. Mavscript wird beendet.", saying that the calculation has been completed. The output
+file <span style="font-family: monospace;">out.</span><span style="font-family: monospace;">1-yacas.txt</span><span style="font-family: monospace;"></span> has been created.<br>
+    <br>
+
+ </li>
+
+
+
+
+  <li>It is not mandatory to have installed <em>OpenOffice</em>, but it is useful to create formatted text. The OpenOffice-Writer files (suffix <span style="font-family: monospace;">.odt</span> or <span style="font-family: monospace;">.sxw)</span> can be used with Mavscript exactly the same way as text or html files. Microsoft Word
+files (suffix .doc) do not work. However if you know Word you'll get along with OpenOffice.</li>
+
+</ol>
+
+<h4>It does not work ... </h4>
+
+
+
+<ul>
+
+
+
+  <li>If mavscript doen't even start, the paht-to-mavscript might not be set correctly (see above).</li>
+
+
+
+  <li>
+    
+    
+    <p>In order to locate the error, open a DOS-window (command prompt) and type the following:<span style="font-family: monospace;"><br>
+
+
+
+cd \Programme\mavscript</span> <br>
+
+
+
+    <span style="font-family: monospace;">mavscript
+examples/1-yacas.txt</span> </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>If the input file name (or its path name) contains <span style="font-style: italic;">space characters</span>
+(blanks), then the name has to be encapsulated by "quotation marks".
+The direct program call out of the DOS-window then looks like this:<span style="font-family: monospace;"> <br>
+
+
+
+java -jar mavscript*.jar ./"template file with blanks"</span></p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>If the option --port does not work, a <span style="font-style: italic;">Firewall</span> might prevent Mavscript from connecting to the external program. If this is the case, a message in the Mavscript window
+should say that Mavscript could not establish the connection. Configure
+the firewall program, that is allows the connection (i.e. on port 9734).</p>
+
+
+
+  </li>
+
+
+
+</ul>
+
+
+
+<h2><br>
+
+
+
+</h2>
+
+
+
+<h2>LINUX <span style="font-family: monospace;">&nbsp;mavscript*.rpm</span>&nbsp;</h2>
+
+
+
+<ol>
+
+
+
+  <li>Java (JRE) version 1.4 or higher must be installed. To check this open a shell and type: <span style="font-family: monospace;">java -version</span><br>
+
+
+    <br>
+
+
+
+  </li>
+
+
+
+  <li>Open a shell and type<br>
+
+
+
+    <code>sudo rpm -Uvh&nbsp;mavscript*.rpm</code><br>
+
+
+
+    and enter the root password.<br>
+
+
+    <br>
+
+
+
+  </li>
+
+
+
+  <li>Mavscript is now installed. It can be called from any directory.<br>
+
+
+
+    <br>
+
+
+
+    
+    
+    <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+
+      <tbody>
+
+
+
+        <tr>
+
+
+
+          <td><code>mavscript ./template.txt</code></td>
+
+
+
+          <td></td>
+
+
+
+        </tr>
+
+
+
+        <tr>
+
+
+
+          <td><code>mavscript
+&nbsp;/home/&lt;user&gt;/template.txt</code></td>
+
+
+
+          <td></td>
+
+
+
+        </tr>
+
+
+
+        <tr>
+
+
+
+          <td><code>mavscript-yacas ./template.txt</code></td>
+
+
+
+          <td>Abbreviation for<br>
+
+
+
+          <code>mavscript --yacas --init
+/usr/share/mavscript/lib/init.ys ./template.txt</code></td>
+
+
+
+        </tr>
+
+
+
+        <tr>
+
+
+
+          <td><code>mavscript-beanshell
+./beanshell_template.txt</code></td>
+
+
+
+          <td>Abbreviation for<br>
+
+
+
+          <code>mavscript --beanshell --init
+/usr/share/mavscript/lib/init.bsh&nbsp;./beanshell_template.txt</code></td>
+
+
+
+        </tr>
+
+
+
+      
+      
+      </tbody>
+    
+    
+    </table>
+
+
+    <br>
+
+There are examples in the directory <code>/usr/share/doc/packages/mavscript/examples</code> . Try them out:<br>
+
+
+    <code>mavscript-yacas -o ~/out.test.txt /usr/share/doc/packages/mavscript/examples/1-yacas.txt</code>&nbsp;<br>
+
+
+    <br>
+
+Manuals and further information are located in the directory <code>/usr/share/doc/packages/mavscript/INFO</code> or use the commands<code></code><br>
+
+
+    <code>mavscript --help</code> and<code><br>
+
+
+man mavscript</code> <br>
+
+    <br>
+
+
+
+  </li>
+
+
+
+  <li>In order to create an icon for Mavscript on the KDE-desktop, drag the file <span style="font-family: monospace;">Mavscript.linux.desktop</span> from the directory&nbsp;<span style="font-family: monospace;">/usr/share/doc/packages/mavscript/INFO/desktoplinks</span> on the desktop and confirm copying.<br>
+
+
+    <br>
+Copy an example file (i.e. <span style="font-family: monospace;">2-yacas+init.txt</span>) in your home directory and drag the copied file on the
+mavscript-icon on the desktop. A
+window opens and when everything works fine on the last line should
+be written "Fertig. Mavscript wird beendet.", saying that the calculation has been completed. The output
+file <span style="font-family: monospace;">out.</span><span style="font-family: monospace;">2-yacas+init.txt</span><span style="font-family: monospace;"></span> has been created.<br>
+    <br>
+
+
+  </li>
+
+
+  <li>It is not mandatory to have installed <em>OpenOffice</em>, but it is useful to create formatted text. The OpenOffice-Writer files (suffix <span style="font-family: monospace;">.odt</span> or <span style="font-family: monospace;">.sxw)</span> can be used with Mavscript exactly the same way as text or html files.</li>
+
+
+
+</ol>
+
+
+
+<h2><br>
+
+
+
+LINUX&nbsp;&nbsp; <span style="font-family: monospace;">mavscript*.zip</span></h2>
+
+
+
+
+
+<ol>
+
+
+
+  <li>
+    
+    
+    <p>Java (JRE) version 1.4 or higher must be installed. To check this open a shell and type: <span style="font-family: monospace;">java -version</span><span style="font-family: monospace;"></span><br>
+Ambitious users may run Mavscript with GNU Classpath (&gt;= 0.14) instead. Tested with JamVM.</p>
+
+
+  </li>
+
+
+  <li>
+    
+    
+    <p>Extract the zip file <span style="font-family: monospace;">mavscript*.zip</span> into <strong>any</strong> directory, i.e. into&nbsp; <span style="font-family: monospace;"></span><span style="font-family: monospace;">/usr/local/share</span>.&nbsp; T<span style="font-family: monospace;"></span>he path-to-mavscript then is <span style="font-family: monospace;">/usr/local/share/mavscript</span>.
+You'll need to be root to write to this directory. Step by step:<br>
+
+
+Open a shell (konsole) and type<br>
+
+
+    <span style="font-family: monospace;">cd /usr/local/share</span> <br>
+
+
+    <span style="font-family: monospace;">sudo unzip
+/home/USER/mavscript*.zip -d <span style="font-weight: bold;">.</span></span> &nbsp; (Type the point following -d !) If necessary replace the * by the version number.<br>
+
+
+Enter the root password. </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>Try to run an example from the Shell<br>
+
+
+    <span style="font-family: monospace;">cd /usr/local/share/mavscript<br>
+
+
+./mavscript</span><code>-yacas -o ~/out.test.txt</code><span style="font-family: monospace;"> examples/1-yacas.txt<br>
+
+
+    </span> </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>KDE: In the directory <span style="font-family: monospace;">/usr/local/share/mavscript/INFO/desktoplinks</span>
+is a file called <span style="font-family: monospace;">Mavscript.linux.desktop</span>
+. Drag this file on the desktop and confirm copying.<br>
+Select the icon on the desktop (that has just been created), press the right mouse button and open the <span style="font-style: italic;">properties</span> dialog. In the tab "programs" in the command field should be written: <span style="font-family: monospace;">konsole
+--noclose --notabbar --nomenubar -T "mavscript" --workdir
+/usr/local/share/mavscript/ -e
+/usr/local/share/mavscript/mavscript-yacas</span> </p>
+
+
+
+  </li>
+
+
+
+  <li>
+
+
+KDE: Mavscript is now installed.
+
+There are examples in the directory <span style="font-family: monospace;">/usr/local/share/mavscript/examples</span>&nbsp;. Copy an example file (i.e. <span style="font-family: monospace;">2-yacas+init.txt</span>) in your home directory and drag the copied file on the
+mavscript-icon on the desktop. A
+window opens and when everything works fine on the last line should
+be written "Fertig. Mavscript wird beendet.", saying that the calculation has been completed. The output
+file <span style="font-family: monospace;">out.</span><span style="font-family: monospace;">2-yacas+init.txt</span><span style="font-family: monospace;"></span> has been created.<br>
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>It is not mandatory to have installed <em>OpenOffice</em>, but it is useful to create formatted text. The OpenOffice-Writer files (suffix <span style="font-family: monospace;">.odt</span> or <span style="font-family: monospace;">.sxw)</span> can be used with Mavscript exactly the same way as text or html files.</p>
+
+
+
+  </li>
+
+
+
+
+</ol>
+
+
+
+<p> </p>
+
+
+
+<h4>It does not work ...</h4>
+
+
+
+<ul>
+
+
+  <li>
+    
+    
+    <p>In order to locate the error open a shell an type:<br>
+
+
+    <span style="font-family: monospace;">cd /usr/local/share/mavscript</span><span style="font-family: monospace;"></span><br>
+    <span style="font-family: monospace;">
+
+./mavscript</span><code> -o ~/out.test.txt</code><span style="font-family: monospace;"> examples/1-yacas.txt</span><br>
+    <span style="font-family: monospace;"></span> </p>
+
+
+
+  </li>
+
+
+
+  <li>
+    
+    
+    <p>If the option --port does not work, the <span style="font-style: italic;">Firewall</span> might prevent Mavscript from connecting to the external program. If this is the case, a message in the Mavscript window
+should say that Mavscript could not establish the connection. Configure
+the firewall, that is allows the connection (i.e. on port 9734).<br>
+    </p>
+  </li>
+
+</ul>
+
+<h2>Mac OS X, Solaris and other operation systems</h2>
+
+<p>Mavscript runs on operation systems that have Java installed.<br>
+If Java is not available for your platform,&nbsp;GNU Classpath (&gt;= 0.14) may be used instead. Tested with JamVM.</p>
+
+<p>&nbsp;&nbsp; 1. Extract the zip file <code>mavscript*.zip</code> into any directory.<br>
+
+<br>
+
+&nbsp;&nbsp; 2. Open a shell and try it out<code> &nbsp;&nbsp;<br>
+
+&nbsp; &nbsp; cd <span style="font-style: italic;">path-to-mavscript</span></code> <br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <code>./mavscript-yacas examples/1-yacas.txt</code>
+  
+  </p>
+
+
+<br>
+
+
+
+</body>
+</html>

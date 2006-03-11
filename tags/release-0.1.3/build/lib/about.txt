@@ -1,0 +1,35 @@
+Program libraries
+-----------------
+
+gnu-java-getopt.jar	required by Mavscript
+
+yacas.jar		The computer-algebra-system Yacas
+scripts.zip		Required by Yacas
+
+bsh.jar			BeanShell, the Java interpreter
+
+
+Init scripts (you may change them)
+------------
+
+init.ys			Init script called when using the command mavscript-yacas.
+			Defines the function nf():
+			nf(1/3, 2) --> 0.33
+			nf(1/3, 4) --> 0.3333
+
+
+init.bsh		Init script called when using the command mavscript-beanshell
+			Defines the functions max(), min() and nf()
+			max({1,4,8,3.3}) --> 8
+			min({1,4,8,3.3}) --> 1
+			nf(1./3., 2) --> 0.33
+			nf(1./3., 4) --> 0.3333
+
+
+Optional
+--------
+yacasconsole.html	Java applet that is conventient for testing Yacas commands.
+			Open it with your web browser.
+yacasconsole.html.hints	Required by the applet to show hints for the available
+			Yacas commands.
+wizard.zip		Required by the applet to run the introduction wizard.

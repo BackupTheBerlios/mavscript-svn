@@ -1,0 +1,12 @@
+Syntax Hightlighting
+--------------------
+
+The editors listened it this folder support customized syntax highlighting.
+Definition files for Mavscript are included in the subdirectories.
+
+
+Syntax Hervorhebung
+-------------------
+
+Die in diesem Verzeichnis aufgeführten Texteditoren unterstützen benutzerdefinierte Syntax-Hervorhebung.
+Für Mavscript angepasste Syntaxdefinitions-Dateien sind in den Unterverzeichnissen enthalten.

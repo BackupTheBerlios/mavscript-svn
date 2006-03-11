@@ -1,4 +1,4 @@
-Damit dieses Beispiel funktioniert, muss Mavscript mit der Opition --init lib/init.yac aufgerufen werden.
+Damit dieses Beispiel funktioniert, muss Mavscript mit der Opition --init lib/init.ys aufgerufen werden.
 
 Mavscript - Testdatei
 ----------------------

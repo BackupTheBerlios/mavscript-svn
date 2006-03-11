@@ -94,7 +94,7 @@ The call <span style="font-family: monospace;">java -jar mavscript*.jar --help</
 
 
 
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Usage:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Usage:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-D, --controlchar $-repl.   Sets the control character(s) (default: $).<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
 
 
 
@@ -353,7 +353,7 @@ Example: <span style="font-family: monospace;">--name_in_zip content.xml</span><
 
 
 Mavscript can process input files that are packed (and compressed) in a
-zip-archive. The archive may contain more than one file, therefor the
+zip-archive. The archive may contain more than one file, therefore the
 name of the input file within the archive must be specified. Mavscript
 then creates a new zip-archive that contains the processed input file
 and all the other files that are packed in the input archiv.<br>
@@ -367,7 +367,7 @@ An important example are OpenOffice-Writer files (suffix
 (in the file content.xml) and other files: embedded pictures, format
 information, etc. Because of the fact that this is a convinient format
 to use together with mavscript, mavscript recognizes it automatically.
-Therefor the option <span style="font-family: monospace;">-z content.xml</span> can be omitted.<br>
+Therefore the option <span style="font-family: monospace;">-z content.xml</span> can be omitted.<br>
 
 
 
@@ -487,14 +487,31 @@ If not specified:<span style="font-family: monospace;"></span><span style="font-
 
 The standard charset is Unicode UTF-8. If some characters like greek
 letters are displayed wrongly, the charset may be changed. Mavscript
-uses the same charset for reading and writing, therefor even a wrong
+uses the same charset for reading and writing, therefore even a wrong
 charset may work, i.e. ISO-8889-1 (western european) instead of CP1253
 (greek). Setting the parameter <span style="font-family: monospace;">--charset system</span> the system's default charset will be used.<br>
 
 
 
 
-This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br><br>
+This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br><br><h2>--controlchar, -D</h2>Example:<span style="font-family: monospace;"> --controlchar %</span><span style="font-family: monospace;"></span><br>
+
+
+
+
+
+If not specified:<span style="font-family: monospace;"></span><span style="font-family: monospace;"></span><span style="font-family: monospace;"> --controlchar $</span><span style="font-family: monospace;"><br>
+
+
+
+
+
+
+
+</span><br>Mavscript finds commands for the computer-algebra-system, if
+they are placed between the control characters $m and&nbsp;$i, $io or
+$n. Instead of the $-sign, an other sign (or a character string) may be
+used. The parameter <span style="font-family: monospace;">-D %</span> tells Mavscript to expect the control characters %m, %i, %io und %n. <br><br>
 
 
 

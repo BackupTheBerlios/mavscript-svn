@@ -95,7 +95,7 @@ Der Aufruf <span style="font-family: monospace;">java -jar mavscript*.jar --help
 
 
 
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Willkommen zu Mavscript<br>            Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Gebrauch:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i Vorlaufdatei]<br>                         [-o Zieldatei] Vorlagedatei<br><br>-v, --verbose               Ausfuehrliche Ausgaben<br>-l, --language              Sprache (z.B. de)<br>-h, --help                  Ausgabe dieser Hilfe<br>-V, --version               Ausgabe von Versionsinformation<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (z.B.: 9734)<br>-s, --server Server         Name des Servers (vorgegeben: 127.0.0.1)<br>-z, --name_in_zip Name      Dateiname in ZIP<br>-i  --init Datei            Liest zuerst die Anweisungen dieser Datei ein.<br>-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &amp;gt;)<br>-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)<br>                            Beispiele: ISO-8859-1, system<br>-x, --extract               Schreibt die Anweisungen in die Zieldatei.<br>                            Es wird keine Berechnung durchgefuehrt.<br>-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)<br><br>OpenOffice-Writer Dateien mit der Endung .sxw und .odt werden automatisch<br>erkannt. Die Option "-H -z content.xml" kann daher weggelassen werden.<br>Mavscript verwendet standardmaessig Yacas. Alternativ kann Beanshell verwendet<br>werden.<br>Mavscript kann auch ueber einen Port zu einem externen Programm Verbindung aufnehmen.<br><br>Beispiele:<br>java -jar mavscript*.jar ./vorlage.txt    Schreibt die Datei out.vorlage.txt<br>java -jar mavscript*.jar ./vorlage.odt    Schreibt die Datei out.vorlage.odt<br>java -jar mavscript*.jar --init ./StdFunktionen.txt ./vorlage.odt<br>java -jar mavscript*.jar -o ergebnis.sxw ./vorlage.sxw</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Willkommen zu Mavscript<br>            Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Gebrauch:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i Vorlaufdatei]<br>                         [-o Zieldatei] Vorlagedatei<br><br>-v, --verbose               Ausfuehrliche Ausgaben<br>-l, --language              Sprache (z.B. de)<br>-h, --help                  Ausgabe dieser Hilfe<br>-V, --version               Ausgabe von Versionsinformation<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (z.B.: 9734)<br>-s, --server Server         Name des Servers (vorgegeben: 127.0.0.1)<br>-z, --name_in_zip Name      Dateiname in ZIP<br>-i  --init Datei            Liest zuerst die Anweisungen dieser Datei ein.<br>-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &amp;gt;)<br>-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)<br>                            Beispiele: ISO-8859-1, system<br>-D, --controlchar $-Ersatz  Setzt das Anweisungszeichen (vorgegeben: $).<br>-x, --extract               Schreibt die Anweisungen in die Zieldatei.<br>                            Es wird keine Berechnung durchgefuehrt.<br>-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)<br><br>OpenOffice-Writer Dateien mit der Endung .sxw und .odt werden automatisch<br>erkannt. Die Option "-H -z content.xml" kann daher weggelassen werden.<br>Mavscript verwendet standardmaessig Yacas. Alternativ kann Beanshell verwendet<br>werden.<br>Mavscript kann auch ueber einen Port zu einem externen Programm Verbindung aufnehmen.<br><br>Beispiele:<br>java -jar mavscript*.jar ./vorlage.txt    Schreibt die Datei out.vorlage.txt<br>java -jar mavscript*.jar ./vorlage.odt    Schreibt die Datei out.vorlage.odt<br>java -jar mavscript*.jar --init ./StdFunktionen.txt ./vorlage.odt<br>java -jar mavscript*.jar -o ergebnis.sxw ./vorlage.sxw</pre>
 
 
 
@@ -525,7 +525,34 @@ Parameter <span style="font-family: monospace;">--charset system</span> wird err
 
 
 
-Diese Einstellung hat keinen direkten Einfluss auf die Kommunikation zwischen Mavscript und dem Computeralgebrasystem.<br><br>
+Diese Einstellung hat keinen direkten Einfluss auf die Kommunikation zwischen Mavscript und dem Computeralgebrasystem.<br><br><h2>--controlchar, -D</h2>
+
+
+
+
+
+
+
+Beispiel:<span style="font-family: monospace;"> --controlchar %</span><span style="font-family: monospace;"></span><br>
+
+
+
+
+
+
+
+Keine Angabe ist gleichbedeutend mit:<span style="font-family: monospace;"> --controlchar $</span><span style="font-family: monospace;"><br>
+
+
+
+
+
+
+
+</span><br>Mavscript erkennt Anweisungen für das Computeralgebrasystem,
+wenn sie zwischen den Steuerzeichen $m und&nbsp;$i, $io oder $n liegen.
+An Stelle des $-Zeichens kann ein anderes Zeichen (oder eine
+Zeichenfolge) verwendet werden. <span style="font-family: monospace;">-D %</span> bewirkt, dass Mavscript die Steuerzeichen %m, %i, %io und %n erwartet. <br>
 
 
 

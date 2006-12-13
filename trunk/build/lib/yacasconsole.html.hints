@@ -190,7 +190,7 @@
 ~43837767 ~GetError~GetError("str")~custom errors handlers~
 ~438398724636 ~GetExtraInfo~GetExtraInfo(expr)~annotate objects with additional information~
 ~438773247466 ~GetPrecision~GetPrecision()~get the current precision~
-~438773889732337 ~GetPrettyReader~GetPrettyReader()~set/get routine to use as pretty-printer~
+~438773889732337 ~GetPrettyReader~GetPrettyReader()~set/get routine to use as pretty-reader~
 ~4387738897746837 ~GetPrettyPrinter~GetPrettyPrinter()~set/get routine to use as pretty-printer~
 ~4388463 ~GetTime~GetTime(expr)~measure the time taken by an evaluation~
 ~43892227743 ~GetYacasPID~GetYacasPID()~obtain Yacas process number~
@@ -324,6 +324,7 @@
 ~562662463 ~LnCombine~LnCombine(expr)~combine logarithmic expressions using standard logarithm rules~
 ~56397263 ~LnExpand~LnExpand(expr)~expand a logarithmic expression using standard logarithm rules~
 ~56442837439 ~LogicVerify~LogicVerify(question,answer)~verifying equivalence of two expressions~
+~564428378 ~LogicTest~LogicTest(variables,expr1,expr2)~verifying equivalence of two expressions~
 ~566963245873 ~KnownFailure~KnownFailure(test)~Mark a test as a known failure~
 ~56 ~Ln~Ln(x)~natural logarithm~
 ~62276 ~Macro~Macro() func(arglist, ...)~~
@@ -402,9 +403,9 @@
 ~65 ~Nl~Nl()~the newline character~
 ~6632487348476775478 ~MoebiusDivisorsList~MoebiusDivisorsList(n)~the list of divisors and Moebius values~
 ~6632487 ~Moebius~Moebius(n)~the Moebius function~
-~66333 ~OMDef~OMDef(yacasSymbol, cd, name)~define translations from Yacas to OpenMath and vice-versa.~
-~66333 ~OMDef~OMDef(yacasSymbol, cd, name, yacasToOM)~~
-~66333 ~OMDef~OMDef(yacasSymbol, cd, name, yacasToOM, omToYacas)~~
+~66333 ~OMDef~OMDef(yacasForm, cd, name)~define translations from Yacas to OpenMath and vice-versa.~
+~66333 ~OMDef~OMDef(yacasForm, cd, name, yacasToOM)~~
+~66333 ~OMDef~OMDef(yacasForm, cd, name, yacasToOM, omToYacas)~~
 ~663676 ~OMForm~OMForm(expression)~convert expressions to and from OpenMath~
 ~663 ~Mod~Mod(x,y)~division with remainder~
 ~66642 ~Monic~Monic(poly)~monic part of a polynomial~
@@ -501,7 +502,7 @@
 ~7568337 ~Plot3DS~Plot3DS(list, ...)~~
 ~764273283 ~RngCreate~RngCreate(init)~~
 ~764273283 ~RngCreate~RngCreate()~manipulate random number generators as objects~
-~764273283 ~RngCreate~RngCreate(option=value,...)~~
+~764273283 ~RngCreate~RngCreate(option==value,...)~~
 ~7647333 ~RngSeed~RngSeed(r, init)~manipulate random number generators as objects~
 ~764 ~Rng~Rng(r)~manipulate random number generators as objects~
 ~76583628749 ~SolveMatrix~SolveMatrix(M,v)~solve a linear system~
@@ -522,7 +523,7 @@
 ~773349 ~Prefix~Prefix("op", precedence)~~
 ~7738893676 ~PrettyForm~PrettyForm(expr)~print an expression nicely with ASCII art~
 ~773889732337 ~PrettyReader~PrettyReader()~~
-~773889732337 ~PrettyReader~PrettyReader(reader)~set/get routine to use as pretty-printer~
+~773889732337 ~PrettyReader~PrettyReader(reader)~set/get routine to use as pretty-reader~
 ~7738897746837 ~PrettyPrinter~PrettyPrinter()~~
 ~7738897746837 ~PrettyPrinter~PrettyPrinter(printer)~set/get routine to use as pretty-printer~
 ~7746484837278 ~PrimitivePart~PrimitivePart(expr)~primitive part of a univariate polynomial~

@@ -1,7 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
+<html>
+<head>
 
 
+
+  
   
   
   <meta content="text/html; charset=UTF-8" http-equiv="content-type">
@@ -10,31 +13,12 @@
 
 
 
+
   
 
   
 
     
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <title>Mavscript start parameters</title><meta content="">
-
-
-
-
-
-
-
     
   
   
@@ -42,14 +26,42 @@
   
   
   
-  <style></style></head>
+  
+  
+  
+  
+  
+  
+  <title>Mavscript start parameters</title>
+  <meta content="">
+
+
+
+
+
+
+
+
+    
+  
+  
+  
+  
+  
+  
+  
+  <style></style>
+</head>
+
 <body>
 
 
 
 
 
+
 <h1>Mavscript start parameters<br>
+
 
 
 
@@ -63,7 +75,9 @@
 
 
 
+
 <br>
+
 
 
 
@@ -78,13 +92,6 @@ The call <span style="font-family: monospace;">java -jar mavscript*.jar --help</
 
 
 
-<br>
-
-
-
-
-
-
 
 <br>
 
@@ -94,7 +101,18 @@ The call <span style="font-family: monospace;">java -jar mavscript*.jar --help</
 
 
 
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2006<br>            Version 0.13<br><br>Usage:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-D, --controlchar $-repl.   Sets the control character(s) (default: $).<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
+
+<br>
+
+
+
+
+
+
+
+
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Mavscript<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright (c) A. Vontobel, 2004-2007<br>            Version 0.14<br><br>Usage:<br>java -jar mavscript*.jar [-vHxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Usage information; this help screen<br>-V, --version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port (i.e. 9734)<br>-s, --server Server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File name within ZIP<br>-i&nbsp; --init InitFile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-A, --ascii                 Kodiert Unicode-Zeichen in Ascii-Zeichenfolge.<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-D, --controlchar $-repl.   Sets the control character(s) (default: $).<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt&nbsp;&nbsp;&nbsp; Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt&nbsp;&nbsp;&nbsp; Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt<br>java -jar mavscript*.jar -o result.sxw ./template.sxw</pre>
+
 
 
 
@@ -103,6 +121,7 @@ The call <span style="font-family: monospace;">java -jar mavscript*.jar --help</
 
 
 <br>
+
 
 
 
@@ -118,7 +137,9 @@ Instead of typing <span style="font-family: monospace;">java -jar mavscript*.jar
 
 
 
+
 <br>
+
 
 
 
@@ -133,7 +154,9 @@ Below the parameters are explained in detail.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -147,7 +170,9 @@ Below the parameters are explained in detail.<br>
 
 
 
+
 </h2>
+
 
 
 
@@ -167,7 +192,10 @@ expected.<br>
 
 
 
-<br><h2>-- language, -l</h2>
+
+<br>
+<h2>-- language, -l</h2>
+
 
 
 
@@ -181,7 +209,9 @@ Example: <span style="font-family: monospace;">--language en</span><br style="fo
 
 
 
+
 <h2>--yacas, -y</h2>
+
 
 
 
@@ -201,7 +231,9 @@ This is the default behaviour.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -213,10 +245,13 @@ This is the default behaviour.<br>
 
 
 
+
 If this option is called, Mavscript will use the
 built-in java interpreter <em>BeanShell.</em><br>
 
+
 <br>
+
 
 
 
@@ -230,7 +265,9 @@ built-in java interpreter <em>BeanShell.</em><br>
 
 
 
+
 </h2>
+
 
 
 
@@ -245,15 +282,19 @@ Example: <span style="font-family: monospace;">--port 9734</span><span style="fo
 
 
 
+
 </span>
 <br>
+
 
 If this option is called, Mavscript will use an <em>external application</em> to evaluate the mathematical expression. The connection between mavscript and the computer-algebra-system&nbsp;is done using a <span style="font-style: italic;">port</span>,
 similar to a connection to the internet. Mavscript sends the commands as text and receives the answers as text.<br>
 
+
 Both programs must use the
 same port number. The external application (on localhost or on a remote
 computer) must listen to the port when you run Mavscript.<br>
+
 
 Example: Start the C-Version of Yacas using the command <span style="font-family: monospace;">yacas --server 9734</span>&nbsp;, then run&nbsp;<code>mavscript --port 9734 ./vorlage.txt</code><br>
 
@@ -263,7 +304,9 @@ Example: Start the C-Version of Yacas using the command <span style="font-family
 
 
 
+
 <br>
+
 
 
 
@@ -277,7 +320,9 @@ Example: Start the C-Version of Yacas using the command <span style="font-family
 
 
 
+
 </h2>
+
 
 
 
@@ -290,6 +335,7 @@ Example:<span style="font-family: monospace;"> --server localhost<br>
 
 
 
+
 </span>If not specified: <span style="font-family: monospace;">--server 127.0.0.1</span><br>
 
 
@@ -298,7 +344,9 @@ Example:<span style="font-family: monospace;"> --server localhost<br>
 
 
 
+
 <br>
+
 
 
 
@@ -316,7 +364,9 @@ address.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -330,7 +380,9 @@ address.<br>
 
 
 
+
 </h2>
+
 
 
 
@@ -346,7 +398,9 @@ Example: <span style="font-family: monospace;">--name_in_zip content.xml</span><
 
 
 
+
 <br>
+
 
 
 
@@ -357,6 +411,7 @@ zip-archive. The archive may contain more than one file, therefore the
 name of the input file within the archive must be specified. Mavscript
 then creates a new zip-archive that contains the processed input file
 and all the other files that are packed in the input archiv.<br>
+
 
 
 
@@ -375,7 +430,9 @@ Therefore the option <span style="font-family: monospace;">-z content.xml</span>
 
 
 
+
 <br>
+
 
 
 
@@ -391,6 +448,7 @@ Therefore the option <span style="font-family: monospace;">-z content.xml</span>
 
 
 
+
 Example: <span style="font-family: monospace;">--init lib/init.ys</span><br>
 
 
@@ -399,7 +457,9 @@ Example: <span style="font-family: monospace;">--init lib/init.ys</span><br>
 
 
 
+
 <br>
+
 
 
 
@@ -410,17 +470,22 @@ functions can be saved i a separate InitFile and mavscipt then can be
 called using the option&nbsp; <span style="font-family: monospace;">--init <span style="font-style: italic;">InitFile</span></span><span style="font-style: italic;"></span>
 . <br>
 
+
 The commands of the InitFile get executed before the template is processed. The
 InitFile remains unchanged.<br>
 
+
 <br>
 
+
 If Mavscript runs in --yacas (default) or --beanshell mode, then the
-InitFile is loaded by&nbsp;Yacass / BeanShell itself. The syntax
+InitFile is loaded by&nbsp;Yacas / BeanShell itself. The syntax
 therefore is the one of the interpreter. Mavscript control characters
 ($m, $i, etc.) must not be used.<br>
 
+
 <br>
+
 
 If Mavscript runs in --port mode, it sends the commands contained in this InitFile to the
 computer-algebra-system. In the InitFile each line is a command. Mavscript control characters
@@ -431,7 +496,9 @@ Empty lines are allowed.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -441,11 +508,23 @@ Empty lines are allowed.<br>
 
 
 <h2>--HTML, -H</h2>
+
 This option tells Mavscript to convert some HTML special characters
 (like &amp;gt; &amp;lt;&nbsp;&amp;quot; &amp;amp;) in their real
 equivalent (&gt; &lt; " &amp;) before sending the command to the
 computer-algebra-system. The option is selected automatically for
 template files with the suffix .odt , .sxw and .html .<br>
+<br>
+<h2>--ascii, -A</h2>
+This option allows the use of Unicode chars (i.e. greek letters) inside
+commands, even if the computer-algebra-system (like Yacas) limits input
+to Ascii chars. It is not needed if the engine supports unicode, as
+BeanShell does.<br>
+It tells Mavscript to convert Non-Ascii chars inside commands to a
+hexadecimal format (i.e. ω to escu03c9) before beeing sent to the
+Computer-Algebra-System. The answer will be converted back when
+inserted in the text.<br>
+
 
 
 
@@ -454,6 +533,7 @@ template files with the suffix .odt , .sxw and .html .<br>
 
 
 <br>
+
 
 
 
@@ -467,7 +547,9 @@ template files with the suffix .odt , .sxw and .html .<br>
 
 
 
+
 Example:<span style="font-family: monospace;"> --charset ISO-8859-1</span><br>
+
 
 
 
@@ -479,7 +561,9 @@ If not specified:<span style="font-family: monospace;"></span><span style="font-
 
 
 
+
 </span><br>
+
 
 
 
@@ -494,7 +578,12 @@ charset may work, i.e. ISO-8889-1 (western european) instead of CP1253
 
 
 
-This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br><br><h2>--controlchar, -D</h2>Example:<span style="font-family: monospace;"> --controlchar %</span><span style="font-family: monospace;"></span><br>
+
+This setting has no direct influence on the communication between mavscript and the computer-algebra-system.<br>
+<br>
+<h2>--controlchar, -D</h2>
+Example:<span style="font-family: monospace;"> --controlchar %</span><span style="font-family: monospace;"></span><br>
+
 
 
 
@@ -508,19 +597,27 @@ If not specified:<span style="font-family: monospace;"></span><span style="font-
 
 
 
-</span><br>Mavscript finds commands for the computer-algebra-system, if
+
+</span><br>
+Mavscript finds commands for the computer-algebra-system, if
 they are placed between the control characters $m and&nbsp;$i, $io or
 $n. Instead of the $-sign, an other sign (or a character string) may be
-used. The parameter <span style="font-family: monospace;">-D %</span> tells Mavscript to expect the control characters %m, %i, %io, %o and %n. <br><br>
+used. The parameter <span style="font-family: monospace;">-D %</span> tells Mavscript to expect the control characters %m, %i, %io, %o and %n. <br>
+<br>
 
 
 
 
 
 
-<h2>--extract, -x</h2>If this option is set, the commands of the
+
+<h2>--extract, -x</h2>
+If this option is set, the commands of the
 template are extracted and written to the OutputFile. No calculation is
-done. This is useful for debuging.<br>If the option --outfile is not specified, the OutputFile will be <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.ys </span>(mode --yacas), <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.bsh</span><span style="font-style: italic; font-family: monospace;"> </span>(mode --beanshell) or<span style="font-style: italic; font-family: monospace;"> </span><span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.txt</span><br><h2>--outfile, -o</h2>
+done. This is useful for debuging.<br>
+If the option --outfile is not specified, the OutputFile will be <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.ys </span>(mode --yacas), <span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.bsh</span><span style="font-style: italic; font-family: monospace;"> </span>(mode --beanshell) or<span style="font-style: italic; font-family: monospace;"> </span><span style="font-family: monospace;">out.</span><span style="font-style: italic; font-family: monospace;">TemplateFileName.txt</span><br>
+<h2>--outfile, -o</h2>
+
 
 
 
@@ -528,6 +625,7 @@ done. This is useful for debuging.<br>If the option --outfile is not specified, 
 
 
 Example: <span style="font-family: monospace;">--outfile result.sxw</span><br>
+
 
 
 
@@ -541,4 +639,6 @@ If not specified:<span style="font-family: monospace;"></span><span style="font-
 
 
 
-</body></html>
+
+</body>
+</html>

@@ -93,7 +93,7 @@ public class console implements inConst {
     private final static String VERSION = "0.14";
     
     private final static String USAGE_de = "Gebrauch:\n" +
-            "java -jar mavscript*.jar [-vHxhV] [-l Sprache] \n" +
+            "java -jar mavscript*.jar [-vHAxhV] [-l Sprache] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i Vorlaufdatei] \n" +
             "                         [-o Zieldatei] Vorlagedatei \n\n" +
@@ -116,20 +116,20 @@ public class console implements inConst {
             "                            Es wird keine Berechnung durchgefuehrt. \n" +
             "-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)\n" +
             "\n" +
-            "OpenOffice-Writer Dateien mit der Endung .sxw und .odt werden automatisch\n" +
+            "OpenOffice-Writer Dateien mit der Endung .odt und .sxw werden automatisch\n" +
             "erkannt. Die Option \"-H -z content.xml\" kann daher weggelassen werden.\n"+
             "Mavscript verwendet standardmaessig Yacas. Alternativ kann Beanshell verwendet\n"+
-            "werden. \n" +
-            "Mavscript kann auch ueber einen Port zu einem externen Programm Verbindung aufnehmen.\n"+
+            "werden. Ausserdem kann Mavscript ueber einen Port zu einem externen Programm\n" +
+            "Verbindung aufnehmen.\n"+
             "\n" +
             "Beispiele:\n" +
             "java -jar mavscript*.jar ./vorlage.txt    Schreibt die Datei out.vorlage.txt\n" +
             "java -jar mavscript*.jar ./vorlage.odt    Schreibt die Datei out.vorlage.odt\n" +
-            "java -jar mavscript*.jar --init ./StdFunktionen.txt ./vorlage.odt\n" +
-            "java -jar mavscript*.jar -o ergebnis.sxw ./vorlage.sxw";
+            "java -jar mavscript*.jar --init ./StdFunktionen.ys ./vorlage.odt\n" +
+            "java -jar mavscript*.jar -o ergebnis.odt ./vorlage.odt";
     
     private final static String USAGE_en = "Usage:\n" +
-            "java -jar mavscript*.jar [-vHxhV] [-l Language] \n" +
+            "java -jar mavscript*.jar [-vHAxhV] [-l Language] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i InitFile] \n" +
             "                         [-o OutputFile] TemplateFile \n\n" +
@@ -161,20 +161,24 @@ public class console implements inConst {
             "Examples:\n" +
             "java -jar mavscript*.jar ./template.txt    Writes the file out.template.txt\n" +
             "java -jar mavscript*.jar ./template.odt    Writes the file out.template.odt\n" +
-            "java -jar mavscript*.jar --init ./StdFunctions.txt ./template.odt\n" +
-            "java -jar mavscript*.jar -o result.sxw ./template.sxw";
+            "java -jar mavscript*.jar --init ./StdFunctions.ys ./template.odt\n" +
+            "java -jar mavscript*.jar -o result.odt ./template.odt";
     
     /** Creates a new instance of console */
     public console(String[] args) {
         iArgs = args;
     }
     
-    public void usage(Locale locale) {
+    /** Zeigt die Hilfe an und beendet anschliessend das Programm.
+     @param locale Sprache. Wenn nicht deutsch, wird die Hilfe auf Englisch angezeigt.
+     @param exitStatus 0 wenn ordentlich beendet, sonst > 0
+     */
+    public void usage(Locale locale, int exitStatus) {
         if (locale.getLanguage().equals(new Locale("de").getLanguage())) {
             System.out.println(USAGE_de);
         }
         else System.out.println(USAGE_en);
-        System.exit(1);
+        System.exit(exitStatus);
     }
     
     /////////////////////////////////////////////////////////////////////////
@@ -214,18 +218,19 @@ public class console implements inConst {
                     tr.setLocale(locale);
                     break;
                 case 'h':
-                    usage(locale);
+                    usage(locale, 0);
                     break;
                 case 'V':
-                    System.out.println(PGM + " " + tr.tr("Version") + " " + VERSION + "\n");
-                    break;
+                    // Version bereits geschrieben (in main)
+                    System.exit(0);
+                    break; // diese Zeile wird nie erreicht.
                 case 'p':
                     try {
                         serverPort = Integer.parseInt(g.getOptarg());
                         verbindungstyp = port;
                     } catch (NumberFormatException e) {
                         System.err.println(tr.tr("Port_not_an_Integer"));
-                        usage(locale);
+                        usage(locale, 1);
                     }
                     break;
                 case 's':
@@ -267,20 +272,20 @@ public class console implements inConst {
                     break;
                 case ':':
                     System.err.println(tr.tr("MissingArgument") + " " + (char) g.getOptopt());
-                    usage(locale);
+                    usage(locale, 1);
                     break;
                 case '?':
                     System.err.println(tr.tr("OptionNotValid") + " " + (char) g.getOptopt());
-                    usage(locale);
+                    usage(locale, 1);
                     break;
                 default:
-                    usage(locale);
+                    usage(locale, 1);
             }
         }
         String[] iDateien = new String[iArgs.length - g.getOptind()];
         for (int i=g.getOptind();i<iArgs.length;++i) iDateien[i-g.getOptind()] = iArgs[i];
         
-        if (iDateien.length < 1) usage(locale);
+        if (iDateien.length < 1) usage(locale, 1);
         quelldatei = iDateien[0];
         if (iDateien.length > 1) {
             System.out.println(tr.tr("MaxOneFile"));
@@ -316,7 +321,7 @@ public class console implements inConst {
         System.out.println("");
         
         boolean allesOK = false;
-        c.parseArguments();
+        c.parseArguments(); // Beendet das Prog, falls z.B. -h oder -V aufgerufen wird.
         if (c.ausZIP == false) {
             if (c.quelldatei.endsWith(".odt")) {
                 System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isODT"));

@@ -17,7 +17,7 @@ import mavscript.bin.clTranslation;
 import mavscript.bin.clMavscriptExtractor;
 
 
-/* Copyright (c) 2004 - 2006 A.Vontobel  <qwert2003@users.berlios.de>,
+/* Copyright (c) 2004 - 2007 A.Vontobel  <qwert2003@users.berlios.de>,
  *                                       <qwert2003@users.sourceforge.net>
  *
  *
@@ -77,6 +77,7 @@ public class console implements inConst {
     boolean ausZIP = false;
     boolean mitvorlauf = false;
     boolean htmlkonvertieren = false;
+    boolean utf2asciikonvertieren = false;
     boolean nurextrahieren = false;
     private boolean zieldateigesetzt = false;
     private boolean stdLocale = true;
@@ -89,7 +90,7 @@ public class console implements inConst {
     private String[] iArgs;
     
     private final static String PGM     = "Mavscript";
-    private final static String VERSION = "0.13";
+    private final static String VERSION = "0.14";
     
     private final static String USAGE_de = "Gebrauch:\n" +
             "java -jar mavscript*.jar [-vHxhV] [-l Sprache] \n" +
@@ -107,6 +108,7 @@ public class console implements inConst {
             "-z, --name_in_zip Name      Dateiname in ZIP\n" +
             "-i  --init Datei            Liest zuerst die Anweisungen dieser Datei ein.\n" +
             "-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &gt;)\n" +
+            "-A, --ascii                 Kodiert Unicode-Zeichen in Ascii-Zeichenfolge.\n" +
             "-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)\n" +
             "                            Beispiele: ISO-8859-1, system \n" +
             "-D, --controlchar $-Ersatz  Setzt das Anweisungszeichen (vorgegeben: $). \n" +
@@ -142,6 +144,7 @@ public class console implements inConst {
             "-z, --name_in_zip Name      File name within ZIP\n" +
             "-i  --init InitFile         First processes the commands of this file.\n" +
             "-H, --HTML                  Accepts HTML special characters (like &gt;)\n" +
+            "-A, --ascii                 Converts unicode chars to a ascii representation.\n" +
             "-C, --charset Encoding      Charset name (default: UTF-8)\n" +
             "                            examples: ISO-8859-1, system \n" +
             "-D, --controlchar $-repl.   Sets the control character(s) (default: $). \n" +
@@ -177,7 +180,7 @@ public class console implements inConst {
     /////////////////////////////////////////////////////////////////////////
     
     void parseArguments() {
-        LongOpt[] longopts = new LongOpt[15];
+        LongOpt[] longopts = new LongOpt[16];
         longopts[0] = new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
         longopts[1] = new LongOpt("verbose",LongOpt.NO_ARGUMENT,null,'v');
         longopts[2] = new LongOpt("version",LongOpt.NO_ARGUMENT,null,'V');
@@ -190,12 +193,13 @@ public class console implements inConst {
         longopts[9] = new LongOpt("beanshell",LongOpt.NO_ARGUMENT,null,'b');
         longopts[10] = new LongOpt("yacas",LongOpt.NO_ARGUMENT,null,'y');
         longopts[11] = new LongOpt("HTML",LongOpt.NO_ARGUMENT,null,'H');
-        longopts[12] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
-        longopts[13] = new LongOpt("extract",LongOpt.NO_ARGUMENT,null,'x');
-        longopts[14] = new LongOpt("controlchar",LongOpt.REQUIRED_ARGUMENT,null,'D');
+        longopts[12] = new LongOpt("ascii",LongOpt.NO_ARGUMENT,null,'A');
+        longopts[13] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
+        longopts[14] = new LongOpt("extract",LongOpt.NO_ARGUMENT,null,'x');
+        longopts[15] = new LongOpt("controlchar",LongOpt.REQUIRED_ARGUMENT,null,'D');
         
         
-        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:D:byvxHhV",longopts);
+        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:D:byvxHAhV",longopts);
         g.setOpterr(false);
         int c;
         
@@ -235,6 +239,9 @@ public class console implements inConst {
                     break;
                 case 'H':
                     htmlkonvertieren = true;
+                    break;
+                case 'A':
+                    utf2asciikonvertieren = true;
                     break;
                 case 'z':
                     dateiImArchiv = g.getOptarg();
@@ -304,7 +311,7 @@ public class console implements inConst {
         
         System.out.println("");
         System.out.println("            " + c.tr.tr("WelcomeTo") + " " + PGM);
-        System.out.println("            Copyright (c) A. Vontobel, 2004-2006");
+        System.out.println("            Copyright (c) A. Vontobel, 2004-2007");
         System.out.println("            " + c.tr.tr("Version") + " " + VERSION);
         System.out.println("");
         
@@ -364,6 +371,7 @@ public class console implements inConst {
             ber.setVerbose(c.verbose);
             if (!c.stdLocale) ber.setLocale(c.locale);
             ber.setHTMLkonvertieren(c.htmlkonvertieren);
+            ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
             ber.setCharset(c.charset);
             if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
             if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
@@ -387,6 +395,7 @@ public class console implements inConst {
                 ber.setVerbose(c.verbose);
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
+                ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
                 ber.setCharset(c.charset);
                 if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
                 if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);
@@ -408,6 +417,7 @@ public class console implements inConst {
                 ber.setVerbose(c.verbose);
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
+                ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
                 ber.setCharset(c.charset);
                 if (c.dollarersetzen) ber.setDollarErsatz(c.dollarersatz);
                 if (c.mitvorlauf) ber.setVorlauf(c.vorlaufdatei);

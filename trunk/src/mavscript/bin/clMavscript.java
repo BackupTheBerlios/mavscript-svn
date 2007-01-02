@@ -12,7 +12,7 @@ import mavscript.bin.inConst;
 
 
 
-/* Copyright (c) 2004 - 2006 A.Vontobel  <qwert2003@users.berlios.de>,
+/* Copyright (c) 2004 - 2007 A.Vontobel  <qwert2003@users.berlios.de>,
  *                                       <qwert2003@users.sourceforge.net>
  *
  *
@@ -65,6 +65,7 @@ public class clMavscript implements inConst {
     private String vorlaufdatei;
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
+    private boolean utf2asciikonvertieren = false;
     private boolean dollarersetzen = false;
     private String dollarersatz = "$"; // wird nur ausgewertet wenn dollarersetzen == true
     
@@ -75,6 +76,7 @@ public class clMavscript implements inConst {
     private boolean FEHLER = false;
     private boolean verbose = false;
     private htmlConverter converter;
+    private clUTF2asciiConverter UTFconverter;
     
     // Verbindungstyp
     private int verbindungstyp = 1;
@@ -133,6 +135,10 @@ public class clMavscript implements inConst {
         this.htmlkonvertieren = htmlkonvertieren;
     }
     
+    public void setUTF2asciikonvertieren(boolean utf2asciikonvertieren) {
+        this.utf2asciikonvertieren = utf2asciikonvertieren;
+    }
+    
     public void setCharset(String neuerCharsetName) {
         if (neuerCharsetName.equalsIgnoreCase("system")) {
             neuerCharsetName = System.getProperty("file.encoding");
@@ -164,34 +170,6 @@ public class clMavscript implements inConst {
         dollarersetzen = true;
         this.dollarersatz = dollarersatz;
     }
-    
-    /* Durch console.java ersetzt
-    public static void main(String[] args) {
-        if (args.length < 1) {
-            System.out.println("Gebrauch: java berechne Quelldatei Zieldatei");
-            System.out.println("resp. java -jar mathscript.jar Quelldatei Zieldatei");
-            System.out.println("Die Zieldatei darf weggelassen werden.");
-            return;
-        }
-        String quelldatei = args[0];
-        String zieldatei;
-        String serverAddress = "127.0.0.1";
-        int serverPort = 9734;
-        if (args.length > 1) zieldatei = args[1];
-        else {
-            File d = new File(quelldatei);
-            zieldatei = d.getPath().replaceFirst(d.getName(), "out." + d.getName());
-            //zieldatei = "out." + d.getName();
-        }
-        if (args.length > 2) serverAddress = args[2];
-        if (args.length > 3) serverPort = Integer.parseInt(args[3]);
-     
-     
-        clMathscript ber = new clMathscript(quelldatei, zieldatei, serverAddress, serverPort);
-        System.out.println("");
-     
-    }
-     */
     
     /** Startet den Programmablauf: Einlesen, Parsen, Rechnen lassen, Rückeinsetzen, Schreiben*/
     public boolean run() {
@@ -439,6 +417,7 @@ public class clMavscript implements inConst {
         // Ausführen der zielListe (der eigentlichen Quelldatei)
         clBaustein baustein;
         if (htmlkonvertieren) converter = new htmlConverter("HTML");
+        if (utf2asciikonvertieren) UTFconverter = new clUTF2asciiConverter();
         for (Iterator it = zielListe.iterator(); it.hasNext();) {
             baustein = (clBaustein) it.next();
             if (baustein.istBefehl()) {
@@ -446,8 +425,13 @@ public class clMavscript implements inConst {
                 if (htmlkonvertieren && converter.containsHTMLcharacters(aktBefehl)) {
                     aktBefehl = converter.convert(aktBefehl);
                     if (verbose) {
-//                        System.out.println("KONVERTIERUNG VON " + baustein.getInput());
-//                        System.out.println("               ZU " + aktBefehl);
+                        System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
+                        System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
+                    }
+                }
+                if (utf2asciikonvertieren && UTFconverter.containsNonAsciiCharacters(aktBefehl)) {
+                    aktBefehl = UTFconverter.convert2UnicodeHex(aktBefehl);
+                    if (verbose) {
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -492,6 +476,7 @@ public class clMavscript implements inConst {
         htmlConverter ampconverter1 = new htmlConverter("XMLamp1"); // Konvertierung von & in %AMP1
         htmlConverter ampconverter2 = new htmlConverter("XMLamp2"); // Konvertierung von %AMP1 in &
         if (htmlkonvertieren) converter = new htmlConverter("XML"); // Rückkonvertierung von < > "
+        if (utf2asciikonvertieren) UTFconverter = new clUTF2asciiConverter();
         for (Iterator it = zielListe.iterator(); it.hasNext();) {
             baustein = (clBaustein) it.next();
             if (baustein.istBefehl()) {
@@ -517,8 +502,13 @@ public class clMavscript implements inConst {
                             etwaskonvertiert = true;
                         }
                         if (etwaskonvertiert && verbose) {
-//                            System.out.println("KONVERTIERUNG VON " + baustein.getOutput());
-//                            System.out.println("               ZU " + aktOutput);
+                            System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
+                            System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
+                        }
+                    }
+                    if (utf2asciikonvertieren && UTFconverter.containsUnicodeHexCharacters(aktOutput)) {
+                        aktOutput = UTFconverter.convert2UTF(aktOutput);
+                        if (verbose) {
                             System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
                             System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
                         }

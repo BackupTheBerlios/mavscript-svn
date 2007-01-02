@@ -11,8 +11,8 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
 
-/* Copyright (c) 2005, 2006 A.Vontobel  <qwert2003@users.berlios.de>,
- *                                      <qwert2003@users.sourceforge.net>
+/* Copyright (c) 2005 - 2007 A.Vontobel  <qwert2003@users.berlios.de>,
+ *                                       <qwert2003@users.sourceforge.net>
  *
  *
  * -------------------------------------------------------------
@@ -133,7 +133,7 @@ public class htmlConverter {
         return text;
     }
     
-    // nur zu Testzwecken
+    /** nur zu Testzwecken */
     public static void main(String[] args) {
         String text = "&gt; &lt; &amp; &quot; &apos; If (a&gt;b, x:=1, x:=0)";        
         if (args.length > 0) text = args[0];

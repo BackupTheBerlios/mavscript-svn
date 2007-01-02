@@ -1,862 +1,229 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org" />
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8" />
+  <meta name="Generator" content=
+  "Kate, the KDE Advanced Text Editor" />
 
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  <meta name="Generator" content="Kate, the KDE Advanced Text Editor" />
-
-
-
-
-
-
-
-  
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <title>Mavscript with Beanshell</title>
   <meta content="A. Vontobel" name="author" />
+  <style type="text/css">
+/*<![CDATA[*/
+  li.c9 {font-weight: bold;}
+  span.c8 {font-style: italic; font-family: monospace;}
+  span.c7 {font-family: mon;}
+  span.c6 {color: rgb(0, 0, 0); font-family: monospace;}
+  br.c5 {font-family: monospace;}
+  span.c4 {font-family: monospace;}
+  span.c3 {background-color: rgb(255, 255, 153);}
+  span.c2 {font-family: monospace; background-color: rgb(255, 255, 153);}
+  span.c1 {color: rgb(0, 0, 0);}
+  /*]]>*/
+  </style>
 </head>
 
-
 <body>
-
-
-
-
-
-
-
-
-<h1><span style="color: rgb(0, 0, 0);">mavscript - with Beanshell</span></h1>
-
-
-
-
-
-
-
-
-<h1><span style="color: rgb(0, 0, 0);"></span></h1>
-
-
-
-
-
-
-
-
-<pre><span style="color: rgb(0, 0, 0);">Copyright (c) A.Vontobel, 2004 - 2007<br /><br /><br /></span></pre>
-
-
-
-
-
-
-
-
-<h4><span style="color: rgb(0, 0, 0);">With Mavscript you can do calculations in a text document.</span></h4>
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">The following <em>file formats</em> are supported:<br />
-
-
-
-
-
-
-</span>
-<ul>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Text files</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">   html</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">OpenDocument Text odt</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">OpenOffice Writer sxw</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">other text based formats (i.e. svg). The text file may be packed in a <em>zip-archive</em>.</span></li>
-
-
-
-
-
-</ul>
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<h4>Mavscript with Beanshell</h4>
-
-
-
-
-
-Instead of a computer-algebra-system one may use <em>Beanshell</em>. Beanshell is a scripting language for the programming language&nbsp;<em>Java</em>.<br />
-
-
-
-
-
-The basic mathematic operations are easily to use, but algebraic
-functions are not available. Beanshell therefore is not a replacement
-for a computer-algebra-program.<br />
-
-
-
-
-
-The power of Beanshell is that you can access external java programs,
-that algorithms can be written in (simplified or normal) Java and that
-the hole functionality of Java is available. If you are a little bit
-familiar with the programming language Java, you have got a very
-powerful tool.
-<h4><span style="color: rgb(0, 0, 0);">How it works</span></h4>
-
-
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">
-Mavscript reads the calculation commands. These commands start with the control characters <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$m</span> and end with one of the following control characters:<span style="font-family: monospace;"> <span style="background-color: rgb(255, 255, 153);">$i</span></span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$o</span>, <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$io</span> and <span style="font-family: monospace; background-color: rgb(255, 255, 153);">$n</span>.
-Their meaning will be explained later. The commands are forwarded to</span><span style="color: rgb(0, 0, 0);">&nbsp;Beanshell. </span><span style="color: rgb(0, 0, 0);">Beanshell evaluates them and then returns an answer to Mavscript, i.e. the result of the calculation command.
-Mavscript now can insert this answer in the text, where the command was. When all calculations are done Mavscript saves
-the text document in a new file <span style="font-family: monospace;">out.originalname</span>. The original file remains unchanged.</span><span style="color: rgb(0, 0, 0);"><br />
-
-
-
-
-
-
-
-
-<br />
-
-
-
-
-
-</span><span style="color: rgb(0, 0, 0);">
-You do not always want to replace the calculation command by the answer from Beanshell.
-When you assign a value to a variable you usually want that the command remains in the text. 
-Therefore there are the following possibilities.</span><span style="color: rgb(0, 0, 0);"><br />
-
-
-
-
-
-
-
-
-</span>
-<pre><span style="color: rgb(0, 0, 0);"><br /><big><span style="font-family: monospace;">Input in the template file     Output                 Notes</span><br style="font-family: monospace;" /><span style="font-family: monospace;">--------------------------     ------                 -----</span><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> l = 5.0 <span style="background-color: rgb(255, 255, 153);">$i</span>                  l = 5.0                </span></big></span><big><span style="color: rgb(0, 0, 0); font-family: monospace;">The command remains unchanged. $i stands for input.</span></big><span style="color: rgb(0, 0, 0);"><big><span style="font-family: monospace;"></span><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> b = 4.0 <span style="background-color: rgb(255, 255, 153);">$i</span>                  b = 3.0                </span></big></span><big><span style="color: rgb(0, 0, 0);">The control characters are removed.</span></big><span style="color: rgb(0, 0, 0);"><big><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> h = 2.0 <span style="background-color: rgb(255, 255, 153);">$i</span> m                h = 2.0 m</span><br /><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> V = l*b*h <span style="background-color: rgb(255, 255, 153);">$io</span>               V = l*b*h --&gt; 40.      Both the input and the output are shown.</span><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> 2 + 3*4 <span style="background-color: rgb(255, 255, 153);">$io</span>                 2 + 3*4 --&gt; 14         $io stands for input/output.</span><br /><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> doubleVol = 2*V <span style="background-color: rgb(255, 255, 153);">$n</span>                                 <span style="font-family: mon;">Sometimes you do not want to show the command or its result.</span></span><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> static import Math.*; <span style="background-color: rgb(255, 255, 153);">$n</span>                           <span style="font-family: mon;">$n stands for nothing.</span></span><br /><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> doubleVol <span style="background-color: rgb(255, 255, 153);">$o</span>                80.                    <span style="font-family: mon;">Only the return value (answer) is shown. $o stands for output.</span></span><br style="font-family: monospace;" /><span style="font-family: monospace;"><span style="background-color: rgb(255, 255, 153);">$m</span> sin(PI/4.) <span style="background-color: rgb(255, 255, 153);">$o</span>               0.7071067811865475     This is useful if you want to separate the calculation and <br />                                                      the results.</span><span style="font-family: monospace;"></span></big><br /></span></pre>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"><br />
-
-
-
-
-
-
-
-
-</span>
-<h4><span style="color: rgb(0, 0, 0);">Some rules:</span></h4>
-
-
-
-
-
-
-
-
-<h4><span style="color: rgb(0, 0, 0);"></span></h4>
-
-
-
-
-
-
-
-
-<ul>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">A command must be placed in a single line.</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Several commands may be in the same line. Example:&nbsp;<span style="font-family: monospace;">$m a=3 $i</span>, <span style="font-family: monospace;">$m b=4 $i</span>.</span></li>
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">In <em>OpenOffice Writer</em> the entire command must be formatted the same way. Avoid double space characters in commands.</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">The syntax of the commands is the one of</span><span style="color: rgb(0, 0, 0);"> BeanShell or Java. The manual is included in the directory&nbsp; <em style="font-family: monospace;"></em></span><span style="color: rgb(0, 0, 0);"><span style="font-style: italic; font-family: monospace;">path-to-mavscript</span></span><span style="color: rgb(0, 0, 0);"><em style="font-family: monospace;"></em><span style="font-family: monospace;">/INFO/beanshell</span>&nbsp;.</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Mavscript attaches a semicolon <span style="font-family: monospace;">(;)</span> to each command. Therefore the semicolon can be omitted in the commands.</span></li>
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Caution when using third
-party templates for Mavscript-BeanShell: The scripting functionality of
-BeanShell is very powerful; the computer and its files can be accessed.
-Have a look on the commands before calling mavscript --beanshell.<br />
-
-
-
-
-
-
-    </span></li>
-
-
-
-
-
-
-
-
-</ul>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"><br />
-
-
-
-
-
-
-
-
-<br />
-
-
-
-
-
-
-
-
-</span>
-<h2><span style="color: rgb(0, 0, 0);">Installation</span></h2>
-
-
-
-
-
-
-
-
-<h2><span style="color: rgb(0, 0, 0);"></span></h2>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">see <a href="en_HowToInstall.html">How to install</a> </span><br />
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">
-
-
-<br />
-
-
-
-
-
-
-
-
-</span>
-<h2><span style="color: rgb(0, 0, 0);">Usage</span></h2>
-
-
-
-
-
-
-
-
-<h2><span style="color: rgb(0, 0, 0);"></span></h2>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<h4><span style="color: rgb(0, 0, 0);">STANDARD</span></h4>
-
-
-
-
-
-
-
-
-<h3><span style="color: rgb(0, 0, 0);"></span></h3>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">If Mavscript has been installed as described and the included&nbsp;<em>beanshell</em> is used:<br />
-
-
-
-
-
-
-</span>
-<ol>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Create a template (input) file:&nbsp;<span style="font-family: monospace;">template.txt</span>,&nbsp;<span style="font-family: monospace;"></span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template.odt</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;"></span> or&nbsp;<span style="font-family: monospace;"></span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.sxw</span></span></li>
-
-
-
-
-
-  <li style="font-weight: bold;"><span style="color: rgb(0, 0, 0);">Drag the template file with the mouse on the Mavscript-bsh-icon on the desktop.</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">A window opens and the calculation is executed. When finished, check if there is an error message and close the window.</span></li>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Open the output file (<span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.txt</span>, <span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.odt</span> or <span style="font-family: monospace;">out.</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">.sxw</span>) .</span></li>
-
-
-
-
-
-</ol>
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<h4><span style="color: rgb(0, 0, 0);">ALTERNATE (in order to use advanced functions or if the standard procedure does not work)</span></h4>
-
-
-
-
-
-
-
-
-<h4><span style="color: rgb(0, 0, 0);"></span></h4>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">Mavscript alternately can be called out of the shell (command prompt, konsole, terminal).<br />
-
-
-
-
-
-
-<span style="font-family: monospace;">cd path-to-mavscript</span> and then:</span>
-<ul>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript --beanshell </span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">templatefile</span>                     </span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;"></span>(Windows)</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./mavscript --beanshell </span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">templatefile</span>                     </span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;"></span>(Linux)</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">java -jar --beanshell mavscript*.jar </span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./templatefile</span>                     </span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;"></span>(</span><span style="color: rgb(0, 0, 0);">all platforms</span><span style="color: rgb(0, 0, 0);">)</span><br />
-
-
-
-
-
-
-
-
-  </li>
-
-
-
-
-
-
-
-
-</ul>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<h4><span style="color: rgb(0, 0, 0);">ENHANCED FUNCTIONS</span></h4>
-
-
-
-
-
-
-
-<ul>
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">mavscript --help</span>                         Shows the available start parameters.</span></li>
-
-
-
-
-
-  <li>see <a href="en_Startparameter.html">start parameters</a></li>
-
-
-
-
-
-</ul>
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<h4><span style="color: rgb(0, 0, 0);">Tips</span></h4>
-
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<ol>
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Mavscript expects commands
-to be on a single line. But BeanShell is powerful because you can
-easily write methods (algorithms, functions). If you have to write them
-on a single line they are hardly readable.<br />
-
-
-
-
-
-This problem can be avoided if you save multi line commands in a
-separate&nbsp;file (i.e. algorithm.bsh). The file then can be called
-using one of the following ways:<br />
-
-
-
-
-
-
-
-    </span>
-    
-    
-    
-    
-    
-    
-    
-    <ul>
-
-
-
-
-
-
-
-      <li>using the init option<br />
-
-
-
-
-
-
-
-        <code>mavscript --beanshell --init </code><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./</span></span><code>algorithm.bsh </code><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><code>.txt</code></li>
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    </ul>
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    <ul>
-
-
-
-
-
-
-
-      <li>calling algorithm.bsh from the input file:<br />
-
-
-
-
-
-
-
+  <h1>mavscript - with Beanshell</h1>
+  <span class="c4">Copyright (c) A.Vontobel, 2004 - 2007</span><br /><br />
+
+  <h4>With Mavscript you can do calculations in a text document.</h4>
+  The following <em>file formats</em> are supported:<br />
+
+  <ul>
+    <li>Text files</li>
+
+    <li>html</li>
+
+    <li>OpenDocument Text odt</li>
+
+    <li>OpenOffice Writer sxw</li>
+
+    <li>other text based formats (i.e. svg). The
+    text file may be packed in a <em>zip-archive</em>.</li>
+  </ul>
+
+  <h4>Mavscript with Beanshell</h4>Instead of a
+  computer-algebra-system one may use <em>Beanshell</em>. Beanshell
+  is a scripting language for the programming language
+  <em>Java</em>.<br />
+  The basic mathematic operations are easily to use, but algebraic
+  functions are not available. Beanshell therefore is not a
+  replacement for a computer-algebra-program.<br />
+  The power of Beanshell is that you can access external java
+  programs, that algorithms can be written in (simplified or
+  normal) Java and that the hole functionality of Java is
+  available. If you are a little bit familiar with the programming
+  language Java, you have got a very powerful tool.
+
+  <h4>How it works</h4>
+  Mavscript reads the calculation commands. These commands
+  start with the control characters <span class="c2">$m</span> and
+  end with one of the following control characters: <span class=
+  "c4"><span class="c3">$i</span></span>, <span class=
+  "c2">$o</span>, <span class="c2">$io</span> and <span class=
+  "c2">$n</span>. Their meaning will be explained later. The
+  commands are forwarded to Beanshell. Beanshell evaluates them and
+  then returns an answer to Mavscript, i.e. the result of the
+  calculation command. Mavscript now can insert this answer in the
+  text, where the command was. When all calculations are done
+  Mavscript saves the text document in a new file <span class=
+  "c4">out.originalname</span>. The original file remains
+  unchanged.<br />
+  <br />
+  You do not always want to replace
+  the calculation command by the answer from Beanshell. When you
+  assign a value to a variable you usually want that the command
+  remains in the text. Therefore there are the following
+  possibilities.<br />
+  <br />
+  <pre>
+<br /><big><span class=
+"c4">Input in the template file     Output                 Notes</span><br class="c5" /><span class="c4">--------------------------     ------                 -----</span><br class="c5" /><span class="c4"><span class="c3">$m</span> l = 5.0 <span class="c3">$i</span>                  l = 5.0                </span></big></span><big><span class="c6">The command remains unchanged. $i stands for input.</span></big><big><br class="c5" /><span class="c4"><span class="c3">$m</span> b = 4.0 <span class="c3">$i</span>                  b = 3.0                </big></span><big>The control characters are removed.</big><big><br class="c5" /><span class="c4"><span class="c3">$m</span> h = 2.0 <span class="c3">$i</span> m                h = 2.0 m<br /><br class="c5" /><span class="c4"><span class="c3">$m</span> V = l*b*h <span class="c3">$io</span>               V = l*b*h --&gt; 40.      Both the input and the output are shown.</span><br class="c5" /><span class="c4"><span class="c3">$m</span> 2 + 3*4 <span class="c3">$io</span>                 2 + 3*4 --&gt; 14         $io stands for input/output.</span><br /><br class="c5" /><span class="c4"><span class="c3">$m</span> doubleVol = 2*V <span class="c3">$n</span>                                 <span class="c7">Sometimes you do not want to show the command or its result.</span></span><br class="c5" /><span class="c4"><span class="c3">$m</span> static import Math.*; <span class="c3">$n</span>                           <span class="c7">$n stands for nothing.</span></span><br /><br class="c5" /><span class="c4"><span class="c3">$m</span> doubleVol <span class="c3">$o</span>                80.                    <span class="c7">Only the return value (answer) is shown. $o stands for output.</span></span><br class="c5" /><span class="c4"><span class="c3">$m</span> sin(PI/4.) <span class="c3">$o</span>               0.7071067811865475     This is useful if you want to separate the calculation and <br />                                                      the results.</span></big><br />
+</pre><br />
+
+  <h4>Some rules:</h4>
+
+  <ul>
+    <li>A command must be placed in a single
+    line.</li>
+
+    <li>Several commands may be in the same line.
+    Example: <span class="c4">$m a=3 $i</span>, <span class="c4">$m
+    b=4 $i</span>.</li>
+
+    <li>In <em>OpenOffice Writer</em> the entire
+    command must be formatted the same way. Avoid double space
+    characters in commands.</li>
+
+    <li>The syntax of the commands is the one of BeanShell or Java.
+    The manual is included in the directory  <span class=
+    "c8">path-to-mavscript</span><span class="c4">/INFO/beanshell</span> .</li>
+
+    <li>Mavscript attaches a semicolon
+    <span class="c4">(;)</span> to each command. Therefore the
+    semicolon can be omitted in the commands.</li>
+
+    <li>Caution when using third party templates
+    for Mavscript-BeanShell: The scripting functionality of
+    BeanShell is very powerful; the computer and its files can be
+    accessed. Have a look on the commands before calling mavscript
+    --beanshell.<br /></li>
+  </ul><br />
+  <br />
+
+  <h2>Installation</h2>
+  see <a href="en_HowToInstall.html">How to install</a><br />
+  <br />
+
+  <h2>Usage</h2>
+
+  <h4>STANDARD</h4>
+  If Mavscript has been installed as described and the included
+  <em>beanshell</em> is used:<br />
+
+  <ol>
+    <li>Create a template (input) file:
+    <span class="c4">template.txt</span>, <span class="c4">template.odt</span>
+    or <span class="c4">template.sxw</span></li>
+
+    <li class="c9">Drag the template file with the
+    mouse on the Mavscript-bsh-icon on the desktop.</li>
+
+    <li>A window opens and the calculation is
+    executed. When finished, check if there is an error message and
+    close the window.</li>
+
+    <li>Open the output file (<span class=
+    "c4">out.template.txt</span>, <span class=
+    "c4">out.template.odt</span> or <span class=
+    "c4">out.template.sxw</span>) .</li>
+  </ol>
+
+  <h4>ALTERNATE (in order to use advanced
+  functions or if the standard procedure does not work)</h4>
+  Mavscript alternately can be
+  called out of the shell (command prompt, konsole, terminal).<br />
+  <span class="c4">cd path-to-mavscript</span> and then:
+
+  <ul>
+    <li><span class="c4">mavscript --beanshell ./templatefile</span> (Windows)</li>
+
+    <li><span class="c4">./mavscript --beanshell ./templatefile</span> (Linux)</li>
+
+    <li><span class="c4">java -jar mavscript*.jar --beanshell ./templatefile</span> (all platforms)</li>
+  </ul>
+  <br />
+
+  <h4>ENHANCED FUNCTIONS</h4>
+
+  <ul>
+    <li><span class="c4">mavscript --help</span>
+    Shows the available start parameters.</li>
+
+    <li>see <a href="en_Startparameter.html">start
+    parameters</a></li>
+  </ul>
+
+  <h4>Tips</h4>
+
+  <ol>
+    <li>
+      Mavscript expects commands to be on a single
+      line. But BeanShell is powerful because you can easily write
+      methods (algorithms, functions). If you have to write them on
+      a single line they are hardly readable.<br />
+      This problem can be avoided if you save multi line commands
+      in a separate file (i.e. algorithm.bsh). The file then can be
+      called using one of the following ways:<br />
+
+      <ul>
+        <li>using the init option<br />
+        <code>mavscript --beanshell --init ./algorithm.bsh ./template.txt</code></li>
+      </ul>
+
+      <ul>
+        <li>calling algorithm.bsh from the input file:<br />
         <code>$m source("algorithm.bsh"); $n</code></li>
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    </ul>
-
-
-
-
-
-The first way is useful for methods that are commonly used. Have a look at the file lib/init.bsh, the methods  <code>min()</code>, <code>max()</code>, <code>nf()</code> are defined there.<br />
-
-
-
-
-
-
-
-  </li>
-
-
-
-
-
-
-
-  <li>The method<code> nf()</code> (which is defined in the file lib/init.bsh) is useful for formatting numbers.<br />
-
-
-
-
-
-
-
-    <code>mavscript --beanshell --init lib/init.bsh&nbsp;</code><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">./</span></span><span style="color: rgb(0, 0, 0);"><span style="font-family: monospace;">template</span></span><code>.txt</code><br />
-
-
-
-
-
-
-
-Usage: <code>$m nf(2.33333333, 2) $o</code> returns <samp>2.33</samp></li>
-
-
-
-
-
-
-
-</ol>
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);">
-
-</span>
-<h2><br />
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span></h2>
-
-
-
-
-
-
-
-<h2><span style="color: rgb(0, 0, 0);">Disclaimer</span></h2>
-
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"></span>
-<ul>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">Use it at your own risk. Mavscript comes with ABSOLUTELY NO WARRANTY.</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">The program Mavscript is subject to the free <a href="LICENCE-GPL.txt">Licence GPL</a>. It is included in the file <span style="font-style: italic; font-family: monospace;">path-to-mavscript</span><span style="font-family: monospace;">/INFO/LICENCE-GPL.txt </span>.
-The licence allows the usage of the program, but does impose clear
-rules if you intend to distribute it. Mavscript is copyrighted by
-A.Vontobel.</span></li>
-
-
-
-
-
-
-
-
-  <li><span style="color: rgb(0, 0, 0);">The included scripting engine <em>BeanShell</em>
-is subject to the free licence&nbsp;<a href="beanshell/LGPL.txt">LGPL</a>.&nbsp;</span><span style="color: rgb(0, 0, 0);">It is included in the file </span><span style="color: rgb(0, 0, 0);"><span style="font-style: italic; font-family: monospace;">path-to-mavscript</span></span><span style="color: rgb(0, 0, 0);"><span style="font-style: italic; font-family: monospace;"></span><span style="font-family: monospace;">/INFO/beanshell/LGPL</span> .&nbsp;</span><span style="color: rgb(0, 0, 0);">The licence allows the usage of the program, but does impose clear
-rules if you intend to distribute it.</span></li>
-
-
-
-
-
-
-
-</ul>
-
-
-
-
-
-
-
-
-<span style="color: rgb(0, 0, 0);"> <br />
-
-
-
-
-
-
-
-
-</span>
+      </ul>The first way is useful for methods that are commonly
+      used. Have a look at the file lib/init.bsh, the methods
+      <code>min()</code>, <code>max()</code>, <code>nf()</code> are
+      defined there.<br />
+    </li>
+
+    <li>The method <code>nf()</code> (which is defined in the file
+    lib/init.bsh) is useful for formatting numbers.<br />
+    <code>mavscript --beanshell --init lib/init.bsh ./template.txt</code><br />
+    Usage: <code>$m nf(2.33333333, 2) $o</code> returns
+    <samp>2.33</samp></li>
+  </ol>
+  <br />
+
+  <h2>Disclaimer</h2>
+
+  <ul>
+    <li>Use it at your own risk. Mavscript comes
+    with ABSOLUTELY NO WARRANTY.</li>
+
+    <li>The program Mavscript is subject to the
+    free <a href="LICENCE-GPL.txt">Licence GPL</a>. It is included
+    in the file <span class=
+    "c8">path-to-mavscript</span><span class=
+    "c4">/INFO/LICENCE-GPL.txt</span> . The licence allows the
+    usage of the program, but does impose clear rules if you intend
+    to distribute it. Mavscript is copyrighted by A.Vontobel.</li>
+
+    <li>The included scripting engine
+    <em>BeanShell</em> is subject to the free licence <a href=
+    "beanshell/LGPL.txt">LGPL</a>. It is
+    included in the file <span class=
+    "c8">path-to-mavscript</span><span class="c4">/INFO/beanshell/LGPL</span> .
+    The licence allows the usage of the program, but does impose clear rules
+    if you intend to distribute it.</li>
+  </ul><span class="c1"><br /></span>
 </body>
 </html>

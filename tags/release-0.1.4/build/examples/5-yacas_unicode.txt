@@ -1,0 +1,20 @@
+Damit dieses Beispiel funktioniert, muss Mavscript mit der Opition --ascii aufgerufen werden.
+Der Aufruf "mavscript-yacas" beinhaltet diese Option bereits.
+Die Option --ascii erlaubt die Verwendung von Nicht-Ascii-Zeichen in den Anweisungen für das Matheprogramm Yacas.
+
+Mavscript - Testdatei
+----------------------
+
+
+Eingabe:
+Länge $m Länge := 10 $i (des Würfels)
+Breite $m Breite := 3 $i
+Höhe $m Höhe := 5 $i
+
+Ausgabe:
+Das Volumen beträgt          $m V := Länge*Breite*Höhe $io m³
+Das λ-fache Volumen beträgt  $m λ*V $io m³
+
+Der Würfel ist $m If (Länge>Breite, antwort := "Länger als breit", antwort := "Breiter als Lang") $o
+
+Ende.

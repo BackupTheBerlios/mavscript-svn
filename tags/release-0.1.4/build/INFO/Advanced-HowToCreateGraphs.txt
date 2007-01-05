@@ -1,0 +1,47 @@
+How to create graphs in mavscript
+---------------------------------
+
+Mavscript does not support graphs directly, as it is only text based.
+A way to draw graphs (xy-diagrams) is to create an image file. The html or OpenOffice odt (or sxw) template can link to it.
+The difficult part is creating the image file. Therefor third party software is needed.
+Good knowledge of mavscript-yacas (resp. mavscript-beanshell) and of your computer system is required in order to understand this HowTo, as it is not a step-by-step explanation.
+
+
+Mavscript-yacas
+---------------
+Using gnuplot.
+http://www.gnuplot.info/
+Gnuplot is not platform independant java software, but it is available for a lot of platforms.
+The approach is to first create a simple text file containing the data. Then a file containing the gnuplot instruction is written. Finally gnuplot is called and creates the image file graph.png.
+
+1.a) $m Plot2D(Sin(x),-1:6,output="datafile",filename="data.txt"); $n
+or
+1.b) $m ToFile("data.txt1") Echo({0,1,Nl(),1,4,Nl(),2,8,Nl(),3,6}); $n
+
+2.) $m ToFile("gnuplot.txt") Echo("set terminal png; set output \"graph.png\"; plot \"data.txt1\""); $n
+3.) $m SystemCall("gnuplot gnuplot.txt"); $n
+
+4.) In the template (anywhere), create a link to graph.png
+
+
+Mavscript-beanshell
+-------------------
+Using jmathplot.
+http://jmathtools.sourceforge.net/jmathplot-14.jar
+Download the version for java 1.4 (even if you are running java 1.5, as beanshell is not java1.5 compatible).
+
+1.) Copy the lines below and paste them in your template (at the beginning). Adjust the PATH to jmathplot.jar
+$m addClassPath("/home/PATH-TO-JMATHPLOT/jmathplot-14.jar"); $n
+$m static import java.awt.Color.*; $n
+$m import org.math.plot.*; $n
+$m Plot2DPanel plot = new Plot2DPanel(); $n
+
+$m void toPNG(String DateiNamePNG) {JFrame frame = new JFrame("a plot panel"); frame.setSize(600, 600); frame.setContentPane(plot); frame.setVisible(true); frame.setVisible(false); String DateiNamePNG2 = DateiNamePNG+".png"; plot.toGraphicFile(new File(DateiNamePNG2)); plot = new Plot2DPanel();} $n
+
+2.) double[][] XY = {{0,1,2,3},{1,4,8,6}};
+
+3.) 
+$m plot.addLinePlot("example plot", BLACK, XY); $n
+$m toPNG("/home/PATH-TO-IMAGE/graph"); $n
+
+4.) In the template (anywhere), create a link to graph.png

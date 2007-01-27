@@ -189,7 +189,6 @@ public class clMavscriptExtractor implements inConst {
             System.err.println("Warnung: '$' can not be replaced by " + dollarersatz);
             return;
         }
-        // else
         dollarersetzen = true;
         this.dollarersatz = dollarersatz;
     }

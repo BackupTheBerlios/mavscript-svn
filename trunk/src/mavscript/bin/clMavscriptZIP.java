@@ -165,7 +165,6 @@ public class clMavscriptZIP implements inConst {
             System.err.println("Warnung: '$' can not be replaced by " + dollarersatz);
             return;
         }
-        // else
         dollarersetzen = true;
         this.dollarersatz = dollarersatz;
     }
@@ -351,14 +350,6 @@ public class clMavscriptZIP implements inConst {
             case beanshell:
                 verbindung = new clConnectBeanshell();
                 verbindung.setVerbose(verbose);
-                
-//                // Das Arbeitsverzeichnis von BeanShell soll dem Verzeichnis der Zieldatei entsprechen
-//                File d = new File(zielarchiv).getAbsoluteFile();
-//                String ausgabeverzeichnis = d.getParent();
-//                if (ausgabeverzeichnis == null) ausgabeverzeichnis = System.getProperty("user.dir");
-//                ausgabeverzeichnis = ausgabeverzeichnis.replace('\\','/');  // Beanshell erwartet '/', unabhängig vom Betriebssystem
-//                verbindung.exec("cd(\"" + ausgabeverzeichnis + "\");");
-                
                 break;
                 
             case port:

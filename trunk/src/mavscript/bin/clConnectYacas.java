@@ -10,8 +10,8 @@ import net.sf.yacas.YacasInterpreter;
 import java.util.*;
 
 
-/* Copyright (c) 2005, 2006 A.Vontobel  <qwert2003@users.berlios.de>,
- *                                      <qwert2003@users.sourceforge.net>
+/* Copyright (c) 2005 - 2007 A.Vontobel  <qwert2003@users.berlios.de>,
+ *                                       <qwert2003@users.sourceforge.net>
  *
  *
  * -------------------------------------------------------------
@@ -66,37 +66,10 @@ public class clConnectYacas extends clConnect {
     /** Creates a new instance of clConnectYacas
      */
     public clConnectYacas()  {
-//        interpreter = new CYacas(new StdFileOutput(System.out)); // funktioniert auch
-//        interpreter = new CYacas(new StringOutput(new StringBuffer()));
         interpreter = new YacasInterpreter();
     }
     
     public boolean connect() {
-        
-//        try {
-////            interpreter.env.iCurrentInput = new CachedStdFileInput(interpreter.env.iInputStatus);
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            return false;
-//        }
-//        try {
-//            // Datei scripts.zip suchen, anhand von yacasinit.ys
-//            java.net.URL erkenndateiURL = java.lang.ClassLoader.getSystemResource("yacasinit.ys");
-//            if (erkenndateiURL == null) throw new java.io.FileNotFoundException("yacasinit.ys not found. Expected in scripts.zip");
-//            String erkenndatei = erkenndateiURL.getPath(); // file:/home/av/src/lib/scripts.zip!/yacasinit.ys
-//            String zipFileName = erkenndatei.substring(0, erkenndatei.lastIndexOf('!')); // file:/home/av/src/lib/scripts.zip
-//            
-//            java.util.zip.ZipFile z = new java.util.zip.ZipFile(new java.io.File(new java.net.URI(zipFileName)));
-//            LispStandard.zipFile = z;
-//            if (verbose) System.out.println("Succeeded in finding "+zipFileName);
-//        } catch(Exception e) {
-//            System.out.println("Failed to find scripts.zip " + e.toString());
-//            return false;
-//        }
-//        
-//        String yacasinitys = interpreter.Evaluate("Load(\"yacasinit.ys\");");
-//        if (verbose) System.out.println(yacasinitys);
-//        
         return true;
     }
     

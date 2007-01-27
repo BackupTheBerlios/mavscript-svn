@@ -166,7 +166,6 @@ public class clMavscript implements inConst {
             System.err.println("Warnung: '$' can not be replaced by " + dollarersatz);
             return;
         }
-        // else
         dollarersetzen = true;
         this.dollarersatz = dollarersatz;
     }
@@ -366,14 +365,6 @@ public class clMavscript implements inConst {
             case beanshell:
                 verbindung = new clConnectBeanshell();
                 verbindung.setVerbose(verbose);
-                
-//                // Das Arbeitsverzeichnis von BeanShell soll dem Verzeichnis der Zieldatei entsprechen
-//                File d = new File(zieldatei).getAbsoluteFile();
-//                String ausgabeverzeichnis = d.getParent();
-//                if (ausgabeverzeichnis == null) ausgabeverzeichnis = System.getProperty("user.dir");
-//                ausgabeverzeichnis = ausgabeverzeichnis.replace('\\','/');  // Beanshell erwartet '/', unabhängig vom Betriebssystem
-//                verbindung.exec("cd(\"" + ausgabeverzeichnis + "\");");
-                
                 break;
                 
             case port:

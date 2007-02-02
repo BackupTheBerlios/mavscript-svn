@@ -71,7 +71,7 @@ public class console implements inConst {
     String zieldatei;
     String serverAddress = "127.0.0.1";
     int serverPort = 9734; // Beispielwert
-    String dateiImArchiv = "content.xml";
+    String dateiImArchiv = "content.xml"; // in OpenDocument Text .odt
     String charset = "UTF-8";
     boolean verbose = false;
     boolean ausZIP = false;
@@ -90,7 +90,7 @@ public class console implements inConst {
     private String[] iArgs;
     
     private final static String PGM     = "Mavscript";
-    private final static String VERSION = "0.14";
+    private final static String VERSION = "0.15";
     
     private final static String USAGE_de = "Gebrauch:\n" +
             "java -jar mavscript*.jar [-vHAxhV] [-l Sprache] \n" +
@@ -329,10 +329,16 @@ public class console implements inConst {
             } else if (c.quelldatei.endsWith(".sxw")) {
                 System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isSXW"));
                 c.ausZIP = true;
+            } else if (c.quelldatei.endsWith(".docx")) {
+                System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isDOCX"));
+                c.dateiImArchiv = "word/document.xml";
+                c.ausZIP = true;
             }
         }
         if (c.htmlkonvertieren == false) {
-            if (c.quelldatei.endsWith(".odt") || c.quelldatei.endsWith(".sxw") || c.quelldatei.endsWith(".html")) {
+            if (c.quelldatei.endsWith(".odt") || c.quelldatei.endsWith(".sxw") 
+            || c.quelldatei.endsWith(".odtx") 
+            || c.quelldatei.endsWith(".html") || c.quelldatei.endsWith(".xml")) {
                 c.htmlkonvertieren = true;
                 if (c.verbose) System.out.println(c.tr.tr("setHTML"));
             }

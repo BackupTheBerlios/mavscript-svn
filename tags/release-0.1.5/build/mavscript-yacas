@@ -1,0 +1,3 @@
+#! /bin/bash
+
+./mavscript --yacas --ascii --init $(pwd)/lib/init.ys "$@"

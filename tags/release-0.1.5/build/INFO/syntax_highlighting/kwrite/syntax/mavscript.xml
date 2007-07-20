@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="Mavscript" version="0.1" kateversion="2.3" section="Other" extensions="" mimetype="text/x-mavscript" author="A. Vontobel" license="GPL">
+  <highlighting>
+    <list name="keywords">
+      <item> $m </item>
+      <item> $io </item>
+      <item> $o </item>
+      <item> $i </item>
+      <item> $n </item>
+    </list>
+    
+    <list name="init">
+      <item> nf </item>
+    </list>
+    
+    <list name="yacas">
+      <item> Newton </item>
+      <item> N </item>
+      <item> Solve </item>
+      <item> Max </item>
+      <item> Min </item>
+      <item> Eval </item>
+      <item> Where </item>
+      
+      <item> Abs </item>
+      <item> Sqrt </item>
+      <item> Sin </item>
+      <item> Cos </item>
+      <item> Tan </item>
+      <item> ArcSin </item>
+      <item> ArcCos </item>
+      <item> ArcTan </item>
+      <item> Round </item>
+      <item> Ceil </item>
+      <item> Floor </item>
+      <item> Exp </item>
+      <item> Ln </item>
+      <item> Log </item>
+      <item> Div </item>
+      <item> Mod </item>
+      <item> Integrate </item>
+      <item> D </item>
+      <item> Pi </item>
+      <item> Sign </item>
+      
+      
+      <item> True </item>
+      <item> False </item>
+      <item> And </item>
+      <item> Not </item>
+      <item> Or </item>
+      
+      <item> Add </item>
+      <item> Append </item>
+      <item> Apply </item>
+      <item> Average </item>
+      <item> Bodied </item>
+      <item> Check </item>
+      <item> Clear </item>
+      <item> Concat </item>
+      <item> Contains </item>
+      <item> Count </item>
+      <item> CrossProduct </item>
+      <item> Decimal </item>
+      <item> Delete </item>
+      <item> Denom </item>
+      <item> Determinant </item>
+      <item> Diagonal </item>
+      <item> Dot </item>
+      <item> Eliminate </item>
+      <item> Expand </item>
+      <item> Factorize </item>
+      <item> Factors </item>
+      <item> Find </item>
+      <item> FindRealRoots </item>
+      <item> Flatten </item>
+      <item> For </item>
+      <item> ForEach </item>
+      <item> FromBase </item>
+      <item> Function </item>
+      <item> Gcd </item>
+      <item> Head </item>
+      <item> Hold </item>
+      <item> HoldArg </item>
+      <item> Identity </item>
+      <item> If </item>
+      <item> Infix </item>
+      <item> Insert </item>
+      <item> Intersection </item>
+      <item> Inverse </item>
+      <item> IsEven </item>
+      <item> IsInfinity </item>
+      <item> IsInteger </item>
+      <item> IsList </item>
+      <item> IsMatrix </item>
+      <item> IsNegativeNumber </item>
+      <item> IsNotZero </item>
+      <item> IsNumber </item>
+      <item> IsOdd </item>
+      <item> IsPositiveNumber </item>
+      <item> IsRational </item>
+      <item> IsScalar </item>
+      <item> IsSquareMatrix </item>
+      <item> IsString </item>
+      <item> IsSymmetric </item>
+      <item> IsUnitary </item>
+      <item> IsVector </item>
+      <item> IsZero </item>
+      <item> Lcm </item>
+      <item> Length </item>
+      <item> Limit </item>
+      <item> List </item>
+      <item> Load </item>
+      <item> LnCombine </item>
+      <item> LnExpand </item>
+      <item> Local </item>
+      <item> MatrixSolve </item>
+      <item> Normalize </item>
+      <item> Nl </item>
+      <item> Nth </item>
+      <item> Numer </item>
+      <item> NumRealRoots </item>
+      <item> Precision </item>
+      <item> Plot2D </item>
+      <item> Pop </item>
+      <item> Prog </item>
+      <item> PSolve </item>
+      <item> Push </item>
+      <item> RadSimp </item>
+      <item> Rationalize </item>
+      <item> Replace </item>
+      <item> Reverse </item>
+      <item> Select </item>
+      <item> Set </item>
+      <item> Simplify </item>
+      <item> SolveMatrix </item>
+      <item> Swap </item>
+      <item> String </item>
+      <item> Subst </item>
+      <item> SuchThat </item>
+      <item> Sum </item>
+      <item> SystemCall </item>
+      <item> Tail </item>
+      <item> Taylor </item>
+      <item> Type </item>
+      <item> ToBase </item>
+      <item> ToFile </item>
+      <item> ToString </item>
+      <item> Trace </item>
+      <item> Transpose </item>
+      <item> TrigSimpCombine </item>
+      <item> TruncRadian </item>
+      <item> Undefined </item>
+      <item> Union </item>
+      <item> Until </item>
+      <item> Use </item>
+      <item> UnFlatten </item>
+      <item> Version </item>
+      <item> While </item>
+      <item> WithValue </item>
+      <item> WriteString </item>
+    </list>
+    
+    <list name="beanshell">
+      <item> source </item>
+      <item> addClassPath </item>
+      
+      <item> boolean </item>
+      <item> byte </item>
+      <item> char </item>
+      <item> const </item>
+      <item> double </item>
+      <item> final </item>
+      <item> float </item>
+      <item> int </item>
+      <item> long </item>
+      <item> short </item>
+      <item> static </item>
+      <item> void </item>      
+      
+      <item> abstract </item>
+      <item> break </item>
+      <item> case </item>
+      <item> catch </item>
+      <item> class </item>
+      <item> continue </item>
+      <item> default </item>
+      <item> do </item>
+      <item> else </item>
+      <item> enum </item>
+      <item> extends </item>
+      <item> false </item>
+      <item> finally </item>
+      <item> for </item>
+      <item> goto </item>
+      <item> if </item>
+      <item> implements </item>
+      <item> instanceof </item>
+      <item> @interface </item>
+      <item> interface </item>
+      <item> native </item>
+      <item> new </item>
+      <item> null </item>
+      <item> private </item>
+      <item> protected </item>
+      <item> public </item>
+      <item> return </item>
+      <item> super </item>
+      <item> strictfp </item>
+      <item> switch </item>
+      <item> synchronized </item>
+      <item> this </item>
+      <item> throws </item>
+      <item> throw </item>
+      <item> transient </item>
+      <item> true </item>
+      <item> try </item>
+      <item> volatile </item>
+      <item> while </item>
+      
+      <item> String </item>
+      <item> StringBuffer </item>
+      <item> Math </item>
+      <item> pow </item>
+      <item> sqrt </item>
+      <item> sin </item>
+      <item> cos </item>
+      <item> tan </item>
+      <item> asin </item>
+      <item> acos </item>
+      <item> atan </item>
+      <item> atan2 </item>
+      <item> sinh </item>
+      <item> cosh </item>
+      <item> tanh </item>
+      <item> round </item>
+      <item> ceil </item>
+      <item> floor </item>
+      <item> min </item>
+      <item> max </item>
+      <item> abs </item>
+      <item> signum </item>
+      <item> exp </item>
+      <item> log </item>
+      <item> log10 </item>
+      <item> toDegrees </item>
+      <item> toRadians </item>
+      <item> rint </item>
+      <item> PI </item>
+      <item> E </item>
+    </list>
+    
+    <contexts>
+      <context name="default" attribute="Normal Text" lineEndContext="#stay">
+        <Detect2Chars attribute="Comment" context="linecomment" char="/" char1="/"/>
+        <Detect2Chars attribute="Comment" context="linecomment" char="/" char1="*"/>
+        <Detect2Chars attribute="Highlight" context="mavscriptcommand" char="$" char1="m"/>
+        <keyword attribute="Highlight" context="#stay" String="Keyword"/>
+        <AnyChar attribute="Parens" context="#stay" String="{[(" beginRegion="brace"/>
+        <AnyChar attribute="Parens" context="#stay" String="}])" endRegion="brace"/>
+      </context>
+      <context name="string" attribute="String" lineEndContext="#pop">
+        <LineContinue attribute="String" context="#stay"/>
+        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+      </context>
+      <context name="linecomment" attribute="Comment" lineEndContext="#pop">
+        <RegExpr attribute="Highlight" context="#stay" String="(FIXME|TODO)" />
+      </context>
+      <context name="mavscriptcommand" attribute="Keyword" lineEndContext="#pop">
+        <StringDetect attribute="Highlight" context="#pop" String="$io"/>
+        <Detect2Chars attribute="Highlight" context="#pop" char="$" char1="o"/>
+        <Detect2Chars attribute="Highlight" context="#pop" char="$" char1="i"/>
+        <Detect2Chars attribute="Highlight" context="#pop" char="$" char1="n"/>
+        <AnyChar attribute="Parens" context="#stay" String="{[(" beginRegion="brace"/>
+        <AnyChar attribute="Parens" context="#stay" String="}])" endRegion="brace"/>
+        <Float attribute="Float" context="#stay"/>
+        <Int attribute="Decimal" context="#stay"/>
+        <keyword attribute="FunctionDiscrete" context="#stay" String="init"/>
+        <keyword attribute="Function" context="#stay" String="yacas"/>
+        <keyword attribute="Function" context="#stay" String="beanshell"/>
+        <DetectChar attribute="String" context="string" char="&quot;"/>
+      </context>
+      
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text"  defStyleNum="dsNormal"/>
+      <itemData name="Keyword"      defStyleNum="dsKeyword"/>
+      <itemData name="Function"     defStyleNum="dsFunction" bold="1"/>
+      <itemData name="FunctionDiscrete"     defStyleNum="dsFunction"/>
+      <itemData name="Decimal"      defStyleNum="dsDecVal" bold="1"/>
+      <itemData name="Float"        defStyleNum="dsFloat" bold="1"/>
+      <itemData name="Char"         defStyleNum="dsChar"/>
+      <itemData name="String"       defStyleNum="dsString"/>
+      <itemData name="Comment"      defStyleNum="dsComment"/>
+      <itemData name="Symbol"       defStyleNum="dsOthers"/>
+      <itemData name="Parens"       defStyleNum="dsNormal"/>
+      <itemData name="Highlight"    defStyleNum="dsKeyword" color="#808000" selColor="#FFFFFF" bold="0" italic="0"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="//" />
+      <comment name="multiLine" start="/*" end="*/" />
+    </comments>
+    <keywords casesensitive="1" weakDeliminator="=`"/>
+  </general>
+</language>
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->

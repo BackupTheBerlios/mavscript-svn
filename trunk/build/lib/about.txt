@@ -4,7 +4,6 @@ Program libraries
 gnu-java-getopt.jar	required by Mavscript
 
 yacas.jar		The computer-algebra-system Yacas
-scripts.zip		Required by Yacas
 
 bsh.jar			BeanShell, the Java interpreter
 
@@ -30,6 +29,5 @@ Optional
 --------
 yacasconsole.html	Java applet that is conventient for testing Yacas commands.
 			Open it with your web browser.
-yacasconsole.html.hints	Required by the applet to show hints for the available
+hints.txt		Required by the applet to show hints for the available
 			Yacas commands.
-wizard.zip		Required by the applet to run the introduction wizard.

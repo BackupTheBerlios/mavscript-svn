@@ -2,7 +2,7 @@ How to create graphs in mavscript
 ---------------------------------
 
 Mavscript does not support graphs directly, as it is only text based.
-A way to draw graphs (xy-diagrams) is to create an image file. The html or OpenOffice odt (or sxw) template can link to it.
+A way to draw graphs (xy-diagrams) is to create an image file. The html or OpenOffice odt template can link to it.
 The difficult part is creating the image file. Therefor third party software is needed.
 Good knowledge of mavscript-yacas (resp. mavscript-beanshell) and of your computer system is required in order to understand this HowTo, as it is not a step-by-step explanation.
 
@@ -27,8 +27,8 @@ or
 Mavscript-beanshell
 -------------------
 Using jmathplot.
-http://jmathtools.sourceforge.net/jmathplot-14.jar
-Download the version for java 1.4 (even if you are running java 1.5, as beanshell is not java1.5 compatible).
+http://jmathtools.sourceforge.net
+Download the version for java 1.4 (even if you are running java 1.5, as beanshell is not java1.5 compatible): http://jmathtools.cvs.sourceforge.net/jmathtools/jmathplot-14/dist/jmathplot-14.jar
 
 1.) Copy the lines below and paste them in your template (at the beginning). Adjust the PATH to jmathplot.jar
 $m addClassPath("/home/PATH-TO-JMATHPLOT/jmathplot-14.jar"); $n

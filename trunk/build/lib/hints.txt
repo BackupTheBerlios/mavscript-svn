@@ -110,7 +110,7 @@
 ~3433373623 ~Difference~Difference(l1, l2)~return the difference of two lists~
 ~34436825837 ~EigenValues~EigenValues(matrix)~get eigenvalues of a matrix~
 ~344368328677 ~EigenVectors~EigenVectors(A,eigenvalues)~get eigenvectors of a matrix~
-~34537284737272867 ~FilePathSeparator~FilePathSeparator~OS-dependent constants~
+~34537284737272867 ~FilePathSeparator~FilePathSeparator()~OS-dependent constants~
 ~34555478 ~FillList~FillList(expr, n)~fill a list with a certain expression~
 ~34633453 ~FindFile~FindFile(name)~find a file in the current path~
 ~346338628466 ~FindFunction~FindFunction(function)~find the library file where a function is defined~
@@ -182,11 +182,10 @@
 ~4323 ~Head~Head(list)~the first element of a list~
 ~43277678 ~HeapSort~HeapSort(list, compare)~sort a list~
 ~43368489 ~Identity~Identity(n)~make identity matrix~
-~4357 ~Help~Help(function)~~
-~4357 ~Help~Help()~get documentation for some command~
 ~436374289736263 ~GenericTypeName~GenericTypeName(object)~get type name~
 ~4377426628749 ~HessianMatrix~HessianMatrix(function,var)~create the Hessian matrix~
 ~438267337767 ~GetCoreError~GetCoreError()~get "hard" error string~
+~438377678225328 ~GetErrorTableau~GetErrorTableau()~custom errors handlers~
 ~43837767 ~GetError~GetError("str")~custom errors handlers~
 ~438398724636 ~GetExtraInfo~GetExtraInfo(expr)~annotate objects with additional information~
 ~438773247466 ~GetPrecision~GetPrecision()~get the current precision~
@@ -210,11 +209,13 @@
 ~4653274 ~HoldArg~HoldArg("operator",parameter)~mark argument as not evaluated~
 ~46533672846 ~GoldenRatio~GoldenRatio()~the Golden Ratio~
 ~4653 ~Hold~Hold(expr)~keep expression unevaluated~
+~4668637426633 ~InNumericMode~InNumericMode()~compute numerical approximation~
 ~467378 ~Insert~Insert(list, n, expr)~insert an element into a list~
 ~467637 ~Horner~Horner(expr, var)~convert a polynomial into the Horner form~
 ~467763828 ~InProduct~InProduct(a,b)~inner product of vectors (deprecated)~
 ~468347283 ~Integrate~Integrate(var) expr~~
 ~468347283 ~Integrate~Integrate(var, x1, x2) expr~integration~
+~4683726736633 ~InVerboseMode~InVerboseMode()~set verbose output mode~
 ~468377328466 ~Intersection~Intersection(l1, l2)~return the intersection of two lists~
 ~4683773829567 ~InverseTaylor~InverseTaylor(var, at, order) expr~Taylor expansion of inverse~
 ~4683773 ~Inverse~Inverse(M)~get inverse of a matrix~
@@ -303,7 +304,6 @@
 ~526 ~Lcm~Lcm(list)~~
 ~526 ~Lcm~Lcm(n,m)~least common multiple~
 ~5275223872673676 ~LaplaceTransform~LaplaceTransform(t,s,func)	~Laplace Transform~
-~5299456225 ~LazyGlobal~LazyGlobal(var)~global variable is to be evaluated lazily~
 ~53234642633 ~LeadingCoef~LeadingCoef(poly)~leading coefficient of a polynomial~
 ~53234642633 ~LeadingCoef~LeadingCoef(poly, var)~~
 ~53387732333623 ~LeftPrecedence~LeftPrecedence("op",precedence)~set operator precedence~
@@ -410,6 +410,7 @@
 ~663 ~Mod~Mod(x,y)~division with remainder~
 ~66642 ~Monic~Monic(poly)~monic part of a polynomial~
 ~66642 ~Monic~Monic(poly, var)~~
+~6666 ~NonN~NonN(expr)~compute numerical approximation~
 ~667323 ~OMRead~OMRead()~convert expressions to and from OpenMath~
 ~667625493 ~Normalize~Normalize(v)~normalize a vector~
 ~668 ~Not~Not expr~logical negation~
@@ -474,7 +475,7 @@
 ~73837737659 ~ReversePoly~ReversePoly(f, g, var, newvar, degree)~solve $h(f(x)) = g(x) + O(x^n)$ for $h$~
 ~7383773 ~Reverse~Reverse(list)~return the reversed list (without touching the original)~
 ~738398724636 ~SetExtraInfo~SetExtraInfo(expr,tag)~annotate objects with additional information~
-~73843572769737 ~SetHelpBrowser~SetHelpBrowser(helpbrowser)~set the HTML browser to use for help~
+~738456225529982742253 ~SetGlobalLazyVariable~SetGlobalLazyVariable(var,value)~global variable is to be evaluated lazily~
 ~7387228 ~Retract~Retract("function",arity)~erase rules for a function~
 ~738787464643 ~SetStringMid~SetStringMid(index,substring,string)~change a substring~
 ~738 ~Set~Set(var, exp)~assignment~

@@ -1,3 +1,5 @@
 // Rundungsfunktion
 /** nf (zu rundende Zahl, Anzahl Kommastellen) */
 nf(zahl,stellen) := N(Eval(Round(zahl*10^stellen)/10^stellen));
+/** nf (Zahl) */
+nf(zahl) := N(Eval(zahl));

@@ -76,9 +76,9 @@
 :CurrentFile:CurrentFile():return current input file:
 :CurrentLine:CurrentLine():return current line number on input:
 :Cyclotomic:Cyclotomic(n,x):construct the cyclotomic polynomial:
-:D:D(list) expr::
-:D:D(var) expr:differentiation:
-:D:D(var,n) expr::
+:D:D(list) expression::
+:D:D(variable) expression:take derivative of expression with respect to variable:
+:D:D(variable,n) expression::
 :Decimal:Decimal(frac):decimal representation of a rational:
 :DefaultDirectory:DefaultDirectory(path):add directory to path for Yacas scripts:
 :DefaultTokenizer:DefaultTokenizer():select the default syntax tokenizer for parsing the input:
@@ -403,11 +403,8 @@
 :NextPrime:NextPrime(i):generate a prime following a number:
 :NFunction:NFunction("newname","funcname", {arglist}):make wrapper for numeric functions:
 :Nl:Nl():the newline character:
-:N:N(Catalan)::
 :N:N(expr):compute numerical approximation:
 :N:N(expr, prec)::
-:N:N(gamma)::
-:N:N(GoldenRatio)::
 :NonN:NonN(expr):calculate part in non-numeric mode:
 :Normalize:Normalize(v):normalize a vector:
 :Not:Not expr:logical negation:
@@ -457,7 +454,6 @@
 :PDF:PDF(dist,x):probability density function:
 :Permutations:Permutations(list):get all permutations of a list:
 :Pi:Pi:mathematical constant, $pi$:
-:Pi:Pi():numerical approximation of $Pi$:
 :PlatformOS:PlatformOS():OS-dependent constants:
 :Plot2D:Plot2D(f(x), a b)::
 :Plot2D:Plot2D(f(x), a b, option=value, ...)::

@@ -9,43 +9,47 @@ package mavscript.bin;
 import java.util.*;
 
 
-/* Copyright (c) 2005, 2006 A.Vontobel  <qwert2003@users.berlios.de>,
- *                                      <qwert2003@users.sourceforge.net>
+/* Copyright (c) 2005 - 2007 A.Vontobel  <qwert2003@users.berlios.de>,
+ *                                       <qwert2003@users.sourceforge.net>
  *
  *
  * -------------------------------------------------------------
  *
  * Dieses Programm ist freie Software. Sie können es unter den Bedingungen
- * der GNU General Public License, Version 2, wie von der Free Software
- * Foundation herausgegeben, weitergeben und/oder modifizieren.
- *
+ * der GNU General Public License, wie von der Free Software Foundation
+ * veröffentlicht, weitergeben und/oder modifizieren, entweder gemäss Version 2
+ * der Lizenz oder (nach Ihrer Option) jeder späteren Version.
+
  * Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, dass es
- * Ihnen von Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne
- * die implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FüR EINEN
- * BESTIMMTEN ZWECK.  Details finden Sie in der GNU General Public License.
+ * Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne
+ * die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN
+ * BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.
  *
- * Sie sollten eine Kopie der GNU General Public License zusammen  mit
+ * Sie sollten ein Exemplar der GNU General Public License zusammen mit
  * diesem Programm erhalten haben. Falls nicht, schreiben Sie an die
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA.
  *
  * Die Lizenz befindet sich in der beiliegenden Datei LICENCE-GPL.txt.
- * Siehe auch http://www.gnu.org/copyleft/gpl.html für weitere Informationen.
+ * Falls nicht, siehe http://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
  *
  * -------------------------------------------------------------
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License version 2
- * as published by the Free Software Foundation.
- * This program is distributed
- * in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details. You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * The license is in LICENCE-GPL.txt.
- * See http://www.gnu.org/copyleft/gpl.html for the details.
+ * If not, see http://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
  */
 
 /**

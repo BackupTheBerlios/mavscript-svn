@@ -20,9 +20,7 @@
 :AssocDelete:AssocDelete(alist, {key, value})::
 :AssocIndices:AssocIndices(alist):return the keys in an association list:
 :Atom:Atom("string"):convert string to atom:
-:Average:Average(list):average of a list of values:
 :BaseVector:BaseVector(k, n):base vector:
-:BernoulliArray:BernoulliArray(index):Bernoulli numbers and polynomials:
 :Bernoulli:Bernoulli(index):Bernoulli numbers and polynomials:
 :Bernoulli:Bernoulli(index, x)::
 :BernoulliDistribution:BernoulliDistribution(p):Bernoulli distribution:
@@ -40,7 +38,7 @@
 :BubbleSort:BubbleSort(list, compare):sort a list:
 :CachedConstant:CachedConstant(cache, Cname, Cfunc):precompute multiple-precision constants:
 :CanProve:CanProve(proposition):try to prove statement:
-:Catalan:Catalan():Catalan's Constant:
+:Catalan:Catalan:Catalan's Constant:
 :CatalanNumber:CatalanNumber(n):return the {n}th Catalan Number:
 :Ceil:Ceil(x):round a number upwards:
 :CForm:CForm(expr):export expression to C++ code:
@@ -54,7 +52,6 @@
 :ClearErrors:ClearErrors():simple error handlers:
 :Coef:Coef(expr, var, order):coefficient of a polynomial:
 :CoFactor:CoFactor(M,i,j):cofactor of a matrix:
-:Commutator:Commutator(a, b):commutator of two objects:
 :Complex:Complex(r, c):construct a complex number:
 :Concat:Concat(list1, list2, ...):concatenate lists:
 :ConcatStrings:ConcatStrings(strings):concatenate strings:
@@ -140,7 +137,6 @@
 :Factors:Factors(x):factorization:
 :False:False:boolean constant representing false:
 :FermatNumber:FermatNumber(n):return the {n}th Fermat Number:
-:Fibonacci:Fibonacci(n):Fibonacci sequence:
 :FilePathSeparator:FilePathSeparator():OS-dependent constants:
 :FillList:FillList(expr, n):fill a list with a certain expression:
 :FindFile:FindFile(name):find a file in the current path:
@@ -164,7 +160,6 @@
 :Function:Function("op", {arglist, ...}) body::
 :Function:Function("op", {arglist}) body::
 :Gamma:Gamma(x):Euler's Gamma function:
-:GammaNum:GammaNum(number):Euler's Gamma function:
 :GarbageCollect:GarbageCollect():do garbage collection on unused memory:
 :GaussianFactors:GaussianFactors(z):factorization in Gaussian integers:
 :GaussianGcd:GaussianGcd(z,w):greatest common divisor in Gaussian integers:
@@ -184,7 +179,7 @@
 :GlobalPop:GlobalPop()::
 :GlobalPop:GlobalPop(var):restore variables using a global stack:
 :GlobalPush:GlobalPush(expr):save variables using a global stack:
-:GoldenRatio:GoldenRatio():the Golden Ratio:
+:GoldenRatio:GoldenRatio:the Golden Ratio:
 :GreaterThan:GreaterThan(a,b):comparison predicate:
 :GuessRational:GuessRational(x, digits)::
 :GuessRational:GuessRational(x):find optimal rational approximations:
@@ -301,7 +296,6 @@
 :KnownFailure:KnownFailure(test):Mark a test as a known failure:
 :LagrangeInterpolant:LagrangeInterpolant(xlist, ylist, var):polynomial interpolation:
 :LambertW:LambertW(x):Lambert's $W$ function:
-:LambertWNum:LambertWNum(x):Lambert's $W$ function:
 :LaplaceTransform:LaplaceTransform(t,s,func)	:Laplace Transform:
 :Lcm:Lcm(list)::
 :Lcm:Lcm(n,m):least common multiple:
@@ -403,8 +397,8 @@
 :NextPrime:NextPrime(i):generate a prime following a number:
 :NFunction:NFunction("newname","funcname", {arglist}):make wrapper for numeric functions:
 :Nl:Nl():the newline character:
-:N:N(expr):compute numerical approximation:
-:N:N(expr, prec)::
+:N:N(expression, precision)::
+:N:N(expression):try determine numerical approximation of expression:
 :NonN:NonN(expr):calculate part in non-numeric mode:
 :Normalize:Normalize(v):normalize a vector:
 :Not:Not expr:logical negation:
@@ -512,7 +506,6 @@
 :RngCreate:RngCreate(option==value,...)::
 :Rng:Rng(r):manipulate random number generators as objects:
 :RngSeed:RngSeed(r, init):manipulate random number generators as objects:
-:RootsOfUnity:RootsOfUnity(n):find the $n$ complex roots of unity:
 :Round:Round(x):round a number to the nearest integer:
 :RoundTo:RoundTo(number,precision):Round a real-valued result to a set number of digits:
 :RuleBaseArgList:RuleBaseArgList("operator", arity):obtain list of arguments:
@@ -624,6 +617,5 @@
 :ZeroMatrix:ZeroMatrix(n, m)::
 :ZeroMatrix:ZeroMatrix(n):make a zero matrix:
 :ZeroVector:ZeroVector(n):create a vector with all zeroes:
-:ZetaNum:ZetaNum(number):Riemann's Zeta function:
 :Zeta:Zeta(x):Riemann's Zeta function:
 :::::::

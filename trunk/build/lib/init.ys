@@ -3,3 +3,7 @@
 nf(zahl,stellen) := N(Eval(Round(zahl*10^stellen)/10^stellen));
 /** nf (Zahl) */
 nf(zahl) := N(Eval(zahl));
+
+// Löst numerisch Gleichungen
+nSolve(expr,var,initial,accuracy) := `(Newton(Eval(@expr),@var,initial,accuracy));
+nSolve(expr,var,initial) := `(Newton(Eval(@expr),@var,initial,0.00001));

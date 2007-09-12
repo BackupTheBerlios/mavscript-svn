@@ -11,7 +11,7 @@
     <h2>Introduction</h2>
     <p>
       <i>Yacas</i> allows you to do calculations, and can be used directly inside your browser. Above 
-      you should see the <i>Yacas</i> calculation environment, with a text in blue stating "Click here to enter an expression". 
+      you should see the <i>Yacas</i> calculation center, with a text in blue stating "Click here to enter an expression". 
       After tapping in that area, that text should be replaced with <span class="yacasExpression">In></span>. You can type an expression to
       be executed here. If you don't know what to type don't worry, that is what this tutorial is for.
     </p>
@@ -554,9 +554,10 @@
     </p>
     <p>
       Variables can also be made to be local to a small set of functions, with  <span class="yacasExpression">LocalSymbols(variables) body</span>. For example, the following code snippet:
-      <a class="commandlink">LocalSymbols(a,b) [a:=0;b:=0; inc():=[a:=a+1;b:=b-1;]; show():=Echo("a = ",a," b = ",b); ];</a> defines two functions, <span class="yacasExpression">inc</span>
+      <a class="commandlink">LocalSymbols(a,b) [a:=0;b:=0; inc():=[a:=a+1;b:=b-1;show();]; show():=Echo("a = ",a," b = ",b); ];</a> defines two functions, <span class="yacasExpression">inc</span>
       and <span class="yacasExpression">show</span>. Calling <a class="commandlink">inc()</a> repeatedly increments <span class="yacasExpression">a</span> and decrements
-      <span class="yacasExpression">b</span>, and calling <a class="commandlink">show()</a> then shows the result. The variables are local to these two functions, as you can see
+      <span class="yacasExpression">b</span>, and calling <a class="commandlink">show()</a> then shows the result (the function "inc" also calls the function "show", but the purpose of 
+this example is to show how two functions can share the same variable while the outside world cannot get at that variable). The variables are local to these two functions, as you can see
       by evaluating <a class="commandlink">a</a> and <a class="commandlink">b</a> outside the scope of these two functions. This feature is very important when writing a larger body
       of code, where you want to be able to guarantee that there are no unintended side-effects due to two bits of code defined in different files accidentally using the same global
       variable.

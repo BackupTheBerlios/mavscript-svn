@@ -7,11 +7,12 @@
 :ArcSin:ArcSin(x):inverse trigonometric function arc-sine:
 :ArcTan:ArcTan(x):inverse trigonometric function arc-tangent:
 :Arg:Arg(x):argument of a complex number:
-:ArrayCreate:ArrayCreate(size,init):create array:
-:ArrayCreateFromList:ArrayCreateFromList(list):convert list to array:
-:ArrayGet:ArrayGet(array,index):fetch array element:
-:ArraySet:ArraySet(array,index,element):set array element:
-:ArraySize:ArraySize(array):get array size:
+:Array'Create:Array'Create(size,init):create array:
+:Array'CreateFromList:Array'CreateFromList(list):convert list to array:
+:Array'Get:Array'Get(array,index):fetch array element:
+:Array'Set:Array'Set(array,index,element):set array element:
+:Array'Size:Array'Size(array):get array size:
+:Array'ToList:Array'ToList(array):convert array to list:
 :Assert:Assert() pred::
 :Assert:Assert("str", expr) pred:signal "soft" custom error:
 :Assert:Assert("str") pred::
@@ -36,6 +37,8 @@
 :Bodied:Bodied("op", precedence):define function syntax (bodied function):
 :BracketRational:BracketRational(x, eps):find optimal rational approximations:
 :BubbleSort:BubbleSort(list, compare):sort a list:
+:Builtin'Precision'Get:Builtin'Precision'Get():get the current precision:
+:Builtin'Precision'Set:Builtin'Precision'Set(n):set the precision:
 :CachedConstant:CachedConstant(cache, Cname, Cfunc):precompute multiple-precision constants:
 :CanProve:CanProve(proposition):try to prove statement:
 :Catalan:Catalan:Catalan's Constant:
@@ -64,11 +67,9 @@
 :ContFracEval:ContFracEval(list, rest)::
 :ContFracList:ContFracList(frac, depth)::
 :ContFracList:ContFracList(frac):manipulate continued fractions:
-:CopyFile:CopyFile("src","dest"):manipulate files and directories:
 :Cos:Cos(x):trigonometric cosine function:
 :Count:Count(list, expr):count the number of occurrences of an expression:
 :CrossProduct:CrossProduct(a,b):outer product of vectors:
-:CTokenizer:CTokenizer():select a C syntax tokenizer for parsing the input:
 :Curl:Curl(vector, basis):curl of a vector field:
 :CurrentFile:CurrentFile():return current input file:
 :CurrentLine:CurrentLine():return current line number on input:
@@ -85,8 +86,6 @@
 :Degree:Degree(expr):degree of a polynomial:
 :Degree:Degree(expr, var)::
 :Delete:Delete(list, n):delete an element from a list:
-:DeleteDir:DeleteDir("dir", ...):manipulate files and directories:
-:DeleteFile:DeleteFile("file", ...):manipulate files and directories:
 :Denom:Denom(expr):denominator of an expression:
 :DestructiveAppend:DestructiveAppend(list, expr):destructively append an entry to a list:
 :DestructiveDelete:DestructiveDelete(list, n):delete an element destructively from a list:
@@ -102,10 +101,7 @@
 :Divisors:Divisors(n):number of divisors:
 :DivisorsList:DivisorsList(n):the list of divisors:
 :DivisorsSum:DivisorsSum(n):the sum of  divisors:
-:DllDirectory:DllDirectory(path):add directory to path for Yacas plugins:
-:DllEnumerate:DllEnumerate():enumerate all loaded plugins:
-:DllLoad:DllLoad(file):load a plugin:
-:DllUnload:DllUnload(file):unload a plugin:
+:Dll'Load:Dll'Load(file):load a plugin:
 :Dot:Dot(t1,t2):get dot product of tensors:
 :Drop:Drop(list, {m,n})::
 :Drop:Drop(list, -n)::
@@ -130,6 +126,8 @@
 :Expand:Expand(expr, var)::
 :Expand:Expand(expr, varlist)::
 :Exp:Exp(x):exponential function:
+:ExtraInfo'Get:ExtraInfo'Get(expr):annotate objects with additional information:
+:ExtraInfo'Set:ExtraInfo'Set(expr,tag):annotate objects with additional information:
 :Factor:Factor(x):factorization, in pretty form:
 :FactorialSimplify:FactorialSimplify(expression):Simplify hypergeometric expressions containing factorials:
 :Factorize:Factorize(list):product of a list of values:
@@ -137,7 +135,6 @@
 :Factors:Factors(x):factorization:
 :False:False:boolean constant representing false:
 :FermatNumber:FermatNumber(n):return the {n}th Fermat Number:
-:FilePathSeparator:FilePathSeparator():OS-dependent constants:
 :FillList:FillList(expr, n):fill a list with a certain expression:
 :FindFile:FindFile(name):find a file in the current path:
 :Find:Find(list, expr):get the index at which a certain element occurs:
@@ -170,12 +167,7 @@
 :GetCoreError:GetCoreError():get "hard" error string:
 :GetError:GetError("str"):custom errors handlers:
 :GetErrorTableau:GetErrorTableau():custom errors handlers:
-:GetExtraInfo:GetExtraInfo(expr):annotate objects with additional information:
-:GetPrecision:GetPrecision():get the current precision:
-:GetPrettyPrinter:GetPrettyPrinter():get routine to use as pretty-printer:
-:GetPrettyReader:GetPrettyReader():get routine that is currently used as pretty-reader:
 :GetTime:GetTime(expr):measure the time taken by an evaluation:
-:GetYacasPID:GetYacasPID():obtain Yacas process number:
 :GlobalPop:GlobalPop()::
 :GlobalPop:GlobalPop(var):restore variables using a global stack:
 :GlobalPush:GlobalPush(expr):save variables using a global stack:
@@ -310,7 +302,6 @@
 :Limit:Limit(var, val) expr:limit of an expression:
 :LispRead:LispRead():read expressions in LISP syntax:
 :LispReadListed:LispReadListed():read expressions in LISP syntax:
-:ListFromArray:ListFromArray(array):convert array to list:
 :Listify:Listify(expr):convert a function application to a list:
 :List:List(expr1, expr2, ...):construct a list:
 :LnCombine:LnCombine(expr):combine logarithmic expressions using standard logarithm rules:
@@ -325,10 +316,6 @@
 :Macro:Macro() func(arglist):declare or define a macro:
 :Macro:Macro("op", {arglist, ...}) body::
 :Macro:Macro("op", {arglist}) body::
-:MakeDir:MakeDir("dir1", ...):manipulate files and directories:
-:MakeFilePath:MakeFilePath("dir1", "dir2", ..., "file"):manipulate files and directories:
-:MakeFunctionPlugin:MakeFunctionPlugin()::
-:MakeFunctionPlugin:MakeFunctionPlugin("name", body):compile numerical functions into plugins:
 :MakeVector:MakeVector(var,n):vector of uniquely numbered variable names:
 :MapArgs:MapArgs(expr, fn):apply a function to all top-level arguments:
 :Map:Map(fn, list):apply an $n$-ary function to all entries in a list:
@@ -352,7 +339,6 @@
 :MathFloor:MathFloor(x)   (largest integer not larger than x)::
 :MathGcd:MathGcd(n,m)      (Greatest Common Divisor)::
 :MathGetExactBits:MathGetExactBits(x):manipulate precision of floating-point numbers:
-:MathLibrary:MathLibrary():obtain current math library name:
 :MathLog:MathLog(x)     (natural logarithm, for x>0)::
 :MathMod:MathMod(x,y)    (remainder of division, or x mod y)::
 :MathMultiply:MathMultiply(x,y) (multiply two numbers)::
@@ -439,7 +425,6 @@
 :OrthoTSum:OrthoTSum(c, x);:sums of series of orthogonal polynomials:
 :OrthoU:OrthoU(n, x);:Chebyshev polynomials:
 :OrthoUSum:OrthoUSum(c, x);:sums of series of orthogonal polynomials:
-:OSVersion:OSVersion():OS-dependent constants:
 :Outer:Outer(t1,t2):get outer tensor product:
 :PAdicExpand:PAdicExpand(n, p):p-adic expansion:
 :Partition:Partition(list, n):partition a list in sublists of equal length:
@@ -448,7 +433,6 @@
 :PDF:PDF(dist,x):probability density function:
 :Permutations:Permutations(list):get all permutations of a list:
 :Pi:Pi:mathematical constant, $pi$:
-:PlatformOS:PlatformOS():OS-dependent constants:
 :Plot2D:Plot2D(f(x), a b)::
 :Plot2D:Plot2D(f(x), a b, option=value, ...)::
 :Plot2D:Plot2D(f(x), a b, option=value)::
@@ -464,14 +448,15 @@
 :Pop:Pop(stack, n):remove an element from a stack:
 :Postfix:Postfix("op"):define function syntax (postfix operator):
 :Postfix:Postfix("op", precedence)::
-:Precision:Precision(n):set the precision:
 :Prefix:Prefix("op"):define function syntax (prefix operator):
 :Prefix:Prefix("op", precedence)::
 :PrettyForm:PrettyForm(expr):print an expression nicely with ASCII art:
-:PrettyPrinter:PrettyPrinter()::
-:PrettyPrinter:PrettyPrinter(printer):set routine to use as pretty-printer:
-:PrettyReader:PrettyReader()::
-:PrettyReader:PrettyReader(reader):set routine to use as pretty-reader:
+:PrettyPrinter'Get:PrettyPrinter'Get():get routine to use as pretty-printer:
+:PrettyPrinter'Set:PrettyPrinter'Set()::
+:PrettyPrinter'Set:PrettyPrinter'Set(printer):set routine to use as pretty-printer:
+:PrettyReader'Get:PrettyReader'Get():get routine that is currently used as pretty-reader:
+:PrettyReader'Set:PrettyReader'Set()::
+:PrettyReader'Set:PrettyReader'Set(reader):set routine to use as pretty-reader:
 :PrimitivePart:PrimitivePart(expr):primitive part of a univariate polynomial:
 :PrintList:PrintList(list, padding);::
 :PrintList:PrintList(list):print list with padding:
@@ -514,13 +499,10 @@
 :Rule:Rule("operator", arity,:define a rewrite rule:
 :Secure:Secure(body):guard the host OS:
 :Select:Select(pred, list):select entries satisfying some predicate:
-:SetExtraInfo:SetExtraInfo(expr,tag):annotate objects with additional information:
 :SetGlobalLazyVariable:SetGlobalLazyVariable(var,value):global variable is to be evaluated lazily:
 :Set:Set(var, exp):assignment:
-:SetStringMid:SetStringMid(index,substring,string):change a substring:
 :ShiftLeft:ShiftLeft(expr,bits)::
 :ShiftRight:ShiftRight(expr,bits)::
-:ShowPS:ShowPS(expr):view equations graphically:
 :Sign:Sign(x):sign of a number:
 :Simplify:Simplify(expr):try to simplify an expression:
 :Sin:Sin(x):trigonometric sine function:
@@ -533,20 +515,9 @@
 :SquareFreeDivisorsList:SquareFreeDivisorsList(n):the list of square-free divisors:
 :SquareFree:SquareFree(p):return the square-free part of polynomial:
 :StirlingNumber1:StirlingNumber1(n,m):return the {n,m}th Stirling Number of the first kind:
-:StringMid:StringMid(index,length,string):retrieve a substring:
+:StringMid'Get:StringMid'Get(index,length,string):retrieve a substring:
+:StringMid'Set:StringMid'Set(index,substring,string):change a substring:
 :String:String(atom):convert atom to string:
-:StubApiCFile:StubApiCFile(pluginname,basename):set file name for plugin API:
-:StubApiCFunction:StubApiCFunction(returntype,fname,::
-:StubApiCFunction:StubApiCFunction(returntype,fname,args):declare C++ function in plugin:
-:StubApiCInclude:StubApiCInclude(file):declare include file in plugin:
-:StubApiCPluginPurpose:StubApiCPluginPurpose(text):document the purpose of the plugin:
-:StubApiCPrettyName:StubApiCPrettyName(name):give a descriptive name for documentation:
-:StubApiCRemark:StubApiCRemark(string):provide more documentation for plugin:
-:StubApiCSetEnv:StubApiCSetEnv(func):access Yacas environment in plugin:
-:StubApiCShortIntegerConstant:StubApiCShortIntegerConstant(const,value):declare integer constant in plugin:
-:StubApiCStart:StubApiCStart(name):begin a C++ plugin API description:
-:StubApiCStruct:StubApiCStruct(name):declare C struct in plugin:
-:StubApiCStruct:StubApiCStruct(name,freefunction)::
 :Subfactorial:Subfactorial(m):factorial and related functions:
 :Subst:Subst(from, to) expr:perform a substitution:
 :SuchThat:SuchThat(expr, var):special purpose solver:
@@ -557,7 +528,6 @@
 :SumTaylorNum:SumTaylorNum(x, ZerothTerm, TermFactor, order)::
 :Swap:Swap(list, i1, i2):swap two elements in a list:
 :SylvesterMatrix:SylvesterMatrix(poly1,poly2,variable):calculate the Sylvester matrix of two polynomials:
-:SystemCallBg:SystemCallBg("command"):execute a system command in the background:
 :SystemCall:SystemCall(str):pass a command to the shell:
 :TableForm:TableForm(list):print each entry in a list on a line:
 :Table:Table(body, var, from, to, step):evaluate while some variable ranges over interval:
@@ -567,8 +537,6 @@
 :Take:Take(list, n):take a sublist from a list, dropping the rest:
 :Tan:Tan(x):trigonometric tangent function:
 :Taylor:Taylor(var, at, order) expr:univariate Taylor series expansion:
-:TemporaryDir:TemporaryDir():manipulate files and directories:
-:TemporaryFile:TemporaryFile():manipulate files and directories:
 :TestYacas:TestYacas(question,answer):verifying equivalence of two expressions:
 :TeXForm:TeXForm(expr):export expressions to $LaTeX$:
 :Time:Time(expr):measure the time taken by a function:
@@ -603,8 +571,6 @@
 :VerifyDiv:VerifyDiv(u,v):Special purpose arithmetic verifiers:
 :Verify:Verify(question,answer):verifying equivalence of two expressions:
 :Version:Version():show version of Yacas:
-:Vi:Vi(filename);:edit a file or function:
-:Vi:Vi(functionname);::
 :V:V(expression):set verbose output mode:
 :While:While(pred) body:loop while a condition is met:
 :WithValue:WithValue({var,...}, {val,...}, expr)::

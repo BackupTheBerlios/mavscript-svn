@@ -78,7 +78,6 @@
 :D:D(variable) expression:take derivative of expression with respect to variable:
 :D:D(variable,n) expression::
 :Decimal:Decimal(frac):decimal representation of a rational:
-:DefaultDirectory:DefaultDirectory(path):add directory to path for Yacas scripts:
 :DefaultTokenizer:DefaultTokenizer():select the default syntax tokenizer for parsing the input:
 :DefLoad:DefLoad(name):load a {.def} file:
 :DefMacroRuleBase:DefMacroRuleBase(name,params):define a function as a macro:
@@ -101,7 +100,6 @@
 :Divisors:Divisors(n):number of divisors:
 :DivisorsList:DivisorsList(n):the list of divisors:
 :DivisorsSum:DivisorsSum(n):the sum of  divisors:
-:Dll'Load:Dll'Load(file):load a plugin:
 :Dot:Dot(t1,t2):get dot product of tensors:
 :Drop:Drop(list, {m,n})::
 :Drop:Drop(list, -n)::
@@ -189,7 +187,6 @@
 :HilbertInverseMatrix:HilbertInverseMatrix(n):create a Hilbert inverse matrix:
 :HilbertMatrix:HilbertMatrix(n):create a Hilbert matrix:
 :HilbertMatrix:HilbertMatrix(n,m)::
-:HistorySize:HistorySize(n):set size of history file:
 :HoldArg:HoldArg("operator",parameter):mark argument as not evaluated:
 :HoldArgNr:HoldArgNr("function", arity, argNum):specify argument as not evaluated:
 :Hold:Hold(expr):keep expression unevaluated:
@@ -354,7 +351,6 @@
 :MathTan:MathTan(x)     (tangent)::
 :MatrixPower:MatrixPower(mat,n):get nth power of a square matrix:
 :MatrixSolve:MatrixSolve(A,b):solve a system of equations:
-:MaxEvalDepth:MaxEvalDepth(n):set depth of recursion stack:
 :MaxEvalDepth:MaxEvalDepth(n):set the maximum evaluation depth:
 :MaximumBound:MaximumBound(p):return upper bounds on the absolute values of real roots of a polynomial:
 :Max:Max(list)::
@@ -451,12 +447,6 @@
 :Prefix:Prefix("op"):define function syntax (prefix operator):
 :Prefix:Prefix("op", precedence)::
 :PrettyForm:PrettyForm(expr):print an expression nicely with ASCII art:
-:PrettyPrinter'Get:PrettyPrinter'Get():get routine to use as pretty-printer:
-:PrettyPrinter'Set:PrettyPrinter'Set()::
-:PrettyPrinter'Set:PrettyPrinter'Set(printer):set routine to use as pretty-printer:
-:PrettyReader'Get:PrettyReader'Get():get routine that is currently used as pretty-reader:
-:PrettyReader'Set:PrettyReader'Set()::
-:PrettyReader'Set:PrettyReader'Set(reader):set routine to use as pretty-reader:
 :PrimitivePart:PrimitivePart(expr):primitive part of a univariate polynomial:
 :PrintList:PrintList(list, padding);::
 :PrintList:PrintList(list):print list with padding:
@@ -570,7 +560,6 @@
 :VerifyArithmetic:VerifyArithmetic(x,n,m):Special purpose arithmetic verifiers:
 :VerifyDiv:VerifyDiv(u,v):Special purpose arithmetic verifiers:
 :Verify:Verify(question,answer):verifying equivalence of two expressions:
-:Version:Version():show version of Yacas:
 :V:V(expression):set verbose output mode:
 :While:While(pred) body:loop while a condition is met:
 :WithValue:WithValue({var,...}, {val,...}, expr)::

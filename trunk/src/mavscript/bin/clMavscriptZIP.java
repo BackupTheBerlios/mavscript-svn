@@ -96,7 +96,8 @@ public class clMavscriptZIP implements inConst {
     // Fall IO
     private String trennzeichenIO = " --> ";
     
-    private final String NZ = System.getProperty("line.separator"); //"\n"; // neue Zeile
+    private final String NZsys = System.getProperty("line.separator");
+    private String NZ = NZsys; //"\n"; // neue Zeile
     private Locale locale = Locale.getDefault();
     private final clTranslation tr = new clTranslation("mavscript/locales/clMavscript");
     public static final int EOF = -1; // End Of File
@@ -152,13 +153,13 @@ public class clMavscriptZIP implements inConst {
             charsetOK = java.nio.charset.Charset.isSupported(neuerCharsetName);
             
         } catch (java.nio.charset.IllegalCharsetNameException e) {
-            String Fehlermeldung = tr.tr("InvalidCharset") +" "+ neuerCharsetName  + '\n' + tr.tr("ErrorMessage") + ": " + e
-                    + '\n' + charsetName + " " + tr.tr("UsedInstead");
+            String Fehlermeldung = tr.tr("InvalidCharset") +" "+ neuerCharsetName  + NZsys + tr.tr("ErrorMessage") + ": " + e
+                    + NZsys + charsetName + " " + tr.tr("UsedInstead");
             System.err.println(Fehlermeldung);
         }
         if (charsetOK) charsetName = neuerCharsetName;
         else {
-            String Fehlermeldung = tr.tr("InvalidCharset") +" "+ neuerCharsetName + '\n' + charsetName + " " + tr.tr("UsedInstead");
+            String Fehlermeldung = tr.tr("InvalidCharset") +" "+ neuerCharsetName + NZsys + charsetName + " " + tr.tr("UsedInstead");
             System.err.println(Fehlermeldung);
         }
     }
@@ -208,12 +209,12 @@ public class clMavscriptZIP implements inConst {
             while (EOF == false);
             eingabe.close();
         } catch(FileNotFoundException e) {
-            Fehlermeldung = tr.tr("File")+" " + dateiname + " "+tr.tr("NotExisting")+"!" + '\n' + tr.tr("ErrorMessage") + ": " + e;
+            Fehlermeldung = tr.tr("File")+" " + dateiname + " "+tr.tr("NotExisting")+"!" + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
             verbose = true;
         } catch(IOException e) {
-            Fehlermeldung = tr.tr("ErrorInFile") +" " + dateiname +  ", "+tr.tr("Line")+" " + zeilennr + '\n' + tr.tr("ErrorMessage") + ": " + e;
+            Fehlermeldung = tr.tr("ErrorInFile") +" " + dateiname +  ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
             verbose = true;
@@ -228,6 +229,28 @@ public class clMavscriptZIP implements inConst {
         }
         
         if (!FEHLER) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        
+        // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
+        try {
+            ZipFile datei = new ZipFile(dateiname);
+            ZipEntry entry = datei.getEntry(dateiimarchivname);
+            InputStreamReader eingabestrom = new InputStreamReader(datei.getInputStream(entry), charsetName);
+            char[] cbuf = new char[2];
+            eingabestrom.skip(quelle[0].length());
+            eingabestrom.read(cbuf, 0, cbuf.length);
+            eingabestrom.close();
+            if (cbuf[0] == '\n') NZ = "\n"; // Unix
+            else if (cbuf[0] == '\r') {
+                if (cbuf[1] == '\n') NZ = "\r\n"; // Windows
+                else NZ = "\r"; // Mac früher
+            }
+            else NZ = NZsys; // wenn nichts entdeckt wird. Z.B. Einzeiler.
+        }
+        catch(Exception e) {
+            Fehlermeldung = tr.tr("ErrorMessage") + ": " + e;
+            System.err.println(Fehlermeldung);
+            System.err.println("Could not detect NewLine char: using system default.");
+        }
     }
     
     private void vorlaufdateiEinlesen(String dateiname) {
@@ -306,12 +329,12 @@ public class clMavscriptZIP implements inConst {
                     
                 } catch(FileNotFoundException e) {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!" + 
-                            '\n' + tr.tr("ErrorMessage") + ": " + e;
+                            NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
                     verbose = true;
                 } catch(IOException e) {
-                    Fehlermeldung = tr.tr("ErrorInFile")+" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + '\n' + tr.tr("ErrorMessage") + ": " + e;
+                    Fehlermeldung = tr.tr("ErrorInFile")+" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
                     verbose = true;
@@ -331,8 +354,8 @@ public class clMavscriptZIP implements inConst {
     
     private void quelldateiParsen() {
         clParser parser;
-        if (dollarersetzen) parser = new clParser(quelle, dollarersatz);
-        else parser = new clParser(quelle);
+        if (dollarersetzen) parser = new clParser(quelle, NZ, dollarersatz);
+        else parser = new clParser(quelle, NZ);
         zielListe = parser.getZiel();
     }
     
@@ -542,7 +565,7 @@ public class clMavscriptZIP implements inConst {
             ZIELDATEIGESCHRIEBEN = true;
         } catch(IOException e) {
             String Fehlermeldung = tr.tr("ErrorWritingFile") + " " + aktDateiinZip + " "+tr.tr("ToArchive")+" " + zielarchiv
-                    + NZ + tr.tr("ErrorMessage") + ": " + e;
+                    + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
             verbose = true;

@@ -75,18 +75,22 @@ public class clParser {
     private String stzIO = "$io";   // Ende der Anweisung: Zeige Ein- und Ausgabe
     private String stzN = "$n";     // Ende der Anweisung: Zeige nichts
     
-    private final String NZ = System.getProperty("line.separator"); //"\n"; // neue Zeile
+    private String NZ = System.getProperty("line.separator"); //"\n"; // neue Zeile
     
-    /** Creates a new instance of clParser */
-    public clParser(String[] quelle) {
+    /** Creates a new instance of clParser
+     @args neueZeile: Zeichen für NewLine, z.B. "\n". null für System.getProperty("line.separator"); */
+    public clParser(String[] quelle, String neueZeile) {
         this.quelle = quelle;
+        if (neueZeile != null) NZ = neueZeile;
         parse();        
     }
     
     /** Creates a new instance of clParser.
+     @args neueZeile: Zeichen für NewLine, z.B. "\n". null für System.getProperty("line.separator");
      @args dollarersatz: ersetzt $ mit anderem Zeichen, z.B. %. --> %m statt $m*/
-    public clParser(String[] quelle, String dollarErsatz) {
+    public clParser(String[] quelle, String neueZeile, String dollarErsatz) {
         this.quelle = quelle;
+        if (neueZeile != null) NZ = neueZeile;
         stzM = dollarErsatz + "m";     // Start der Mathe-Anweisung
         stzI = dollarErsatz + "i";     // Ende der Anweisung: Zeige Eingabe
         stzO = dollarErsatz + "o";     // Ende der Anweisung: Zeige Ausgabe

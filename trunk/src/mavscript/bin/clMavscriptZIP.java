@@ -80,6 +80,7 @@ public class clMavscriptZIP implements inConst {
     String ziel;
     private boolean FEHLER = false;
     private boolean verbose = false;
+    private boolean quiet = false;
     private htmlConverter converter;
     private clUTF2asciiConverter UTFconverter;
     
@@ -123,6 +124,11 @@ public class clMavscriptZIP implements inConst {
     
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+    
+    public void setQuiet(boolean quiet) {
+        if (quiet) verbose = false;
+        this.quiet = quiet;
     }
     
     public void setLocale(Locale locale) {

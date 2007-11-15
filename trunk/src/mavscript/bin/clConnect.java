@@ -72,6 +72,7 @@ public abstract class clConnect {
     public abstract String[][] exec(String[] befehle) ;    
     public abstract String[] exec(String befehl) ;    
     public abstract void setVerbose(boolean verbose);
+    public abstract void setQuiet(boolean quiet);
     
     public void stop() {
     }

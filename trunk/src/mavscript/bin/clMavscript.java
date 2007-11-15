@@ -64,8 +64,8 @@ import mavscript.bin.inConst;
  */
 public class clMavscript implements inConst {
     
-    private String quelldatei;
-    private String zieldatei;
+    private String quelldatei; // Dateiname, oder "_opt_stdin"
+    private String zieldatei; // Dateiname, oder "_opt_stdout"
     private String vorlaufdatei;
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
@@ -79,6 +79,7 @@ public class clMavscript implements inConst {
     String ziel;
     private boolean FEHLER = false;
     private boolean verbose = false;
+    private boolean quiet = false;
     private htmlConverter converter;
     private clUTF2asciiConverter UTFconverter;
     
@@ -103,6 +104,8 @@ public class clMavscript implements inConst {
     
     /** Creates a new instance of clMavscript
      * Verwendet interne Interpreter: yacas, beanshell
+     * @param indatei: Quelldatei oder "_opt_stdin"
+     * @param outdatei: Zieldatei oder "_opt_stdout"
      */
     public clMavscript(int verbindungsTyp, String indatei, String outdatei) {
         quelldatei = indatei;
@@ -112,6 +115,8 @@ public class clMavscript implements inConst {
     
     /** Creates a new instance of clMavscript
      * Verbindet sich über den Port mit z.B. Yacas
+     * @param indatei: Quelldatei oder "_opt_stdin"
+     * @param outdatei: Zieldatei oder "_opt_stdout"
      */
     public clMavscript(int verbindungsTyp, String indatei, String outdatei, String serverAddress, int serverPort) {
         quelldatei = indatei;
@@ -124,6 +129,11 @@ public class clMavscript implements inConst {
     
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+    
+    public void setQuiet(boolean quiet) {
+        if (quiet) verbose = false;
+        this.quiet = quiet;
     }
     
     public void setLocale(Locale locale) {
@@ -191,9 +201,13 @@ public class clMavscript implements inConst {
         String Fehlermeldung;
         int zeilennr = 0;
         
+        boolean STDIN = false;
+        if (dateiname.equals("_opt_stdin")) STDIN = true;
+        
         try {
-            File datei = new File(dateiname);
-            InputStreamReader eingabestrom = new InputStreamReader(new FileInputStream(datei), charsetName);
+            InputStreamReader eingabestrom;
+            if (STDIN) eingabestrom = new InputStreamReader(System.in); // Lese von Stdin
+            else eingabestrom = new InputStreamReader(new FileInputStream(new File(dateiname)), charsetName);
             BufferedReader eingabe = new BufferedReader(eingabestrom);
             
             String zeile = "";
@@ -214,12 +228,12 @@ public class clMavscript implements inConst {
             Fehlermeldung = tr.tr("File")+" " + dateiname + " "+tr.tr("NotExisting")+"!" + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         } catch(IOException e) {
             Fehlermeldung = tr.tr("ErrorInFile") +" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
         
         // Array quelle schreiben
@@ -230,25 +244,12 @@ public class clMavscript implements inConst {
             i++;
         }
         
-        /*
-        // debug
-        System.out.println("");
-        System.out.println("Quelldatei:");
-        System.out.println("-----------");
-        System.out.println("");
-        for (int j = 0; j < quelle.length; j++) {
-            System.out.println(quelle[j]);
-        }
-        System.out.println("");
-        System.out.println("");
-         */
-        
-        if (!FEHLER) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        if (!STDIN && !FEHLER && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
         
         // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
-        try {
-            File datei = new File(dateiname);
-            InputStreamReader eingabestrom = new InputStreamReader(new FileInputStream(datei), charsetName);
+        if (STDIN) NZ = NZsys;
+        else try {
+            InputStreamReader eingabestrom = new InputStreamReader(new FileInputStream(new File(dateiname)), charsetName);
             char[] cbuf = new char[2];
             eingabestrom.skip(quelle[0].length());
             eingabestrom.read(cbuf, 0, cbuf.length);
@@ -286,7 +287,7 @@ public class clMavscript implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
                 
@@ -303,7 +304,7 @@ public class clMavscript implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
                 
@@ -346,12 +347,12 @@ public class clMavscript implements inConst {
                             NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 } catch(IOException e) {
                     Fehlermeldung = tr.tr("ErrorInFile")+" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 
                 // Array vorlauf schreiben
@@ -362,7 +363,7 @@ public class clMavscript implements inConst {
                     i++;
                 }
                 
-                if (!FEHLER && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
+                if (!FEHLER && !quiet && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
         }
     }
     
@@ -379,11 +380,12 @@ public class clMavscript implements inConst {
             case yacas:
                 verbindung = new clConnectYacas();
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 boolean aufgestartet = verbindung.connect();
                 if (aufgestartet == false) {
                     System.err.println(tr.tr("ErrorConnectingYacas"));
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                     return;
                 }
                 break;
@@ -391,23 +393,25 @@ public class clMavscript implements inConst {
             case beanshell:
                 verbindung = new clConnectBeanshell();
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 break;
                 
             case port:
             default:
                 verbindung = new clConnectPort(serverAddress, serverPort);
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 boolean verbunden = verbindung.connect();
                 if (verbunden == false) {
                     System.err.println(tr.tr("ErrorConnectingServer")); // Keine Verbindung zum Server
                     System.err.println(tr.tr("ErrorConnectingServerTip1")); // Ist der Server gestartet? yacas --server 9734
                     System.err.println(tr.tr("ErrorConnectingServerTip2")); // Verhindert ein Firewall die Verbindung zum Port? Test: telnet 127.0.0.1 9734
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                     return;
                 }
         }
-        System.out.println("");
+        if (!quiet) System.out.println("");
         
         String aktBefehl;
         String[] aktResultat;
@@ -417,7 +421,7 @@ public class clMavscript implements inConst {
             for (int i = 0; i < vorlauf.length; i++) {
                 aktBefehl = vorlauf[i];
                 aktResultat = verbindung.exec(aktBefehl);
-                if (aktResultat.length > 1) {
+                if (aktResultat.length > 1 && !quiet) {
                     System.out.println("");
                     System.out.println(tr.tr("WarningMoreThanOneLine")); //Warnung: Das Resultat besteht aus mehreren Zeilen.
                     System.out.println(tr.tr("InputInit") + ": " + aktBefehl);
@@ -442,6 +446,7 @@ public class clMavscript implements inConst {
                 if (htmlkonvertieren && converter.containsHTMLcharacters(aktBefehl)) {
                     aktBefehl = converter.convert(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -449,6 +454,7 @@ public class clMavscript implements inConst {
                 if (utf2asciikonvertieren && UTFconverter.containsNonAsciiCharacters(aktBefehl)) {
                     aktBefehl = UTFconverter.convert2UnicodeHex(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -464,14 +470,16 @@ public class clMavscript implements inConst {
                     }
                     baustein.setOutput(aktResultat[0]);
                 } else {
-                    System.out.println("");
-                    System.out.println(tr.tr("WarningMoreThanOneLine"));//Warnung: Das Resultat besteht aus mehreren Zeilen.
-                    System.out.println(tr.tr("Input") + ": " + baustein.getInput());
-                    System.out.println(tr.tr("ResultCheckOutfile")); //"Resultat: (Tip: Darstellung in der Ausgabe-Datei kontrollieren.)
-                    for (int z = 0; z < aktResultat.length; z++) {
-                        System.out.println(aktResultat[z]);
+                    if (!quiet) {
+                        System.out.println("");
+                        System.out.println(tr.tr("WarningMoreThanOneLine"));//Warnung: Das Resultat besteht aus mehreren Zeilen.
+                        System.out.println(tr.tr("Input") + ": " + baustein.getInput());
+                        System.out.println(tr.tr("ResultCheckOutfile")); //"Resultat: (Tip: Darstellung in der Ausgabe-Datei kontrollieren.)
+                        for (int z = 0; z < aktResultat.length; z++) {
+                            System.out.println(aktResultat[z]);
+                        }
+                        System.out.println("");
                     }
-                    System.out.println("");
                     
                     String mehrzeiligesres = "";
                     for (int z = 0; z < aktResultat.length; z++) {
@@ -519,6 +527,7 @@ public class clMavscript implements inConst {
                             etwaskonvertiert = true;
                         }
                         if (etwaskonvertiert && verbose) {
+                            assert !quiet;
                             System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
                             System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
                         }
@@ -526,6 +535,7 @@ public class clMavscript implements inConst {
                     if (utf2asciikonvertieren && UTFconverter.containsUnicodeHexCharacters(aktOutput)) {
                         aktOutput = UTFconverter.convert2UTF(aktOutput);
                         if (verbose) {
+                            assert !quiet;
                             System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
                             System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
                         }
@@ -542,10 +552,14 @@ public class clMavscript implements inConst {
     }
     
     private void zieldateiSchreiben(String dateiname) {
+        boolean STDOUT = false;
+        if (dateiname.equals("_opt_stdout")) STDOUT = true;
+        
         boolean ZIELDATEIGESCHRIEBEN = false;
         try {
-            File datei = new File(dateiname);
-            OutputStreamWriter ausgabestrom = new OutputStreamWriter(new FileOutputStream(datei), charsetName);
+            OutputStreamWriter ausgabestrom;
+            if (STDOUT) ausgabestrom = new OutputStreamWriter(System.out); // Schreibe stdout
+            else ausgabestrom = new OutputStreamWriter(new FileOutputStream(new File(dateiname)), charsetName);
             BufferedWriter ausgabe = new BufferedWriter(ausgabestrom);
             
             ausgabe.write(ziel);
@@ -556,10 +570,12 @@ public class clMavscript implements inConst {
             String Fehlermeldung = tr.tr("ErrorWritingFile") + " " + dateiname + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
-        System.out.println("");
-        if (ZIELDATEIGESCHRIEBEN) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+        if (!quiet) {
+            System.out.println("");
+            if (!STDOUT && ZIELDATEIGESCHRIEBEN) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+        }
     }
 }
 

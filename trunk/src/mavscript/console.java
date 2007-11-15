@@ -71,14 +71,15 @@ import mavscript.bin.clMavscriptExtractor;
 public class console implements inConst {
     
     int verbindungstyp = yacas; // default
-    String quelldatei;
+    String quelldatei; // Dateiname, oder "_opt_stdin"
     String vorlaufdatei;
-    String zieldatei;
+    String zieldatei; // Dateiname, oder "_opt_stdout"
     String serverAddress = "127.0.0.1";
     int serverPort = 9734; // Beispielwert
     String dateiImArchiv = "content.xml"; // in OpenDocument Text .odt
     String charset = "UTF-8";
     boolean verbose = false;
+    boolean quiet = false;
     boolean ausZIP = false;
     boolean mitvorlauf = false;
     boolean htmlkonvertieren = false;
@@ -103,6 +104,7 @@ public class console implements inConst {
             "                         [-z Name_in_ZIP] [-i Vorlaufdatei] \n" +
             "                         [-o Zieldatei] Vorlagedatei \n\n" +
             "-v, --verbose               Ausfuehrliche Ausgaben\n" +
+            "-q, --quiet                 Keine Meldungen auf stdout\n" +
             "-l, --language              Sprache (z.B. de)\n" +
             "-h, --help                  Ausgabe dieser Hilfe\n" +
             "-V, --version               Ausgabe von Versionsinformation\n" +
@@ -139,6 +141,7 @@ public class console implements inConst {
             "                         [-z Name_in_ZIP] [-i InitFile] \n" +
             "                         [-o OutputFile] TemplateFile \n\n" +
             "-v, --verbose               Verbose output\n" +
+            "-q, --quiet                 No messages to stdout\n" +
             "-l, --language              Language (i.e. en)\n" +
             "-h, --help                  Usage information; this help screen\n" +
             "-V, --version               Display version\n" +
@@ -174,11 +177,21 @@ public class console implements inConst {
         iArgs = args;
     }
     
+    /** Zeigt die Startinformatin an.*/
+    private void startinfo() {
+        System.out.println("");
+        System.out.println("            " + tr.tr("WelcomeTo") + " " + PGM);
+        System.out.println("            Copyright (c) A. Vontobel, 2004-2007");
+        System.out.println("            " + tr.tr("Version") + " " + VERSION);
+        System.out.println("");
+    }
+    
     /** Zeigt die Hilfe an und beendet anschliessend das Programm.
      @param locale Sprache. Wenn nicht deutsch, wird die Hilfe auf Englisch angezeigt.
      @param exitStatus 0 wenn ordentlich beendet, sonst > 0
      */
     public void usage(Locale locale, int exitStatus) {
+        startinfo();
         if (locale.getLanguage().equals(new Locale("de").getLanguage())) {
             System.out.println(USAGE_de);
         }
@@ -189,26 +202,27 @@ public class console implements inConst {
     /////////////////////////////////////////////////////////////////////////
     
     void parseArguments() {
-        LongOpt[] longopts = new LongOpt[16];
+        LongOpt[] longopts = new LongOpt[17];
         longopts[0] = new LongOpt("help",LongOpt.NO_ARGUMENT,null,'h');
         longopts[1] = new LongOpt("verbose",LongOpt.NO_ARGUMENT,null,'v');
-        longopts[2] = new LongOpt("version",LongOpt.NO_ARGUMENT,null,'V');
-        longopts[3] = new LongOpt("port",LongOpt.REQUIRED_ARGUMENT,null,'p');
-        longopts[4] = new LongOpt("server",LongOpt.REQUIRED_ARGUMENT,null,'s');
-        longopts[5] = new LongOpt("name_in_zip",LongOpt.REQUIRED_ARGUMENT,null,'z');
-        longopts[6] = new LongOpt("init",LongOpt.REQUIRED_ARGUMENT,null,'i');
-        longopts[7] = new LongOpt("charset",LongOpt.REQUIRED_ARGUMENT,null,'C');
-        longopts[8] = new LongOpt("outfile",LongOpt.REQUIRED_ARGUMENT,null,'o');
-        longopts[9] = new LongOpt("beanshell",LongOpt.NO_ARGUMENT,null,'b');
-        longopts[10] = new LongOpt("yacas",LongOpt.NO_ARGUMENT,null,'y');
-        longopts[11] = new LongOpt("HTML",LongOpt.NO_ARGUMENT,null,'H');
-        longopts[12] = new LongOpt("ascii",LongOpt.NO_ARGUMENT,null,'A');
-        longopts[13] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
-        longopts[14] = new LongOpt("extract",LongOpt.NO_ARGUMENT,null,'x');
-        longopts[15] = new LongOpt("controlchar",LongOpt.REQUIRED_ARGUMENT,null,'D');
+        longopts[2] = new LongOpt("quiet",LongOpt.NO_ARGUMENT,null,'q');
+        longopts[3] = new LongOpt("version",LongOpt.NO_ARGUMENT,null,'V');
+        longopts[4] = new LongOpt("port",LongOpt.REQUIRED_ARGUMENT,null,'p');
+        longopts[5] = new LongOpt("server",LongOpt.REQUIRED_ARGUMENT,null,'s');
+        longopts[6] = new LongOpt("name_in_zip",LongOpt.REQUIRED_ARGUMENT,null,'z');
+        longopts[7] = new LongOpt("init",LongOpt.REQUIRED_ARGUMENT,null,'i');
+        longopts[8] = new LongOpt("charset",LongOpt.REQUIRED_ARGUMENT,null,'C');
+        longopts[9] = new LongOpt("outfile",LongOpt.REQUIRED_ARGUMENT,null,'o');
+        longopts[10] = new LongOpt("beanshell",LongOpt.NO_ARGUMENT,null,'b');
+        longopts[11] = new LongOpt("yacas",LongOpt.NO_ARGUMENT,null,'y');
+        longopts[12] = new LongOpt("HTML",LongOpt.NO_ARGUMENT,null,'H');
+        longopts[13] = new LongOpt("ascii",LongOpt.NO_ARGUMENT,null,'A');
+        longopts[14] = new LongOpt("language",LongOpt.REQUIRED_ARGUMENT,null,'l');
+        longopts[15] = new LongOpt("extract",LongOpt.NO_ARGUMENT,null,'x');
+        longopts[16] = new LongOpt("controlchar",LongOpt.REQUIRED_ARGUMENT,null,'D');
         
         
-        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:D:byvxHAhV",longopts);
+        Getopt g = new Getopt(PGM,iArgs,":p:s:z:i:C:o:l:D:byvqxHAhV",longopts);
         g.setOpterr(false);
         int c;
         
@@ -216,6 +230,10 @@ public class console implements inConst {
             switch (c) {
                 case 'v':
                     verbose = true;
+                    break;
+                case 'q':
+                    verbose = false;
+                    quiet = true;
                     break;
                 case 'l':
                     locale = new Locale(g.getOptarg());
@@ -273,6 +291,11 @@ public class console implements inConst {
                     break;
                 case 'o':
                     zieldatei = g.getOptarg();
+                    if (zieldatei.equals("-")) {
+                        verbose = false;
+                        quiet = true;
+                        zieldatei = "_opt_stdout"; // Schreibe auf stdout
+                    }
                     zieldateigesetzt = true;
                     break;
                 case ':':
@@ -290,27 +313,37 @@ public class console implements inConst {
         String[] iDateien = new String[iArgs.length - g.getOptind()];
         for (int i=g.getOptind();i<iArgs.length;++i) iDateien[i-g.getOptind()] = iArgs[i];
         
-        if (iDateien.length < 1) usage(locale, 1);
-        quelldatei = iDateien[0];
-        if (iDateien.length > 1) {
-            System.out.println(tr.tr("MaxOneFile"));
+        if (iDateien.length < 1) {
+            quelldatei = "_opt_stdin"; // Lesen von stdin
         }
+        else quelldatei = iDateien[0];
+        if (iDateien.length > 1) {
+            System.err.println(tr.tr("MaxOneFile"));
+        }
+        
         if (!zieldateigesetzt) {
-            File d = new File(quelldatei);
-            if (d.getParent() == null) {
-                zieldatei = "out." +d.getName();
-            } else zieldatei = d.getParent() + System.getProperty("file.separator") + "out." +d.getName();
-            if (nurextrahieren) {
-                switch (verbindungstyp) {
-                    case yacas:
-                        zieldatei += ".ys";
-                        break;
-                    case beanshell:
-                        zieldatei += ".bsh";
-                        break;
-                    case port:
-                    default:
-                        zieldatei += ".txt";
+            if (quelldatei.equals("_opt_stdin")) {
+                verbose = false;
+                quiet = true;
+                zieldatei = "_opt_stdout"; // Schreibe auf stdout
+            }
+            else {
+                File d = new File(quelldatei);
+                if (d.getParent() == null) {
+                    zieldatei = "out." +d.getName();
+                } else zieldatei = d.getParent() + System.getProperty("file.separator") + "out." +d.getName();
+                if (nurextrahieren) {
+                    switch (verbindungstyp) {
+                        case yacas:
+                            zieldatei += ".ys";
+                            break;
+                        case beanshell:
+                            zieldatei += ".bsh";
+                            break;
+                        case port:
+                        default:
+                            zieldatei += ".txt";
+                    }
                 }
             }
         }
@@ -318,24 +351,19 @@ public class console implements inConst {
     
     public static void main(String[] args) {
         console c = new console(args);
-        
-        System.out.println("");
-        System.out.println("            " + c.tr.tr("WelcomeTo") + " " + PGM);
-        System.out.println("            Copyright (c) A. Vontobel, 2004-2007");
-        System.out.println("            " + c.tr.tr("Version") + " " + VERSION);
-        System.out.println("");
+        c.parseArguments(); // Beendet das Prog, falls z.B. -h oder -V aufgerufen wird.
+        if (!c.quiet) c.startinfo();
         
         boolean allesOK = false;
-        c.parseArguments(); // Beendet das Prog, falls z.B. -h oder -V aufgerufen wird.
         if (c.ausZIP == false) {
             if (c.quelldatei.endsWith(".odt")) {
-                System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isODT"));
+                if (!c.quiet) System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isODT"));
                 c.ausZIP = true;
             } else if (c.quelldatei.endsWith(".sxw")) {
-                System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isSXW"));
+                if (!c.quiet) System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isSXW"));
                 c.ausZIP = true;
             } else if (c.quelldatei.endsWith(".docx")) {
-                System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isDOCX"));
+                if (!c.quiet) System.out.println(c.tr.tr("TheFile") +" " + c.quelldatei + " "+ c.tr.tr("isDOCX"));
                 c.dateiImArchiv = "word/document.xml";
                 c.ausZIP = true;
             }
@@ -345,11 +373,15 @@ public class console implements inConst {
             || c.quelldatei.endsWith(".odtx") 
             || c.quelldatei.endsWith(".html") || c.quelldatei.endsWith(".xml")) {
                 c.htmlkonvertieren = true;
-                if (c.verbose) System.out.println(c.tr.tr("setHTML"));
+                if (c.verbose) {
+                    assert !c.quiet;
+                    System.out.println(c.tr.tr("setHTML"));
+                }
             }
         }
         
         if (c.verbose) {
+            assert !c.quiet;
             switch(c.verbindungstyp) {
                 case port:
                     System.out.println(c.tr.tr("Mode") + ": Port");
@@ -385,6 +417,7 @@ public class console implements inConst {
             else ber = new clMavscriptExtractor(c.verbindungstyp, c.quelldatei, c.zieldatei);
             
             ber.setVerbose(c.verbose);
+            ber.setQuiet(c.quiet);
             if (!c.stdLocale) ber.setLocale(c.locale);
             ber.setHTMLkonvertieren(c.htmlkonvertieren);
             ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
@@ -409,6 +442,7 @@ public class console implements inConst {
                         ber = new clMavscriptZIP(yacas, c.quelldatei, c.dateiImArchiv, c.zieldatei);
                 }
                 ber.setVerbose(c.verbose);
+                ber.setQuiet(c.quiet);
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
                 ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
@@ -431,6 +465,7 @@ public class console implements inConst {
                         ber = new clMavscript(yacas, c.quelldatei, c.zieldatei);
                 }
                 ber.setVerbose(c.verbose);
+                ber.setQuiet(c.quiet);
                 if (!c.stdLocale) ber.setLocale(c.locale);
                 ber.setHTMLkonvertieren(c.htmlkonvertieren);
                 ber.setUTF2asciikonvertieren(c.utf2asciikonvertieren);
@@ -443,14 +478,16 @@ public class console implements inConst {
         
         // Ende
         if (allesOK) {
-            System.out.println("");
-            System.out.println(c.tr.tr("FinishedOK"));
-            System.out.println("");
+            if (!c.quiet) {
+                System.out.println("");
+                System.out.println(c.tr.tr("FinishedOK"));
+                System.out.println("");
+            }
             System.exit(0);
         } else {
-            System.out.println("");
-            System.out.println(c.tr.tr("FinishedERROR"));
-            System.out.println("");
+            System.err.println("");
+            System.err.println(c.tr.tr("FinishedERROR"));
+            System.err.println("");
             System.exit(1);
         }
     }

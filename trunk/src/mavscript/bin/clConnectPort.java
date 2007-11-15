@@ -67,6 +67,7 @@ public class clConnectPort extends clConnect {
     private String serverAddress;
     private int serverPort;
     private boolean verbose = false;
+    private boolean quiet = false;
     private final clTranslation tr = new clTranslation("mavscript/locales/clConnect");
     
     /**
@@ -87,21 +88,20 @@ public class clConnectPort extends clConnect {
     }
     
     public boolean connect() {
-        //System.out.println("Connecting to the server at address "+serverAddress+" on port "+serverPort);
-        System.out.println(tr.tr("ConnectingAtAddress")+" "+serverAddress+" "+tr.tr("OnPort")+" "+serverPort);
+        if (!quiet) System.out.println(tr.tr("ConnectingAtAddress")+" "+serverAddress+" "+tr.tr("OnPort")+" "+serverPort);
         
         try {
             client = new Socket(serverAddress,serverPort);
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
             return false;
         }
         
         if (client == null) {
-            System.out.println(tr.tr("NotConnected"));
+            System.err.println(tr.tr("NotConnected"));
             return false;
         } else {
-            System.out.println(tr.tr("Connected"));
+            if (!quiet) System.out.println(tr.tr("Connected"));
             return true;
         }
     }
@@ -125,7 +125,7 @@ public class clConnectPort extends clConnect {
         
         if (verbindung.connect()) {
             verbindung.exec(befehle);
-        } else System.out.println("keine Verbindung zum Server");
+        } else System.err.println("keine Verbindung zum Server");
     }
     
     public String[][] exec(String[] befehle) {
@@ -133,12 +133,13 @@ public class clConnectPort extends clConnect {
         for (int i = 0; i < befehle.length; i++) {
             antworten[i] = PerformRequest(befehle[i]);
             if (verbose) {
+                assert !quiet;
                 System.out.println("# " + i + ": " + befehle[i]);
                 for (int j = 0; j < antworten[i].length; j++) {
                     System.out.println("@ " + antworten[i][j]);
                 }
             } 
-            else for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
+            else if (!quiet) for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
         }
         
         return antworten;
@@ -146,8 +147,9 @@ public class clConnectPort extends clConnect {
     
     public String[] exec(String befehl) {
         String[] antwort = PerformRequest(befehl);
-        System.out.print("#");
+        if (!quiet) System.out.print("#");
         if (verbose) {
+            assert !quiet;
             System.out.println(" " + befehl);
             for (int j = 0; j < antwort.length; j++) {
                 System.out.println("@ " + antwort[j]);
@@ -160,6 +162,11 @@ public class clConnectPort extends clConnect {
         this.verbose = verbose;
     }
     
+    public void setQuiet(boolean quiet) {
+        if (quiet) verbose = false;
+        this.quiet = quiet;
+    }
+    
     
     // ----------------------------------------------------------------------------------------
     private String[] PerformRequest(String inputLine) {
@@ -170,8 +177,7 @@ public class clConnectPort extends clConnect {
         try {
             BufferedOutputStream buffered = new BufferedOutputStream(client.getOutputStream());
             DataOutputStream outbound = new DataOutputStream(buffered);
-            //DataInputStream inbound = new DataInputStream(client.getInputStream()); // uses a deprecated API
-            BufferedReader inbound = new BufferedReader(new InputStreamReader(client.getInputStream()));            
+            BufferedReader inbound = new BufferedReader(new InputStreamReader(client.getInputStream()));
             outbound.writeBytes(inputLine+";"); // hängt Strichpunkt an. POTENTIELLES PROBLEM für Zusammenarbeit mit externen Programmen
             outbound.flush();
             String responseLine;

@@ -62,9 +62,9 @@ import java.util.*;
  */
 public class clConnectYacas extends clConnect {
     
-//    private CYacas interpreter;
     private YacasInterpreter interpreter;
     private boolean verbose = false;
+    private boolean quiet = false;
     
     
     /** Creates a new instance of clConnectYacas
@@ -91,7 +91,7 @@ public class clConnectYacas extends clConnect {
         verbindung.setVerbose(true);
         if (verbindung.connect()) {
             verbindung.exec(befehle);
-        } else System.out.println("Fehler beim Aufstarten von Yacas. (skript.zip ??).");
+        } else System.err.println("Fehler beim Aufstarten von Yacas.");
         verbindung.stop();
     }
     
@@ -108,11 +108,13 @@ public class clConnectYacas extends clConnect {
                 antworten[i][0] = "ERROR";
             }
             if (verbose) {
+                assert !quiet;
                 System.out.println("# " + i + ":  " + befehle[i]);
                 for (int j = 0; j < antworten[i].length; j++) {
                     System.out.println("@ " + antworten[i][j]);
                 }
-            } else for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
+            }
+            else if (!quiet) for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
         }
         
         return antworten;
@@ -130,8 +132,9 @@ public class clConnectYacas extends clConnect {
             antwort[0] = "ERROR";
         }
         
-        System.out.print("#");
+        if (!quiet) System.out.print("#");
         if (verbose) {
+            assert !quiet;
             System.out.println(" " + befehl);
             System.out.println("@ " + antwort[0]);
         }
@@ -141,6 +144,11 @@ public class clConnectYacas extends clConnect {
     
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+    
+    public void setQuiet(boolean quiet) {
+        if (quiet) verbose = false;
+        this.quiet = quiet;
     }
     
     public void stop() {

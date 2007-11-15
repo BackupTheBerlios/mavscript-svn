@@ -65,6 +65,7 @@ public class clConnectBeanshell extends clConnect {
     
     private Interpreter interpreter;
     private boolean verbose = false;
+    private boolean quiet = false;
     
     
     /** Creates a new instance of clConnectBeanshell
@@ -92,7 +93,7 @@ public class clConnectBeanshell extends clConnect {
         verbindung.setVerbose(false);
         if (verbindung.connect()) {
             verbindung.exec(befehle);
-        } else System.out.println("keine Verbindung zum Beanshell-Interpreter");
+        } else System.err.println("keine Verbindung zum Beanshell-Interpreter");
         verbindung.stop();
     }
     
@@ -109,11 +110,13 @@ public class clConnectBeanshell extends clConnect {
                 antworten[i][0] = "ERROR";
             }
             if (verbose) {
+                assert !quiet;
                 System.out.println("# " + i + ":  " + befehle[i]);
                 for (int j = 0; j < antworten[i].length; j++) {
                     System.out.println("@ " + antworten[i][j]);
                 }
-            } else for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
+            }
+            else if (!quiet) for (int j = 0; j < antworten[i].length; j++) {System.out.print("#");}
         }
         
         return antworten;
@@ -131,8 +134,9 @@ public class clConnectBeanshell extends clConnect {
             antwort[0] = "ERROR";
         }
         
-        System.out.print("#");
+        if (!quiet) System.out.print("#");
         if (verbose) {
+            assert !quiet;
             System.out.println(" " + befehl);
             System.out.println("@ " + antwort[0]);
         }
@@ -142,6 +146,11 @@ public class clConnectBeanshell extends clConnect {
     
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+    
+    public void setQuiet(boolean quiet) {
+        if (quiet) verbose = false;
+        this.quiet = quiet;
     }
     
     public void stop() {

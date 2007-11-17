@@ -68,6 +68,8 @@ public class clMavscriptZIP implements inConst {
     private String dateiImArchiv; // = "content.xml";
     private String zielarchiv;
     private String vorlaufdatei;
+    private boolean STDIN = false; // Lese von stdin
+    private boolean STDOUT = false; // Schreibe auf stdout
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
     private boolean utf2asciikonvertieren = false;
@@ -103,18 +105,32 @@ public class clMavscriptZIP implements inConst {
     private final clTranslation tr = new clTranslation("mavscript/locales/clMavscript");
     public static final int EOF = -1; // End Of File
     
-    /** Creates a new instance of clMathscriptSWX
-     * dies ist die Mathscriptklasse für OpenOffice .swx Dateien*/
+    /** Creates a new instance of clMathscriptZIP
+     * dies ist die Mavscriptklasse für OpenOffice .odt Dateien
+     * Verwendet interne Interpreter: yacas, beanshell
+     * @param inarchiv: Quelldatei oder "_opt_stdin" (falls STDIN wird berechnetes content.xml geschrieben, nicht odt)
+     * @param outarchiv: Zieldatei oder "_opt_stdout"
+     */
     public clMavscriptZIP(int verbindungsTyp, String inarchiv, String dateiimarchiv, String outarchiv) {
         quellarchiv = inarchiv;
         zielarchiv = outarchiv;
+        if (quellarchiv.equals("_opt_stdin")) STDIN = true;
+        if (zielarchiv.equals("_opt_stdout")) STDOUT = true;
         dateiImArchiv = dateiimarchiv;
         this.verbindungstyp = verbindungsTyp;
     }
     
+    /** Creates a new instance of clMathscriptZIP
+     * dies ist die Mavscriptklasse für OpenOffice .odt Dateien
+     * Verbindet sich über den Port mit z.B. Yacas
+     * @param inarchiv: Quelldatei oder "_opt_stdin" (falls STDIN wird berechnetes content.xml geschrieben, nicht odt)
+     * @param outarchiv: Zieldatei oder "_opt_stdout"
+     */
     public clMavscriptZIP(int verbindungsTyp, String inarchiv, String dateiimarchiv, String outarchiv, String serverAddress, int serverPort) {
         quellarchiv = inarchiv;
         zielarchiv = outarchiv;
+        if (quellarchiv.equals("_opt_stdin")) STDIN = true;
+        if (zielarchiv.equals("_opt_stdout")) STDOUT = true;
         dateiImArchiv = dateiimarchiv;
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
@@ -188,7 +204,11 @@ public class clMavscriptZIP implements inConst {
         if (!FEHLER) quelldateiParsen();
         if (!FEHLER) rechnenlassen();
         if (!FEHLER) rückeinsetzen();
-        if (!FEHLER) zielarchivSchreiben();
+        if (!FEHLER) {
+        // Falls Input von stdin --> nicht das Archiv (odt) wird ausgegeben, sondern die berechnete DateiImArchiv
+            if (STDIN) zieldateiSchreiben(zielarchiv);
+            else zielarchivSchreiben(); // normal zielarchiv (odt) schreiben
+        }
         return !FEHLER;
     }
     
@@ -196,11 +216,29 @@ public class clMavscriptZIP implements inConst {
         LinkedList quelleListe = new LinkedList();
         String Fehlermeldung;
         int zeilennr = 0;
-        
         try {
-            ZipFile datei = new ZipFile(dateiname);
-            ZipEntry entry = datei.getEntry(dateiimarchivname);
-            BufferedReader eingabe = new BufferedReader(new InputStreamReader(datei.getInputStream(entry), charsetName));
+            InputStreamReader eingabestrom;
+            ZipEntry entry;
+            if (STDIN) {
+                ZipInputStream zipeingabestrom = new ZipInputStream(System.in); // Lese von Stdin
+                boolean dateiimarchivGEFUNDEN = false;
+                while (zipeingabestrom.available() > 0) {
+                    entry = zipeingabestrom.getNextEntry();
+                    String aktDateiinZip = entry.getName();
+                    if (aktDateiinZip.equals(dateiimarchivname)) {
+                        dateiimarchivGEFUNDEN = true;
+                        break;
+                    }
+                }
+                if (!dateiimarchivGEFUNDEN) throw new ZipException(dateiimarchivname + " not found."); // TODO übersetzen
+                eingabestrom = new InputStreamReader(zipeingabestrom, charsetName);
+            }
+            else {
+                ZipFile datei = new ZipFile(dateiname);
+                entry = datei.getEntry(dateiimarchivname);
+                eingabestrom = new InputStreamReader(datei.getInputStream(entry), charsetName);
+            }
+            BufferedReader eingabe = new BufferedReader(eingabestrom);
             
             String zeile = "";
             boolean EOF = false;
@@ -218,12 +256,12 @@ public class clMavscriptZIP implements inConst {
             Fehlermeldung = tr.tr("File")+" " + dateiname + " "+tr.tr("NotExisting")+"!" + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         } catch(IOException e) {
             Fehlermeldung = tr.tr("ErrorInFile") +" " + dateiname +  ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
         
         // Array quelle schreiben
@@ -234,10 +272,11 @@ public class clMavscriptZIP implements inConst {
             i++;
         }
         
-        if (!FEHLER) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        if (!STDIN && !FEHLER && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
         
         // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
-        try {
+        if (STDIN) NZ = NZsys;
+        else try {
             ZipFile datei = new ZipFile(dateiname);
             ZipEntry entry = datei.getEntry(dateiimarchivname);
             InputStreamReader eingabestrom = new InputStreamReader(datei.getInputStream(entry), charsetName);
@@ -278,7 +317,7 @@ public class clMavscriptZIP implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
             
@@ -295,7 +334,7 @@ public class clMavscriptZIP implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
                 
@@ -338,12 +377,12 @@ public class clMavscriptZIP implements inConst {
                             NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 } catch(IOException e) {
                     Fehlermeldung = tr.tr("ErrorInFile")+" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 
                 // Array quelle schreiben
@@ -354,7 +393,7 @@ public class clMavscriptZIP implements inConst {
                     i++;
                 }
                 
-                if (!FEHLER && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
+                if (!FEHLER  && !quiet && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
         }
     }
     
@@ -371,11 +410,12 @@ public class clMavscriptZIP implements inConst {
             case yacas:
                 verbindung = new clConnectYacas();
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 boolean aufgestartet = verbindung.connect();
                 if (aufgestartet == false) {
                     System.err.println(tr.tr("ErrorConnectingYacas"));
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                     return;
                 }                
                 break;
@@ -383,23 +423,25 @@ public class clMavscriptZIP implements inConst {
             case beanshell:
                 verbindung = new clConnectBeanshell();
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 break;
                 
             case port:
             default:
                 verbindung = new clConnectPort(serverAddress, serverPort);
                 verbindung.setVerbose(verbose);
+                verbindung.setQuiet(quiet);
                 boolean verbunden = verbindung.connect();
                 if (verbunden == false) {
                     System.err.println(tr.tr("ErrorConnectingServer")); // Keine Verbindung zum Server
                     System.err.println(tr.tr("ErrorConnectingServerTip1")); // Ist der Server gestartet? yacas --server 9734
                     System.err.println(tr.tr("ErrorConnectingServerTip2")); // Verhindert ein Firewall die Verbindung zum Port? Test: telnet 127.0.0.1 9734
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                     return;
                 }
         }
-        System.out.println("");
+        if (!quiet) System.out.println("");
         
         String aktBefehl;
         String[] aktResultat;
@@ -409,7 +451,7 @@ public class clMavscriptZIP implements inConst {
             for (int i = 0; i < vorlauf.length; i++) {
                 aktBefehl = vorlauf[i];
                 aktResultat = verbindung.exec(aktBefehl);
-                if (aktResultat.length > 1) {
+                if (aktResultat.length > 1 && !quiet) {
                     System.out.println("");
                     System.out.println(tr.tr("WarningMoreThanOneLine")); //Warnung: Das Resultat besteht aus mehreren Zeilen.
                     System.out.println(tr.tr("InputInit") + ": " + aktBefehl);
@@ -417,7 +459,7 @@ public class clMavscriptZIP implements inConst {
                     for (int z = 0; z < aktResultat.length; z++) {
                         System.out.println(aktResultat[z]);
                     }
-                    System.out.println("");
+                    if (!quiet) System.out.println("");
                 }
             }
         }
@@ -434,6 +476,7 @@ public class clMavscriptZIP implements inConst {
                 if (htmlkonvertieren && converter.containsHTMLcharacters(aktBefehl)) {
                     aktBefehl = converter.convert(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -441,6 +484,7 @@ public class clMavscriptZIP implements inConst {
                 if (utf2asciikonvertieren && UTFconverter.containsNonAsciiCharacters(aktBefehl)) {
                     aktBefehl = UTFconverter.convert2UnicodeHex(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -456,14 +500,16 @@ public class clMavscriptZIP implements inConst {
                     }
                     baustein.setOutput(aktResultat[0]);
                 } else {
-                    System.out.println("");
-                    System.out.println(tr.tr("WarningMoreThanOneLine"));//Warnung: Das Resultat besteht aus mehreren Zeilen.
-                    System.out.println(tr.tr("Input") + ": " + baustein.getInput());
-                    System.out.println(tr.tr("ResultCheckOutfile")); //"Resultat: (Tip: Darstellung in der Ausgabe-Datei kontrollieren.)
-                    for (int z = 0; z < aktResultat.length; z++) {
-                        System.out.println(aktResultat[z]);
+                    if (!quiet) {
+                        System.out.println("");
+                        System.out.println(tr.tr("WarningMoreThanOneLine"));//Warnung: Das Resultat besteht aus mehreren Zeilen.
+                        System.out.println(tr.tr("Input") + ": " + baustein.getInput());
+                        System.out.println(tr.tr("ResultCheckOutfile")); //"Resultat: (Tip: Darstellung in der Ausgabe-Datei kontrollieren.)
+                        for (int z = 0; z < aktResultat.length; z++) {
+                            System.out.println(aktResultat[z]);
+                        }
+                        System.out.println("");
                     }
-                    System.out.println("");
                     
                     String mehrzeiligesres = "";
                     for (int z = 0; z < aktResultat.length; z++) {
@@ -511,6 +557,7 @@ public class clMavscriptZIP implements inConst {
                             etwaskonvertiert = true;
                         }
                         if (etwaskonvertiert && verbose) {
+                            assert !quiet;
                             System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
                             System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
                         }
@@ -518,6 +565,7 @@ public class clMavscriptZIP implements inConst {
                     if (utf2asciikonvertieren && UTFconverter.containsUnicodeHexCharacters(aktOutput)) {
                         aktOutput = UTFconverter.convert2UTF(aktOutput);
                         if (verbose) {
+                            assert !quiet;
                             System.out.println(tr.tr("ConvertFrom") + " " + baustein.getOutput());
                             System.out.println(tr.tr("ConvertTo") + " " + aktOutput);
                         }
@@ -533,11 +581,39 @@ public class clMavscriptZIP implements inConst {
         ziel = zielbf.toString();
     }
     
+    /** Schreibt die aus dem Archiv (odt/zip) extrahierte und berechnete Datei (z.B. content.xml) in eine Datei oder nach stdout.*/
+    private void zieldateiSchreiben(String dateiname) {
+        boolean ZIELDATEIGESCHRIEBEN = false;
+        try {
+            OutputStreamWriter ausgabestrom;
+            if (STDOUT) ausgabestrom = new OutputStreamWriter(System.out); // Schreibe stdout
+            else ausgabestrom = new OutputStreamWriter(new FileOutputStream(new File(dateiname)), charsetName);
+            BufferedWriter ausgabe = new BufferedWriter(ausgabestrom);
+            
+            ausgabe.write(ziel);
+            ausgabe.flush();
+            ausgabe.close();
+            ZIELDATEIGESCHRIEBEN = true;
+        } catch(IOException e) {
+            String Fehlermeldung = tr.tr("ErrorWritingFile") + " " + dateiname + NZsys + tr.tr("ErrorMessage") + ": " + e;
+            System.err.println(Fehlermeldung);
+            FEHLER = true;
+            if (!quiet) verbose = true;
+        }
+        if (!quiet) {
+            System.out.println("");
+            if (ZIELDATEIGESCHRIEBEN && !STDOUT) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+        }
+    }
+    
+    /** Schreibt das Zielarchiv. Z.B. out.datei.odt oder out.datei.zip */
     private void zielarchivSchreiben() {
         boolean ZIELDATEIGESCHRIEBEN = false;
         String aktDateiinZip = "";
         try {
-            ZipOutputStream zipStrom = new ZipOutputStream(new FileOutputStream(zielarchiv));
+            ZipOutputStream zipStrom;
+            if (STDOUT) zipStrom = new ZipOutputStream(System.out); // Schreibe stdout
+            else zipStrom = new ZipOutputStream(new FileOutputStream(zielarchiv));
             zipStrom.setMethod(ZipOutputStream.DEFLATED);
             
             // kopieren vom Quellarchiv
@@ -574,10 +650,12 @@ public class clMavscriptZIP implements inConst {
                     + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
-        System.out.println("");
-        if (ZIELDATEIGESCHRIEBEN) System.out.println(tr.tr("File") + " " + zielarchiv + " " + tr.tr("Written"));
+        if (!quiet) {
+            System.out.println("");
+            if (ZIELDATEIGESCHRIEBEN && !STDOUT) System.out.println(tr.tr("File") + " " + zielarchiv + " " + tr.tr("Written"));
+        }
     }
 }
 

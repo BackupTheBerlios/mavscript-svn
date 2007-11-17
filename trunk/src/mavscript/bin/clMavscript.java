@@ -64,8 +64,10 @@ import mavscript.bin.inConst;
  */
 public class clMavscript implements inConst {
     
-    private String quelldatei; // Dateiname, oder "_opt_stdin"
-    private String zieldatei; // Dateiname, oder "_opt_stdout"
+    private String quelldatei;
+    private String zieldatei;
+    private boolean STDIN = false; // Lese von stdin
+    private boolean STDOUT = false; // Schreibe auf stdout
     private String vorlaufdatei;
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
@@ -110,6 +112,8 @@ public class clMavscript implements inConst {
     public clMavscript(int verbindungsTyp, String indatei, String outdatei) {
         quelldatei = indatei;
         zieldatei = outdatei;
+        if (quelldatei.equals("_opt_stdin")) STDIN = true;
+        if (zieldatei.equals("_opt_stdout")) STDOUT = true;
         this.verbindungstyp = verbindungsTyp;
     }
     
@@ -121,6 +125,8 @@ public class clMavscript implements inConst {
     public clMavscript(int verbindungsTyp, String indatei, String outdatei, String serverAddress, int serverPort) {
         quelldatei = indatei;
         zieldatei = outdatei;
+        if (quelldatei.equals("_opt_stdin")) STDIN = true;
+        if (zieldatei.equals("_opt_stdout")) STDOUT = true;
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
         assert verbindungsTyp == port;
@@ -200,10 +206,6 @@ public class clMavscript implements inConst {
         LinkedList quelleListe = new LinkedList();
         String Fehlermeldung;
         int zeilennr = 0;
-        
-        boolean STDIN = false;
-        if (dateiname.equals("_opt_stdin")) STDIN = true;
-        
         try {
             InputStreamReader eingabestrom;
             if (STDIN) eingabestrom = new InputStreamReader(System.in); // Lese von Stdin
@@ -244,7 +246,7 @@ public class clMavscript implements inConst {
             i++;
         }
         
-        if (!STDIN && !FEHLER && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        if (!FEHLER && !STDIN && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
         
         // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
         if (STDIN) NZ = NZsys;
@@ -552,9 +554,6 @@ public class clMavscript implements inConst {
     }
     
     private void zieldateiSchreiben(String dateiname) {
-        boolean STDOUT = false;
-        if (dateiname.equals("_opt_stdout")) STDOUT = true;
-        
         boolean ZIELDATEIGESCHRIEBEN = false;
         try {
             OutputStreamWriter ausgabestrom;
@@ -574,7 +573,7 @@ public class clMavscript implements inConst {
         }
         if (!quiet) {
             System.out.println("");
-            if (!STDOUT && ZIELDATEIGESCHRIEBEN) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+            if (ZIELDATEIGESCHRIEBEN && !STDOUT) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
         }
     }
 }

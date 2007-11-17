@@ -102,7 +102,8 @@ public class console implements inConst {
             "java -jar mavscript*.jar [-vHAxhV] [-l Sprache] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i Vorlaufdatei] \n" +
-            "                         [-o Zieldatei] Vorlagedatei \n\n" +
+            "                         [-o Zieldatei] \n" +
+            "                         [Vorlagedatei] \n\n" +
             "-v, --verbose               Ausfuehrliche Ausgaben\n" +
             "-q, --quiet                 Keine Meldungen auf stdout\n" +
             "-l, --language              Sprache (z.B. de)\n" +
@@ -122,6 +123,8 @@ public class console implements inConst {
             "-x, --extract               Schreibt die Anweisungen in die Zieldatei. \n" +
             "                            Es wird keine Berechnung durchgefuehrt. \n" +
             "-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)\n" +
+            "                            Ausgabe auf stdout: -. \n" +
+            "Vorlagedatei                Vorlagedatei. Ohne Angabe wird von stdin gelesen.\n" +
             "\n" +
             "OpenOffice-Writer Dateien mit der Endung .odt und .sxw werden automatisch\n" +
             "erkannt. Die Option \"-H -z content.xml\" kann daher weggelassen werden.\n"+
@@ -139,7 +142,8 @@ public class console implements inConst {
             "java -jar mavscript*.jar [-vHAxhV] [-l Language] \n" +
             "                         [-y | -b | -p Port [-s Server]] \n" +
             "                         [-z Name_in_ZIP] [-i InitFile] \n" +
-            "                         [-o OutputFile] TemplateFile \n\n" +
+            "                         [-o OutputFile]  \n" +
+            "                         [TemplateFile] \n\n" +
             "-v, --verbose               Verbose output\n" +
             "-q, --quiet                 No messages to stdout\n" +
             "-l, --language              Language (i.e. en)\n" +
@@ -159,6 +163,8 @@ public class console implements inConst {
             "-x, --extract               Writes the commands to the OutputFile. \n" +
             "                            No calculation is done. \n" +
             "-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)\n" +
+            "                            Output to stdout: - \n" +
+            "TemplateFile                TemplateFile. If omitted reads from stdin .\n" +
             "\n" +
             "OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.\n" +
             "The option \"-H -z content.xml\" therefore can be omitted.\n"+

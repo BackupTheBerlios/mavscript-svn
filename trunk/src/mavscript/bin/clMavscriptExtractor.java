@@ -68,6 +68,8 @@ public class clMavscriptExtractor implements inConst {
     private String quellarchiv;
     private String dateiImArchiv; // = "content.xml";
     private String zieldatei;
+    private boolean STDIN = false; // Lese von stdin
+    private boolean STDOUT = false; // Schreibe auf stdout
     private String vorlaufdatei;
     private boolean mitvorlauf = false;
     private boolean htmlkonvertieren = false;
@@ -103,10 +105,14 @@ public class clMavscriptExtractor implements inConst {
     
     /** Creates a new instance of clMavscriptExtractor
      * Für Textdateien
+     * @param indatei: Quelldatei oder "_opt_stdin"
+     * @param outdatei: Zieldatei oder "_opt_stdout"
      */
     public clMavscriptExtractor(int verbindungsTyp, String indatei, String outdatei) {
         quelldatei = indatei;
         zieldatei = outdatei;
+        if (quelldatei.equals("_opt_stdin")) STDIN = true;
+        if (zieldatei.equals("_opt_stdout")) STDOUT = true;
         this.verbindungstyp = verbindungsTyp;
         istZIP = false;
         switch (verbindungstyp) {
@@ -122,11 +128,15 @@ public class clMavscriptExtractor implements inConst {
     
     /** Creates a new instance of clMavscriptExtractor
      * Für gezippte Textdateien. Z.B. .odt
+     * @param inarchiv: Quelldatei oder "_opt_stdin"
+     * @param outdatei: Zieldatei oder "_opt_stdout"
      */
     public clMavscriptExtractor(int verbindungsTyp, String inarchiv, String dateiimarchiv, String outdatei) {
         quellarchiv = inarchiv;
         dateiImArchiv = dateiimarchiv;
         zieldatei = outdatei;
+        if (quellarchiv.equals("_opt_stdin")) STDIN = true;
+        if (zieldatei.equals("_opt_stdout")) STDOUT = true;
         this.verbindungstyp = verbindungsTyp;
         istZIP = true;
         switch (verbindungstyp) {
@@ -211,7 +221,7 @@ public class clMavscriptExtractor implements inConst {
         }
         if (mitvorlauf && !FEHLER) vorlaufdateiEinlesen(vorlaufdatei);
         if (!FEHLER) quelldateiParsen();
-        System.out.println("");
+        if (!quiet) System.out.println("");
         if (!FEHLER) befehlliste_schreiben();
         if (!FEHLER) zieldateiSchreiben(zieldatei);
         return !FEHLER;
@@ -221,10 +231,10 @@ public class clMavscriptExtractor implements inConst {
         LinkedList quelleListe = new LinkedList();
         String Fehlermeldung;
         int zeilennr = 0;
-        
         try {
-            File datei = new File(dateiname);
-            InputStreamReader eingabestrom = new InputStreamReader(new FileInputStream(datei), charsetName);
+            InputStreamReader eingabestrom;
+            if (STDIN) eingabestrom = new InputStreamReader(System.in); // Lese von Stdin
+            else eingabestrom = new InputStreamReader(new FileInputStream(new File(dateiname)), charsetName);
             BufferedReader eingabe = new BufferedReader(eingabestrom);
             
             String zeile = "";
@@ -261,23 +271,11 @@ public class clMavscriptExtractor implements inConst {
             i++;
         }
         
-        /*
-        // debug
-        System.out.println("");
-        System.out.println("Quelldatei:");
-        System.out.println("-----------");
-        System.out.println("");
-        for (int j = 0; j < quelle.length; j++) {
-            System.out.println(quelle[j]);
-        }
-        System.out.println("");
-        System.out.println("");
-         */
-        
-        if (!FEHLER) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        if (!FEHLER && !STDIN && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
         
         // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
-        try {
+        if (STDIN) NZ = NZsys;
+        else try {
             File datei = new File(dateiname);
             InputStreamReader eingabestrom = new InputStreamReader(new FileInputStream(datei), charsetName);
             char[] cbuf = new char[2];
@@ -302,11 +300,29 @@ public class clMavscriptExtractor implements inConst {
         LinkedList quelleListe = new LinkedList();
         String Fehlermeldung;
         int zeilennr = 0;
-        
         try {
-            ZipFile datei = new ZipFile(dateiname);
-            ZipEntry entry = datei.getEntry(dateiimarchivname);
-            BufferedReader eingabe = new BufferedReader(new InputStreamReader(datei.getInputStream(entry), charsetName));
+            InputStreamReader eingabestrom;
+            ZipEntry entry;
+            if (STDIN) {
+                ZipInputStream zipeingabestrom = new ZipInputStream(System.in); // Lese von Stdin
+                boolean dateiimarchivGEFUNDEN = false;
+                while (zipeingabestrom.available() > 0) {
+                    entry = zipeingabestrom.getNextEntry();
+                    String aktDateiinZip = entry.getName();
+                    if (aktDateiinZip.equals(dateiimarchivname)) {
+                        dateiimarchivGEFUNDEN = true;
+                        break;
+                    }
+                }
+                if (!dateiimarchivGEFUNDEN) throw new ZipException(dateiimarchivname + " not found."); // TODO übersetzen
+                eingabestrom = new InputStreamReader(zipeingabestrom, charsetName);
+            }
+            else {
+                ZipFile datei = new ZipFile(dateiname);
+                entry = datei.getEntry(dateiimarchivname);
+                eingabestrom = new InputStreamReader(datei.getInputStream(entry), charsetName);
+            }
+            BufferedReader eingabe = new BufferedReader(eingabestrom);
             
             String zeile = "";
             boolean EOF = false;
@@ -324,12 +340,12 @@ public class clMavscriptExtractor implements inConst {
             Fehlermeldung = tr.tr("File")+" " + dateiname + " "+tr.tr("NotExisting")+"!" + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         } catch(IOException e) {
             Fehlermeldung = tr.tr("ErrorInFile") +" " + dateiname +  ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
         
         // Array quelle schreiben
@@ -340,10 +356,11 @@ public class clMavscriptExtractor implements inConst {
             i++;
         }
         
-        if (!FEHLER) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
+        if (!STDIN && !FEHLER && !quiet) System.out.println(tr.tr("Template") + " " + dateiname + " " + tr.tr("Read"));
         
         // Zeilenend-Zeichen feststellen "\n", "\r\n" oder "\r"
-        try {
+        if (STDIN) NZ = NZsys;
+        else try {
             ZipFile datei = new ZipFile(dateiname);
             ZipEntry entry = datei.getEntry(dateiimarchivname);
             InputStreamReader eingabestrom = new InputStreamReader(datei.getInputStream(entry), charsetName);
@@ -385,7 +402,7 @@ public class clMavscriptExtractor implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
                 
@@ -402,7 +419,7 @@ public class clMavscriptExtractor implements inConst {
                     Fehlermeldung = tr.tr("File") + " " + dateiname + " "+tr.tr("NotExisting")+"!";
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 break;
                 
@@ -445,12 +462,12 @@ public class clMavscriptExtractor implements inConst {
                             NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 } catch(IOException e) {
                     Fehlermeldung = tr.tr("ErrorInFile")+" " + dateiname + ", "+tr.tr("Line")+" " + zeilennr + NZsys + tr.tr("ErrorMessage") + ": " + e;
                     System.err.println(Fehlermeldung);
                     FEHLER = true;
-                    verbose = true;
+                    if (!quiet) verbose = true;
                 }
                 
                 // Array vorlauf schreiben
@@ -461,7 +478,7 @@ public class clMavscriptExtractor implements inConst {
                     i++;
                 }
                 
-                if (!FEHLER && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
+                if (!FEHLER  && !quiet && verbose) System.out.println(tr.tr("InitFile") +" " + dateiname + " " + tr.tr("Read"));
         }
     }
     
@@ -496,6 +513,7 @@ public class clMavscriptExtractor implements inConst {
                 if (htmlkonvertieren && converter.containsHTMLcharacters(aktBefehl)) {
                     aktBefehl = converter.convert(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -503,6 +521,7 @@ public class clMavscriptExtractor implements inConst {
                 if (utf2asciikonvertieren && UTFconverter.containsNonAsciiCharacters(aktBefehl)) {
                     aktBefehl = UTFconverter.convert2UnicodeHex(aktBefehl);
                     if (verbose) {
+                        assert !quiet;
                         System.out.println(tr.tr("ConvertFrom") + " " + baustein.getInput());
                         System.out.println(tr.tr("ConvertTo") + " " + aktBefehl);
                     }
@@ -526,8 +545,9 @@ public class clMavscriptExtractor implements inConst {
     private void zieldateiSchreiben(String dateiname) {
         boolean ZIELDATEIGESCHRIEBEN = false;
         try {
-            File datei = new File(dateiname);
-            OutputStreamWriter ausgabestrom = new OutputStreamWriter(new FileOutputStream(datei), charsetName);
+            OutputStreamWriter ausgabestrom;
+            if (STDOUT) ausgabestrom = new OutputStreamWriter(System.out); // Schreibe stdout
+            else ausgabestrom = new OutputStreamWriter(new FileOutputStream(new File(dateiname)), charsetName);
             BufferedWriter ausgabe = new BufferedWriter(ausgabestrom);
             
             ausgabe.write(ziel);
@@ -538,10 +558,12 @@ public class clMavscriptExtractor implements inConst {
             String Fehlermeldung = tr.tr("ErrorWritingFile") + " " + dateiname + NZsys + tr.tr("ErrorMessage") + ": " + e;
             System.err.println(Fehlermeldung);
             FEHLER = true;
-            verbose = true;
+            if (!quiet) verbose = true;
         }
-        System.out.println("");
-        if (ZIELDATEIGESCHRIEBEN) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+        if (!quiet) {
+            System.out.println("");
+            if (ZIELDATEIGESCHRIEBEN && !STDOUT) System.out.println(tr.tr("File") + " " + dateiname + " " + tr.tr("Written"));
+        }
     }
 }
 

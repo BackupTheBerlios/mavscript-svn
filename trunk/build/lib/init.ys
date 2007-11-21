@@ -1,9 +1,28 @@
-// Rundungsfunktion
-/** nf (zu rundende Zahl, Anzahl Kommastellen) */
-nf(zahl,stellen) := N(Eval(Round(zahl*10^stellen)/10^stellen));
-/** nf (Zahl) */
-nf(zahl) := N(Eval(zahl));
+/** Functions defined in this file are read by yacas when "mavscript-yacas" is called.
 
-// Löst numerisch Gleichungen. Äquivalent zu Newton.
+nf(25/7, 3);  --> 3.571                     numerical value, with 3 decimal places
+nf(25/7);     --> 3.57142857142857142857    numerical value
+y :~ 25/7;    --> 3.57142857142857142857    assignment of evaluated numerical value (instead of y:=25/7 --> 25/7)
+nSolve(x^2-28*y, x, 2.0, 0.00001); --> 10   solves equation numerically (same as "Newton")
+nSolve(x^2-28*y, x, 2.0);          --> 10   solves equation numerically, using default accuracy
+*/
+
+/** Numerical evaluation */
+nf(expr) := N(Eval(expr));
+/** Formated number. "nf(26/7, 3);" returns 3.714 */
+nf(expr,decimalPlaces) := N(Eval(Round(expr*10^decimalPlaces)/10^decimalPlaces));
+
+/** Solves equation numerically. Equivalent to "Newton". */
 nSolve(expr,var,initial,accuracy) := `(Newton(Eval(@expr),@var,N(Eval(initial)),accuracy));
+/** Solves equation numerically. Using default accuracy. */
 nSolve(expr,var,initial) := `(Newton(Eval(@expr),@var,N(Eval(initial)),0.00000001));
+
+/** Assignment with numerical evaluation. "var :~ expr" is equivalent to "var := N(Eval(expr))" */
+// var := expr;
+Infix(":~",10000);
+RightAssociative(":~");
+RuleBase(":~",{aLeftAssign,aRightAssign});
+UnFence(":~",2);
+HoldArg(":~",aLeftAssign);
+HoldArg(":~",aRightAssign);
+Rule(":~",2,0,IsAtom(aLeftAssign)) [MacroSet(aLeftAssign,N(Eval(aRightAssign)));Eval(aLeftAssign);];

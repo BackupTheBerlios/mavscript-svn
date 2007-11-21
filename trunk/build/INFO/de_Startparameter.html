@@ -1,36 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
 
-<html>
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org">
-  <meta content="text/html; charset=utf-8" http-equiv=
-  "content-type">
-
-  <title>Startparameter zu Mavscript</title>
-  <meta content="">
+  
+  <title>Startparameter zu Mavscript</title><meta content="">
   <style type="text/css">
 span.c3 {font-style: italic; font-family: monospace;}
   span.c2 {font-style: italic;}
   span.c1 {font-family: monospace;}
-  </style>
-</head>
+  </style></head>
+
 
 <body>
   <h1>Startparameter zu Mavscript</h1><br>
   Der Aufruf <span class="c1">java -jar mavscript*.jar
   --help</span> gibt folgende Ausgabe, welche die zur Verfügung
   stehenden Startparameter auflistet:<br>
-  <br>
-  <br>
-  <pre>
-            Willkommen zu Mavscript<br>            Copyright (c) A. Vontobel, 2004-2007<br>            Version 0.14<br><br>Gebrauch:<br>java -jar mavscript*.jar [-vHAxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i Vorlaufdatei]<br>                         [-o Zieldatei] Vorlagedatei<br><br>-v, --verbose               Ausfuehrliche Ausgaben<br>-l, --language              Sprache (z.B. de)<br>-h, --help                  Ausgabe dieser Hilfe<br>-V, --version               Ausgabe von Versionsinformation<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (z.B.: 9734)<br>-s, --server Server         Name des Servers (vorgegeben: 127.0.0.1)<br>-z, --name_in_zip Name      Dateiname in ZIP<br>-i  --init Datei            Liest zuerst die Anweisungen dieser Datei ein.<br>-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &amp;gt;)<br>-A, --ascii                 Kodiert Unicode-Zeichen in Ascii-Zeichenfolge.<br>-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)<br>                            Beispiele: ISO-8859-1, system<br>-D, --controlchar $-Ersatz  Setzt das Anweisungszeichen (vorgegeben: $).<br>-x, --extract               Schreibt die Anweisungen in die Zieldatei.<br>                            Es wird keine Berechnung durchgefuehrt.<br>-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)<br><br>OpenOffice-Writer Dateien mit der Endung .odt und .sxw werden automatisch<br>erkannt. Die Option "-H -z content.xml" kann daher weggelassen werden.<br>Mavscript verwendet standardmaessig Yacas. Alternativ kann Beanshell verwendet<br>werden. Ausserdem kann Mavscript ueber einen Port zu einem externen Programm<br>Verbindung aufnehmen.<br><br>Beispiele:<br>java -jar mavscript*.jar ./vorlage.txt    Schreibt die Datei out.vorlage.txt<br>java -jar mavscript*.jar ./vorlage.odt    Schreibt die Datei out.vorlage.odt<br>java -jar mavscript*.jar --init ./StdFunktionen.ys ./vorlage.odt<br>java -jar mavscript*.jar -o ergebnis.odt ./vorlage.odt
-</pre><br>
+  <br><pre>            Willkommen zu Mavscript<br>            Copyright (c) A. Vontobel, 2004-2007<br>            Version 0.16<br><br>Gebrauch:<br>java -jar mavscript*.jar [-vHAxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i Vorlaufdatei]<br>                         [-o Zieldatei] Vorlagedatei<br><br>-v, --verbose               Ausfuehrliche Ausgaben<br>-l, --language              Sprache (z.B. de)<br>-h, --help                  Ausgabe dieser Hilfe<br>-V, --version               Ausgabe von Versionsinformation<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (z.B.: 9734)<br>-s, --server Server         Name des Servers (vorgegeben: 127.0.0.1)<br>-z, --name_in_zip Name      Dateiname in ZIP<br>-i  --init Datei            Liest zuerst die Anweisungen dieser Datei ein.<br>-H, --HTML                  Akzeptiert HTML-Spezialzeichen (z.B. &amp;gt;)<br>-A, --ascii                 Kodiert Unicode-Zeichen in Ascii-Zeichenfolge.<br>-C, --charset Kodierung     Zeichenkodierung festlegen (vorgegeben UTF-8)<br>                            Beispiele: ISO-8859-1, system<br>-D, --controlchar $-Ersatz  Setzt das Anweisungszeichen (vorgegeben: $).<br>-x, --extract               Schreibt die Anweisungen in die Zieldatei.<br>                            Es wird keine Berechnung durchgefuehrt.<br>-o  --outfile Zieldatei     Name der Zieldatei (vorgegeben out.VorlagedateiName)<br><br>OpenOffice-Writer Dateien mit der Endung .odt und .sxw werden automatisch<br>erkannt. Die Option "-H -z content.xml" kann daher weggelassen werden.<br>Mavscript verwendet standardmaessig Yacas. Alternativ kann Beanshell verwendet<br>werden. Ausserdem kann Mavscript ueber einen Port zu einem externen Programm<br>Verbindung aufnehmen.<br><br>Beispiele:<br>java -jar mavscript*.jar ./vorlage.txt    Schreibt die Datei out.vorlage.txt<br>java -jar mavscript*.jar ./vorlage.odt    Schreibt die Datei out.vorlage.odt<br>java -jar mavscript*.jar --init ./StdFunktionen.ys ./vorlage.odt<br>java -jar mavscript*.jar -o ergebnis.odt ./vorlage.odt<br><br></pre><br>
   Anstelle von <span class="c1">java -jar mavscript*.jar</span>
-  (das * steht für die Versionsnummer), kann auch kurz <span class=
-  "c1">mavscript</span> (unter Windows) resp. <span class=
-  "c1">./mavscript</span> (unter Linux) geschrieben werden. Also
-  zum Beispiel <span class="c1">mavscript --help</span> .<br>
+  (das * steht für die Versionsnummer), kann auch kurz <span class="c1">mavscript</span> (oder <span class="c1">./mavscript-yacas</span> ) geschrieben werden. Also
+  zum Beispiel <span class="c1">mavscript --help</span> .<br>Wird keine Vorlagedatei angegeben, liest Mavscript von der Standardeingabe stdin.<br>
   <br>
   Zu den einzelnen Parametern:<br>
   <br>
@@ -43,6 +33,11 @@ span.c3 {font-style: italic; font-family: monospace;}
   die Antwort, welche vom Computer-Algebra-System zurückkommt.
   Dieser Modus ist hilfreich, wenn die Vorlage nicht so verarbeitet
   wird, wie erwartet wurde.<br>
+
+  <h2>--quiet, -q</h2>
+Wird diese Option aufgerufen, schreibt Mavscript keine Meldungen auf
+die Standardausgabe (stdout). Diese Option wird automatisch aufgerufen,
+wenn das Resulat auf stdout ausgegeben wird.<br>
   <br>
 
   <h2>-- language, -l</h2>
@@ -66,16 +61,14 @@ span.c3 {font-style: italic; font-family: monospace;}
   Wird diese Option aufgerufen, verwendet Mavscript ein
   <em>externes Programm</em> zur Auswertung der mathematischen
   Ausdrücke. Die Verbindung zwischen Mavscript und dem
-  Computer-Algebra-System erfolgt über einen <span class=
-  "c2">Port</span>, ähnlich wie eine Verbindung ins Internet.
+  Computer-Algebra-System erfolgt über einen <span class="c2">Port</span>, ähnlich wie eine Verbindung ins Internet.
   Mavscript sendet Anweisungen in Textform und empfängt die
   jeweilige Antwort als Text.<br>
   Wichtig ist, dass beide beteiligten Programme die gleiche
   Portnummer verwenden. Das externe Programm muss die Portnummer
   abhören (auf dem lokalen oder einem entfernten Computer), wenn
   Mavscript ausgeführt wird.<br>
-  Beispiel: C-Version von Yacas mit dem Befehl <span class=
-  "c1">yacas --server 9734</span> starten, anschliessend
+  Beispiel: C-Version von Yacas mit dem Befehl <span class="c1">yacas --server 9734</span> starten, anschliessend
   <code>mavscript --port 9734 ./vorlage.txt</code> auführen.<br>
   <br>
 
@@ -178,8 +171,7 @@ span.c3 {font-style: italic; font-family: monospace;}
 
   <h2>--controlchar, -D</h2>
   Beispiel: <span class="c1">--controlchar %</span><br>
-  Keine Angabe ist gleichbedeutend mit: <span class=
-  "c1">--controlchar $</span><br><br>
+  Keine Angabe ist gleichbedeutend mit: <span class="c1">--controlchar $</span><br><br>
   Mavscript erkennt Anweisungen für das Computeralgebrasystem, wenn
   sie zwischen den Steuerzeichen $m und $i, $io oder $n liegen. An
   Stelle des $-Zeichens kann ein anderes Zeichen (oder eine
@@ -194,16 +186,12 @@ span.c3 {font-style: italic; font-family: monospace;}
   geschrieben. Es wird keine Berechnung durchgeführt. Diese Option
   ist nützlich um Vorlagen auf Fehler zu untersuchen (debug).<br>
   Wenn der Name der Zieldatei nicht durch --outfile angegeben wird,
-  heisst die Zieldatei <span class="c1">out.</span><span class=
-  "c3">VorlagedateiName.ys</span> (Modus --yacas), <span class=
-  "c1">out.</span><span class="c3">VorlagedateiName.bsh</span>
-  (Modus --beanshell) oder <span class="c1">out.</span><span class=
-  "c3">VorlagedateiName.txt</span><br>
+  heisst die Zieldatei <span class="c1">out.</span><span class="c3">VorlagedateiName.ys</span> (Modus --yacas), <span class="c1">out.</span><span class="c3">VorlagedateiName.bsh</span>
+  (Modus --beanshell) oder <span class="c1">out.</span><span class="c3">VorlagedateiName.txt</span><br>
   <br>
 
   <h2>--outfile, -o</h2>
   Beispiel: <span class="c1">--outfile ergebnis.odt</span><br>
   Keine Angabe ist gleichbedeutend mit: <span class="c1">--outfile
   out.</span><span class="c3">VorlagedateiName</span><br>
-</body>
-</html>
+</body></html>

@@ -14,9 +14,7 @@ http://www.gnuplot.info/
 Gnuplot is not platform independant java software, but it is available for a lot of platforms.
 The approach is to first create a simple text file containing the data. Then a file containing the gnuplot instruction is written. Finally gnuplot is called and creates the image file graph.png.
 
-1.a) $m Plot2D(Sin(x),-1:6,output="datafile",filename="data.txt"); $n
-or
-1.b) $m ToFile("data.txt1") Echo({0,1,Nl(),1,4,Nl(),2,8,Nl(),3,6}); $n
+1.) $m ToFile("data.txt1") Echo({0,1,Nl(),1,4,Nl(),2,8,Nl(),3,6}); $n
 
 2.) $m ToFile("gnuplot.txt") Echo("set terminal png; set output \"graph.png\"; plot \"data.txt1\""); $n
 3.) $m SystemCall("gnuplot gnuplot.txt"); $n

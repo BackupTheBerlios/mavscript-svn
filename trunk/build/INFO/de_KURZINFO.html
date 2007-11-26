@@ -164,11 +164,11 @@
   dann:<br />
 
   <ul>
-    <li><span class="c4">mavscript-yacas ./vorlagedatei</span> (Windows)</li>
+    <li><span class="c4">mavscript-yacas vorlagedatei</span> (Windows)</li>
 
-    <li><span class="c4">./mavscript-yacas ./vorlagedatei</span> (Linux)</li>
+    <li><span class="c4">./mavscript-yacas vorlagedatei</span> (Linux)</li>
 
-    <li><span class="c4">java -jar mavscript*.jar ./vorlagedatei</span> (alle Plattformen)</li>
+    <li><span class="c4">java -jar mavscript*.jar vorlagedatei</span> (alle Plattformen)</li>
   </ul>
   <br />
 
@@ -184,6 +184,9 @@
     <li><a href="de_Beanshell.html">Mavscript mit
     <em>BeanShell</em></a></li>
   </ul>
+  Mavscript kann auch über eine "Pipe" mit der Standardeingabe (stdin) und Standardausgabe (stdout) verbunden werden:<br />
+  <span class="c4">cat vorlagedatei | mavscript-yacas > ausgabedatei</span> &nbsp; oder <br />
+  <span class="c4">echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas</span> &nbsp; (antwortet "nf(Pi*8^2,1) --> 201.1")
   <br /><br />
 
   <h2>Rechtliches</h2>

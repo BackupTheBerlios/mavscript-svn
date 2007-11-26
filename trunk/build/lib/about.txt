@@ -20,7 +20,6 @@ init.ys			Init script called when using the command mavscript-yacas.
 			A :~ Pi*8^2 --> 201.0619298297
 			Defines the function nSolve()
 			expr := x^2-2
-			nSolve(expr, x, 1.0) --> 1.4142135624
 
 
 init.bsh		Init script called when using the command mavscript-beanshell

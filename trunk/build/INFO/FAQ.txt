@@ -1,0 +1,41 @@
+Questions - Answers
+-------------------
+
+Q: How can I use a newer/older version of Yacas?
+
+A: In order to use a newer version, just replace the file yacas.jar in
+   PATH-TO-MAVSCRIPT/lib.
+   In order to downgrade do the same. Yacas 1.0.62 (and older) additionly
+   require the file scripts.zip.
+
+---
+Q: How can I plot results with Mavscript?
+A: See Advanced-HowToCreateGraphs.txt
+
+---
+Q: I want to use Mavscript together with LaTeX. The "$"-sign is used by both
+   TeX and Mavscript. Could you please change the Mavscript control chars?
+
+A: Call Mavscript i.e. like this: "mavscript-yacas -D %".
+   This tells Mavscript to expect the control characters %m, %i, %io, %o and %n
+
+---
+Q: Is it possible to use Mavscript with pipes.
+
+A: Yes, Mavscript can read from standard input (stdin) or write to standard
+   output (stdout). Example:
+   echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas
+
+---
+Q: Mavscript 0.1.6 seems to run slower than previous versions.
+
+A. Mavscript 0.1.6 includes Yacas 1.2.2. The yacas syntax has slightly changed
+   since version 1.0.62 that was included in Mavscript 0.1.5.
+   "If(expr1 < expr2, ...)" now is correct syntax, no need to write
+   "If(N(expr1) < N(expr2), ...)" anymore.
+   The decrease of speed (and potentially other problems) is related to the
+   function "N(expression)". It does not evaluate the expression anymore.
+
+   Solution: Instead of "N(expr)", use "N(Eval(expr))" or "nf(expr)".
+
+

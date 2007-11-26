@@ -1,31 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
 
-<html>
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org">
-  <meta content="text/html; charset=utf-8" http-equiv=
-  "content-type">
-
-  <title>Mavscript start parameters</title>
-  <meta content="">
+  
+  <title>Mavscript start parameters</title><meta content="">
   <style type="text/css">
 span.c4 {font-style: italic; font-family: monospace;}
   span.c3 {font-style: italic;}
   span.c1 {font-family: monospace;}
-  </style>
-</head>
+  </style></head>
+
 
 <body>
   <h1>Mavscript start parameters</h1><br>
   The call <span class="c1">java -jar mavscript*.jar --help</span>
   displays a list of the available start parameters. This output is
   shown below.<br>
-  <br>
-  <br>
-  <pre>
-            Welcome to Mavscript<br>            Copyright (c) A. Vontobel, 2004-2007<br>            Version 0.14<br><br>Usage:<br>java -jar mavscript*.jar [-vHAxhV] [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile] TemplateFile<br><br>-v, --verbose               Verbose output<br>-l, --language              Language (i.e. en)<br>-h, --help                  Usage information; this help screen<br>-V, --version               Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (i.e. 9734)<br>-s, --server Server         Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name      File name within ZIP<br>-i  --init InitFile         First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-A, --ascii                 Converts unicode chars to a ascii representation.<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-D, --controlchar $-repl.   Sets the control character(s) (default: $).<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in <br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt    Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt    Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.ys ./template.odt<br>java -jar mavscript*.jar -o result.odt ./template.odt
-</pre><br>
+  <br><pre><br>            Welcome to Mavscript<br>            Copyright (c) A. Vontobel, 2004-2007<br>            Version 0.16<br><br>Usage:<br>java -jar mavscript*.jar [-vHAxhV] [-l Language]<br>                         [-y | -b | -p Port [-s Server]]<br>                         [-z Name_in_ZIP] [-i InitFile]<br>                         [-o OutputFile]<br>                         [TemplateFile]<br><br>-v, --verbose               Verbose output<br>-q, --quiet                 No messages to stdout<br>-l, --language              Language (i.e. en)<br>-h, --help                  Usage information; this help screen<br>-V, --version               Display version<br>-y, --yacas                 Yacas (Standard)<br>-b, --beanshell             Beanshell<br>-p, --port Port             Port (i.e. 9734)<br>-s, --server Server         Server name (default: 127.0.0.1)<br>-z, --name_in_zip Name      File name within ZIP<br>-i  --init InitFile         First processes the commands of this file.<br>-H, --HTML                  Accepts HTML special characters (like &amp;gt;)<br>-A, --ascii                 Converts unicode chars to a ascii representation.<br>-C, --charset Encoding      Charset name (default: UTF-8)<br>                            examples: ISO-8859-1, system<br>-D, --controlchar $-repl.   Sets the control character(s) (default: $).<br>-x, --extract               Writes the commands to the OutputFile.<br>                            No calculation is done.<br>-o  --outfile OutputFile    OutputFile name (default: out.InputFileName)<br>                            Output to stdout: -<br>TemplateFile                TemplateFile. If omitted reads from stdin .<br><br>OpenOffice-Writer files (suffix .odt or .sxw) are detected automatically.<br>The option "-H -z content.xml" therefore can be omitted.<br>The standard engine is the built-in computer-algebra-system Yacas. The built-in<br>java-interpreter BeanShell may be used instead. The third option is to connect<br>to a port (on localhost or on a remote server).<br><br>Examples:<br>java -jar mavscript*.jar ./template.txt    Writes the file out.template.txt<br>java -jar mavscript*.jar ./template.odt    Writes the file out.template.odt<br>java -jar mavscript*.jar --init ./StdFunctions.ys ./template.odt<br>java -jar mavscript*.jar -o result.odt ./template.odt<br><br></pre><br>
   Instead of typing <span class="c1">java -jar
   mavscript*.jar</span> (the * stands for the version number) you
   can type <span class="c1">mavscript</span> (Windows) resp.
@@ -43,9 +35,10 @@ span.c4 {font-style: italic; font-family: monospace;}
   answer coming from the computer-algebra-system ist shown. This
   mode is useful when the input file in not processed as
   expected.<br>
-  <br>
 
-  <h2>-- language, -l</h2>
+  <h2>--quiet, -q</h2>
+  If this option is called, Mavscript will not write messages to standard output&nbsp;(stdout). The option is
+  selected automatically if the result will be written to&nbsp;stdout.<h2>-- language, -l</h2>
   Example: <span class="c1">--language en</span><br>
 
   <h2>--yacas, -y</h2>
@@ -178,16 +171,15 @@ span.c4 {font-style: italic; font-family: monospace;}
   template are extracted and written to the OutputFile. No
   calculation is done. This is useful for debuging.<br>
   If the option --outfile is not specified, the OutputFile will be
-  <span class="c1">out.</span><span class=
-  "c4">TemplateFileName.ys</span> (mode --yacas), <span class=
-  "c1">out.</span><span class="c4">TemplateFileName.bsh</span>
-  (mode --beanshell) or <span class="c1">out.</span><span class=
-  "c4">TemplateFileName.txt</span><br>
+  <span class="c1">out.</span><span class="c4">TemplateFileName.ys</span> (mode --yacas), <span class="c1">out.</span><span class="c4">TemplateFileName.bsh</span>
+  (mode --beanshell) or <span class="c1">out.</span><span class="c4">TemplateFileName.txt</span><br>
   <br>
 
   <h2>--outfile, -o</h2>
   Example: <span class="c1">--outfile result.odt</span><br>
   If not specified: <span class="c1">--outfile
-  out.</span><span class="c4">TemplateFileName</span><br>
-</body>
-</html>
+  out.</span><span class="c4">TemplateFileName</span><span class="c3"></span><br>
+<br>The option&nbsp;<span class="c1">--outfile -</span> &nbsp;writes to
+standard output (stdout). If input comes from standard input (stdin)
+and no other indication is given, output is written to standard output.<br>Example: <span class="c1">cat </span><span class="c4">TemplateFile.txt</span><span class="c1"> | mavscript &gt;</span><span class="c1">&nbsp;</span><span class="c4">output.txt</span><span class="c1"></span>
+</body></html>

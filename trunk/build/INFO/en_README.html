@@ -128,8 +128,8 @@
 
   <ol>
     <li>Create a template (input) file:
-    <span class="c4">template.txt</span>, <span class="c4">template.odt</span>
-    or <span class="c4">template.sxw</span></li>
+    <span class="c4">template.txt</span>, <span class="c4">template.html</span>
+    or <span class="c4">template.odt</span></li>
 
     <li><strong>Drag the template file with the
     mouse on the Mavscript-icon on the
@@ -141,8 +141,8 @@
 
     <li>Open the output file (<span class=
     "c4">out.template.txt</span>,
-    <span class="c4">out.template.odt</span> or
-    <span class="c4">out.template.sxw</span>) .<br /></li>
+    <span class="c4">out.template.html</span> or
+    <span class="c4">out.template.odt</span>) .<br /></li>
   </ol>
 
   <h4>ALTERNATE (in order to use advanced functions or if the standard procedure does not work)</h4>
@@ -169,6 +169,9 @@
     <li><a href="en_Beanshell.html">Mavscript with
     <em>BeanShell</em></a></li>
   </ul>
+  Mavscript can also be connected to stdin and stdout pipes:<br />
+  <span class="c4">cat inputfile | mavscript-yacas > outputfile</span> &nbsp; or <br />
+  <span class="c4">echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas</span> &nbsp; (answering "nf(Pi*8^2,1) --> 201.1")
   <br /><br />
 
   <h2>Disclaimer</h2>

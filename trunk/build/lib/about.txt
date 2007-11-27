@@ -16,10 +16,11 @@ init.ys			Init script called when using the command mavscript-yacas.
 			nf(1/3, 2) --> 0.33
 			nf(1/3, 4) --> 0.3333
 			nf(1/3)    --> 0.33333333333333333333
-			Defines the assignment operator :~
+			Defines the numerical assignment operator :~
 			A :~ Pi*8^2 --> 201.0619298297
 			Defines the function nSolve()
 			expr := x^2-2
+			nSolve(expr, x, 1.0) --> 1.4142135624
 
 
 init.bsh		Init script called when using the command mavscript-beanshell

@@ -1,0 +1,19 @@
+Damit dieses Beispiel funktioniert, muss Mavscript mit der Opition --init lib/init.ys aufgerufen werden.
+
+Mavscript - Testdatei
+----------------------
+
+
+Eingabe:
+Länge l := 10.3 (des Würfels)
+Breite b := 3.2
+Höhe h:= 5.6 --> 5.6
+
+Ausgabe:
+Das Volumen beträgt            V := l*b*h --> 184.576 m³
+Das gerundete Volumen beträgt  V = 184.6 m³
+Das doppelte Volumen beträgt  2V = 369.152 m³
+
+Der Würfel ist Länger als breit
+
+Ende.

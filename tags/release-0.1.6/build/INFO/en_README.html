@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org" />
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8" />
+  <meta name="Generator" content=
+  "Kate, the KDE Advanced Text Editor" />
+
+  <title>Introduction to Mavscript</title>
+  <style type="text/css">
+/*<![CDATA[*/
+  span.c6 {font-style: italic; font-family: monospace;}
+  em.c5 {font-family: monospace;}
+  span.c4 {font-family: monospace;}
+  span.c3 {background-color: rgb(255, 255, 153);}
+  span.c2 {font-family: monospace; background-color: rgb(255, 255, 153);}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <h1>mavscript</h1>
+  <span class="c4">Copyright (c) A.Vontobel, 2004 - 2007</span><br /><br />
+
+  <h4>With Mavscript you can do calculations in a text document.</h4>
+  The following <em>file formats</em> are supported:<br />
+
+  <ul>
+    <li>Text files</li>
+
+    <li>html</li>
+
+    <li>OpenDocument Text odt</li>
+
+    <li>OpenOffice Writer sxw</li>
+
+    <li>other text based formats (i.e. svg). The
+    text file may be packed in a <em>zip-archive</em>.</li>
+  </ul>
+
+  <h4>How it works</h4>
+  Mavscript reads the calculation commands in the template.
+  These commands start with the control characters
+  <span class="c2">$m</span> and end with one of the following control
+  characters: <span class="c2">$i</span>,
+  <span class="c2">$o</span>, <span class="c2">$io</span> und
+  <span class="c2">$n</span>. Their meaning will be explained
+  later. The commands are forwarded to
+  the Computer-Algebra-System (<em>Yacas</em>). The algebra
+  program returns an answer to Mavscript, i.e. the result of the
+  calculation command. Mavscript now can insert this answer in the
+  text, where the command was. When all calculations are done
+  Mavscript saves the text document in a new file <span class="c4">out.template</span>.
+  The template file remains unchanged.<br />
+  <br />
+  You do not always want to replace the calculation command by the
+  answer from the algebra program. When you assign a value to a
+  variable you usually want that the command remains in the text.
+  Therefore there are the following possibilites.<br /><br />
+  <pre>
+  Input in the template file    Output             Notes<br />  --------------------------    ------             -----<br /><br />  <span class="c3">$m</span> l:=5 <span class="c3">$i</span>                    l:=5               The command remains unchanged. $i stands for input.<br />  <span class="c3">$m</span> b:=4 <span class="c3">$i</span>                    b:=4               The control characters are removed.<br />  <span class="c3">$m</span> h:=2 <span class="c3">$i</span> m                  h:=2 m                         <br />       <br />  <span class="c3">$m</span> V:=l*b*h <span class="c3">$io</span>               V:=l*b*h --&gt; 40    Both the input and the output are shown.<br />  <span class="c3">$m</span> 2 + 3*4 $io                2 + 3*4 --&gt; 14     $io stands for input/output.<br /><br />  <span class="c3">$m</span> doubleVol := 2*V <span class="c3">$n</span>                           Sometimes you do not want to show the command or its result.<br />  <span class="c3">$m</span> gl:=x^2-l^2 <span class="c3">$n</span>                                $n stands for nothing.<br /><br />  <span class="c3">$m</span> doubleVol <span class="c3">$o</span>               80                 Only the return value (answer) is shown. $o stands for output.<br />  <span class="c3">$m</span> Solve(gl,x) <span class="c3">$o</span>             {x==5,x==(-5)}     This is useful if you want to separate the calculation and <br />                                                   the results.<br />
+</pre><span class="c1"><br />
+
+  <h4>Some rules:</h4>
+
+  <ul>
+    <li>A command must be placed in a single line.<br /></li>
+
+    <li>Several commands may be in the same line.
+    Example: <span class="c4">$m a:=3 $i</span>,
+    <span class="c4">$m b:=4 $i</span>.<br /></li>
+
+    <li>Mavscript attaches a semicolon
+    <span class="c4">(;)</span> to each command. Therefore the
+    semicolon can be omitted in the commands.<br /></li>
+
+    <li>In <em>OpenOffice Writer</em> the entire
+    command must be formatted the same way. Avoid double space
+    characters in commands.<br /></li>
+
+    <li>
+      The syntax of the commands depends on the
+      algebra program used.<br />
+
+      <ol>
+        <li>For the built-in program
+        <em>Yacas</em> (default mode) an Introduction and the
+        Function Reference are enclosed in the directory
+        <em class="c5">path-to-mavscript</em><span class="c4">/INFO/yacas</span>.</li>
+
+        <li>In addition to Yacas
+        the Java-Interpreter <em>BeanShell</em> is built-in. The manual is 
+        enclosed in the directory
+        <em class="c5">path-to-mavscript</em><span class="c4">/INFO/beanshell</span> .</li>
+
+        <li>The third possibility is to let Mavscript connect to a
+        <em>Port</em> (on localhost or on a remote server).</li>
+      </ol>
+    </li>
+  </ul><br />
+
+  <h4>Mavscript vs. spread sheet applications</h4>
+  The goal of
+  Mavscript is to allow calculations in a text document. Mainly
+  Mavscript is used where spread sheet applications are not that
+  much suitable: The mathematical functionality may be insufficient
+  (algebra!) or the calculations are to much hidden (hard to
+  debug, hard to understand for others). In such cases the use of
+  Mavscript with a computer-algebra-system, such a yacas, shows to
+  be favourable.<br />
+  The disadvantage compared to a spread sheet application is less
+  interactivity, especially when using graphs that depend on
+  the results.<br /><br />
+
+  <h2>Installation</h2>
+  see <a href="en_HowToInstall.html">How to install</a><br />
+  <br />
+
+  <h2>Usage</h2>
+
+  <h4>STANDARD</h4>
+  If Mavscript has been installed as described and the included
+  algebra program <em>yacas</em> is used:<br />
+
+  <ol>
+    <li>Create a template (input) file:
+    <span class="c4">template.txt</span>, <span class="c4">template.html</span>
+    or <span class="c4">template.odt</span></li>
+
+    <li><strong>Drag the template file with the
+    mouse on the Mavscript-icon on the
+    desktop.</strong></li>
+
+    <li>A window opens and the calculation is
+    executed. When finished, check if there is an error message and
+    close the window.</li>
+
+    <li>Open the output file (<span class=
+    "c4">out.template.txt</span>,
+    <span class="c4">out.template.html</span> or
+    <span class="c4">out.template.odt</span>) .<br /></li>
+  </ol>
+
+  <h4>ALTERNATE (in order to use advanced functions or if the standard procedure does not work)</h4>
+  Mavscript alternately can be called out of the shell (command prompt, konsole, terminal).<br />
+  <span class="c4">cd path-to-mavscript</span> and then:<br />
+
+  <ul>
+    <li><span class="c4">mavscript-yacas inputfile</span> (Windows)</li>
+
+    <li><span class="c4">./mavscript-yacas inputfile</span> (Linux)</li>
+
+    <li><span class="c4">java -jar mavscript*.jar inputfile</span> (all platforms)<br /></li>
+  </ul>
+
+  <h4>ENHANCED FUNCTIONS</h4>
+
+  <ul>
+    <li><span class="c4">mavscript --help</span>
+    Shows the available start parameters.</li>
+
+    <li>see <a href="en_Startparameter.html">start
+    parameters</a></li>
+
+    <li><a href="en_Beanshell.html">Mavscript with
+    <em>BeanShell</em></a></li>
+  </ul>
+  Mavscript can also be connected to stdin and stdout pipes:<br />
+  <span class="c4">cat inputfile | mavscript-yacas > outputfile</span> &nbsp; or <br />
+  <span class="c4">echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas</span> &nbsp; (answering "nf(Pi*8^2,1) --> 201.1")
+  <br /><br />
+
+  <h2>Disclaimer</h2>
+
+  <ul>
+    <li>Use it at your own risk. Mavscript comes
+    with ABSOLUTELY NO WARRANTY.</li>
+
+    <li>The program Mavscript is subject to the
+    free <a href="LICENCE-GPL.txt">Licence GPL</a>. It is included in the file
+    <span class="c6">path-to-mavscript</span><span class="c4">/INFO/LICENCE-GPL.txt</span> . The licence allows the
+    usage of the program, but does impose clear rules if you intend
+    to distribute it. Mavscript is copyrighted by A.Vontobel.</li>
+
+    <li>The computer-algebra-system <em>Yacas</em>
+    that is included is subject to the free licence GPL. It is included in the file
+    <span class="c6">path-to-mavscript</span><span class="c4">/INFO/yacas/COPYING</span> .
+    The licence allows the usage of the program, but does impose clear
+    rules if you intend to distribute it.</li>
+
+    <li>The Java-Interpreter <em>BeanShell</em>
+    that is included is subject to the free licence LGPL. It is included in the file
+    <span class="c6">path-to-mavscript</span><span class="c4">/INFO/beanshell/LGPL.txt</span> .
+    The licence allows the usage of the program, but does impose clear
+    rules if you intend to distribute it.</span></li>
+  </ul>
+  <br /><br />
+</body>
+</html>

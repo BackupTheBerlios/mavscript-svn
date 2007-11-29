@@ -1,0 +1,76 @@
+Compatibility issues
+--------------------
+Mavscript 0.1.6 includes yacas 1.2.2. The yacas syntax has slightly changed 
+since version 1.0.62 (included in mavscript 0.1.5).
+
+In Yacas 1.2.2 "N()" does not evaluate variables any more. If your existing 
+templates get slow or even break, replace "N()" by "N(Eval())". You may use 
+"nf()" for short (defined in PATH-TO-MAVSCRIPT/lib/init.ys).
+
+Or use the operator ":~" instead of ":=". It numerically evaluates an 
+expression before assigning it to a variable. This can result in speed gain.
+
+Note, that yacas 1.2.2 brings some syntax improvements.
+"If(expr1 < expr2, ...)" now works even in cases you had to write
+"If(N(expr1) < N(expr2), ...)" previously.
+
+
+Questions - Answers
+-------------------
+
+Q: What is the difference between mavscript and mavscript-yacas
+
+A: mavscript-yacas tells yacas to first process the file init.ys provided
+   by mavscript. It defines the function "nf()" for nicely formated numbers
+   and the operator ":~" for numerical assignment.
+   mavscript-yacas also tells mavscript to convert non-ascii characters into an 
+   ascii-representation that is accepted by yacas. This allows the use of 
+   unicode characters like greek letters.
+   "mavscript-yacas" is actually equivalent to
+   "mavscript --yacas --ascii --init PATH-TO-MAVSCRIPT/lib/init.ys"
+
+---
+Q: How can I use a newer/older version of Yacas?
+
+A: In order to use a newer version, just replace the file yacas.jar in
+   PATH-TO-MAVSCRIPT/lib.
+   In order to downgrade do the same. Yacas 1.0.62 (and older) additionly
+   require the file scripts.zip.
+
+---
+Q: How can I plot results with Mavscript?
+
+A: See Advanced-HowToCreateGraphs.txt
+
+---
+Q: I want to use Mavscript together with LaTeX. The "$"-sign is used by both
+   TeX and Mavscript. Could you please change the Mavscript control chars?
+
+A: Call Mavscript i.e. like this: "mavscript-yacas -D %".
+   This tells Mavscript to expect the control characters %m, %i, %io, %o and %n
+
+---
+Q: Is it possible to use Mavscript with pipes?
+
+A: Yes, Mavscript can read from standard input (stdin) or write to standard
+   output (stdout). Example:
+   echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas
+
+---
+Q: How to contribute to mavscript?
+
+A. The best way is to contribute to yacas! Get yacas (from yacas.sf.net) and
+   have a look at the directory scripts. The math knowledge of yacas is written 
+   in the yacas language itself. You don't need to know Java or C++ to extend
+   the math capabilities.
+   Need ideas? A function equivalent to the solver "Newton", but for a system of 
+   2 equations and 2 variables.
+   The mavscript source code is included in PATH-TO-MAVSCRIPT/src, it is written
+   in Java.
+
+---
+Q: I have a question ...
+
+A. Ask it in the forum at mavscript.berlios.de
+
+

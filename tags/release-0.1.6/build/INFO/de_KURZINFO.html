@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 31 October 2006), see www.w3.org" />
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8" />
+  <meta name="Generator" content=
+  "Kate, the KDE Advanced Text Editor" />
+
+  <title>Einleitung zu Mavscript</title>
+  <style type="text/css">
+/*<![CDATA[*/
+  span.c7 {font-style: italic; font-family: monospace;}
+  em.c5 {font-family: monospace;}
+  span.c4 {font-family: monospace;}
+  span.c3 {background-color: rgb(255, 255, 153);}
+  span.c2 {font-family: monospace; background-color: rgb(255, 255, 153);}
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <h1>mavscript</h1>
+  <span class="c4">Copyright (c) A.Vontobel, 2004 - 2007</span><br /><br />
+
+  <h4>Mavscript ermöglicht es in einem
+  Textdokument Berechnungen durchzuführen.</h4>Unterstützt werden folgende
+  <em>Dateiformate</em>:<br />
+
+  <ul>
+    <li>Textdatei</li>
+
+    <li>html</li>
+
+    <li>OpenDocument Text odt</li>
+
+    <li>OpenOffice Writer sxw</li>
+
+    <li>weitere Formate, die in Textform speichern
+    (z.B. svg). Die Textdatei darf in einem <em>zip-Archiv</em>
+    vorliegen.</li>
+  </ul>
+
+  <h4>So funktionierts</h4>
+  Mavscript liest die Berechnungsanweisungen ein. Es erkennt
+  deren Beginn am Steuerzeichen <span class="c2">$m</span>, das
+  Anweisungsende an einem der folgenden Steuerzeichen:
+  <span class="c2">$i</span>, <span class="c2">$o</span>,
+  <span class="c2">$io</span> und <span class="c2">$n</span>.
+  Auf ihre Bedeutung wird weiter unten eingegangen.
+  Die Anweisung wird an das Computer-Algebra-System
+  (<em>Yacas</em>) weitergeleitet. Das Algebraprogramm gibt
+  eine Antwort an Mavscript zurück, z.B. das Resultat einer
+  Berechnung. Mavscript kann nun diese Antwort an der Stelle in den
+  Text einsetzen, wo die Anweisung stand. Das fertig berechnete
+  Textdokument speichert Mavscript in eine neue Datei
+  <span class="c4">out.vorlage</span> ab. Die Vorlagedatei bleibt
+  unverändert.<br />
+  <br />
+  Nicht immer will man die Anweisung durch den Rückgabewert des
+  Algebraprogrammes ersetzen. Wenn man Variablen einen Wert
+  zuweist, ist das meistens unerwünscht. Es gibt daher die
+  folgenden Möglichkeiten.<br /><br />
+  <pre>
+  Eingabe in der Vorlagedatei    Ausgabe            Anmerkung<br />  ---------------------------    -------            ---------<br /><br />  <span class="c3">$m</span> l:=5 <span class="c3">$i</span>                     l:=5               Die Darstellung bleibt unverändert. $i steht für input.<br />  <span class="c3">$m</span> b:=4 <span class="c3">$i</span>                     b:=4               Die Steuerzeichen werden entfernt.<br />  <span class="c3">$m</span> h:=2 <span class="c3">$i</span> m                   h:=2 m                         <br />       <br />  <span class="c3">$m</span> V:=l*b*h <span class="c3">$io</span>                V:=l*b*h --&gt; 40    Sowohl die Ein- wie auch die Ausgabe werden angezeigt.<br />  <span class="c3">$m</span> 2 + 3*4 <span class="c3">$io</span>                 2 + 3*4 --&gt; 14     $io steht für input/output.<br /><br />  <span class="c3">$m</span> doppeltesVol := 2*V <span class="c3">$n</span>                         Nicht immer will man die Anweisung darstellen.<br />  <span class="c3">$m</span> gl:=x^2-l^2 <span class="c3">$n</span>                                 $n steht für nichts.<br /><br />  <span class="c3">$m</span> doppeltesVol <span class="c3">$o</span>             80                 Es wird nur der Rückgabewert angezeigt. $o steht für output.<br />  <span class="c3">$m</span> Solve(gl,x) <span class="c3">$o</span>              {x==5,x==(-5)}     Dies kann gebraucht werden, um Berechnung und Resultat-<br />                                                    ausgabe örtlich zu trennen.<br />
+</pre><br />
+
+  <h4>Einige Regeln:</h4>
+
+  <ul>
+    <li>Eine Anweisung muss auf einer Zeile
+    liegen.<br /></li>
+
+    <li>Es dürfen mehrere Anweisungen auf einer
+    Zeile liegen. Bsp: <span class="c4">$m a:=3 $i</span>,
+    <span class="c4">$m b:=4 $i</span>.<br /></li>
+
+    <li>Mavscript hängt an jede Anweisung einen
+    Strichpunkt <span class="c4">(;)</span> an. Dieser kann daher
+    in der Anweisung weggelassen werden.<br /></li>
+
+    <li>In <em>OpenOffice Writer</em> muss die
+    ganze Anweisung die gleiche Formatierung aufweisen. In
+    Anweisungen doppelte Leerzeichen meiden.<br /></li>
+
+    <li>
+      Die Syntax der Anweisungen hängt vom
+      verwendeten Algebraprogramm ab.<br />
+
+      <ol>
+        <li>Zum mitgelieferten Programm
+        <em>Yacas</em> liegen eine Einführung und eine ausführliche
+        Funktionsreferenz im Ordner <em class=
+        "c5">Installationspfad</em><span class=
+        "c4">/INFO/yacas</span> bei.</li>
+
+        <li>Nebst Yacas wird auch der
+        Java-Interpreter <em>BeanShell</em> unterstützt und mitgeliefert.
+        Die Anleitung liegt im Ordner <em class="c5">Installationspfad</em>
+        <span class="c4">/INFO/beanshell</span> .</li>
+
+        <li>Als dritte Möglichkeit kann Mavscript
+        zu einem <em>Port</em> (auf dem lokalen Computer oder einem
+        entfernten Server) Verbindung aufnehmen.</li>
+      </ol>
+    </li>
+  </ul><br />
+
+  <h4>Mavscript vs. Tabellenkalkulationsprogramme</h4>Der Zweck von
+  Mavscript ist, Berechnungen in einem Textdokument durchführen zu
+  können. Mavscript kommt vor allem dort zum Einsatz, wo
+  Tabellenkalkulationsprogramme zu wenig geeignet erscheinen: Sei
+  es, weil die mathematischen Fähigkeiten ungenügend sind
+  (Algebra!) oder weil Berechnungen schnell
+  unübersichtlich werden (schwierige Fehlersuche, kaum
+  nachvollziehbar für andere). Die Verwendung von Mavscript, mit
+  dem Computer-Algebra-System Yacas, erweist sich in solchen Fällen
+  als vorteilhaft.<br />
+  Der Nachteil gegenüber Tabellenkalkulationsprogrammen ist die
+  geringere Interaktivität, namentlich das umständlichere Einbinden
+  von (resultatabhängigen) Graphiken. <br />
+  <br />
+
+  <h2>Installation</h2>
+  siehe <a href="de_Installieren.html">Installieren</a><br />
+  <br />
+
+  <h2>Gebrauch</h2>
+
+  <h4>STANDARD</h4>
+  <br />
+  Falls wie oben installiert
+  und das mitgelieferte Algebraprogramm <em>yacas</em> gebraucht
+  werden soll:<br />
+
+  <ol>
+    <li>Vorlagedatei erstellen: <span class=
+    "c4">vorlage.txt</span>, <span class="c4">vorlage.html</span>
+    oder <span class="c4">vorlage.odt</span></li>
+
+    <li><strong>Die Vorlagedatei mit der Maus auf
+    das Mavscript-Symbol auf dem Desktop ziehen.</strong></li>
+
+    <li>Es öffnet sich ein Fenster und die
+    Rechnung rattert durch. Das Fenster kann anschliessend
+    geschlossen werden.<br />
+    Darauf achten, ob eine Fehlermeldung ausgegeben wurde.</li>
+
+    <li>Die Zieldatei (<span class=
+    "c4">out.vorlage.txt</span>, <span class=
+    "c4">out.vorlage.html</span> oder <span class=
+    "c4">out.vorlage.odt</span>) öffnen.<br /></li>
+  </ol>
+
+  <h4>ALTERNATIV (um erweiterte Funktionen zu nutzen oder wenn obige Variante nicht funktioniert)</h4>
+  <br />
+  Mavscript kann alternativ auch von der Shell
+  (Eingabeaufforderung, Konsole, Terminal, Command Prompt,
+  DOS-Fenster) ausgeführt werden.<br />
+  <span class="c4">cd Installationspfad</span> und
+  dann:<br />
+
+  <ul>
+    <li><span class="c4">mavscript-yacas vorlagedatei</span> (Windows)</li>
+
+    <li><span class="c4">./mavscript-yacas vorlagedatei</span> (Linux)</li>
+
+    <li><span class="c4">java -jar mavscript*.jar vorlagedatei</span> (alle Plattformen)</li>
+  </ul>
+  <br />
+
+  <h4>ERWEITERTE FUNKTIONEN</h4>
+
+  <ul>
+    <li><span class="c4">mavscript --help</span>
+    Zeigt die verschiedenen Startparameter an.</li>
+
+    <li>siehe <a href=
+    "de_Startparameter.html">Startparameter</a></li>
+
+    <li><a href="de_Beanshell.html">Mavscript mit
+    <em>BeanShell</em></a></li>
+  </ul>
+  Mavscript kann auch über eine "Pipe" mit der Standardeingabe (stdin) und Standardausgabe (stdout) verbunden werden:<br />
+  <span class="c4">cat vorlagedatei | mavscript-yacas > ausgabedatei</span> &nbsp; oder <br />
+  <span class="c4">echo '$m nf(Pi*8^2,1) $io' | mavscript-yacas</span> &nbsp; (antwortet "nf(Pi*8^2,1) --> 201.1")
+  <br /><br />
+
+  <h2>Rechtliches</h2>
+
+  <ul>
+    <li>Gebrauch auf eigene Gefahr. Jede Haftung
+    wird abgelehnt.</li>
+
+    <li>Das Programm Mavscript unterliegt der
+    freien <a href=
+    "de_Lizenz-GPL-deutsche_Uebersetzung.html">Lizenz GPL</a>. Sie ist in der Datei
+    <span class="c7">Installationspfad</span><span class="c4">/INFO/LICENCE-GPL.txt</span> nachzulesen.
+    Die Lizenz erlaubt die Nutzung, knüpft jedoch die Weitergabe an klare
+    Bedingungen. Das Urheberrecht (Copyright) liegt bei A.Vontobel.</li>
+
+    <li>Das mitgelieferte
+    Computer-Algebra-System <em>Yacas</em> unterliegt der freien Lizenz GPL. Sie ist in der Datei
+    <span class="c7">Installationspfad</span><span class="c4">/INFO/yacas/COPYING</span> nachzulesen.
+    Die Lizenz erlaubt die Nutzung, knüpft jedoch die Weitergabe an klare Bedingungen.</li>
+
+    <li>Der mitgelieferte Java-Interpreter
+    <em>BeanShell</em> unterliegt der freien Lizenz LGPL. Sie ist in der Datei
+    <span class="c7">Installationspfad</span><span class="c4">/INFO/beanshell/LGPL.txt</span> nachzulesen.
+    Die Lizenz erlaubt die Nutzung, knüpft jedoch die Weitergabe an klare Bedingungen.</li>
+  </ul><br />
+</body>
+</html>

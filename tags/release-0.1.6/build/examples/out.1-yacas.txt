@@ -1,0 +1,17 @@
+Mavscript - Testdatei
+----------------------
+
+
+Eingabe:
+Länge l := 10 (des Würfels)
+Breite b := 3
+Höhe h:= 5 --> 5
+
+Ausgabe:
+Das Volumen beträgt V = 150 m³
+Das Volumen beträgt V := l*b*h --> 150 m³
+Das doppelte Volumen beträgt  2V = 300
+
+Der Würfel ist Länger als breit
+
+Ende.

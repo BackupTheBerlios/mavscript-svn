@@ -13,6 +13,7 @@ nf(expr) := N(Eval(expr));
 nf(expr,decimalPlaces) := N(Eval(Round(expr*10^decimalPlaces)/10^decimalPlaces));
 
 /** Solves equation numerically. Equivalent to "Newton". */
+//  Might be removed in future versions.
 nSolve(expr,var,initial,accuracy) := `(Newton(Eval(@expr),@var,N(Eval(initial)),accuracy));
 /** Solves equation numerically. Using default accuracy. */
 nSolve(expr,var,initial) := `(Newton(Eval(@expr),@var,N(Eval(initial)),0.00000001));
